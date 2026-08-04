@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+.astro/
+.svelte-kit/
+.wrangler/
+
+# Env
+.env
+.env.*
+!.env.example
+.dev.vars
+
+# OS / editor
+.DS_Store
+*.log
+.vscode/*
+!.vscode/extensions.json
+
+# Agent session
+.cursor/after-hours-loop.state.json
+.cursor/after-hours-morning-brief.md
