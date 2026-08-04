@@ -1,0 +1,34 @@
+{
+  "name": "satellitebar-demo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Satellite Bar Co — mobile bartending hub (Astro + Svelte)",
+  "license": "MIT",
+  "packageManager": "pnpm@9.15.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check && svelte-check --tsconfig ./tsconfig.json",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/svelte": "^9.0.1",
+    "@fontsource-variable/dm-sans": "^5.2.5",
+    "@fontsource-variable/syne": "^5.2.5",
+    "@tailwindcss/vite": "^4.1.11",
+    "astro": "^7.1.3",
+    "svelte": "^5.36.0",
+    "tailwindcss": "^4.1.11"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "svelte-check": "^4.7.4",
+    "typescript": "~5.9.2"
+  }
+}
