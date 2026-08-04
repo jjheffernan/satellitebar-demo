@@ -1,0 +1,13 @@
+:root {
+  --font-sans: "DM Sans Variable", "DM Sans Fallback", system-ui, sans-serif;
+  --font-heading: "Syne Variable", "Syne Fallback", system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", monospace;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.875rem;
+
+  --space-section: clamp(1.5rem, 4vw, 3.25rem);
+  --space-gutter: clamp(1rem, 3vw, 1.75rem);
+  --max-width: 72rem;
+}

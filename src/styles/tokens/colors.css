@@ -1,0 +1,37 @@
+/**
+ * Color tokens — Satellite Bar Co
+ * Night graphite floor, orbital copper accent, soft signal glow.
+ * Semantic names only — swap values to rebrand without touching components.
+ */
+
+:root {
+  --background: oklch(0.16 0.018 250deg);
+  --foreground: oklch(0.94 0.012 80deg);
+  --card: oklch(0.2 0.02 250deg);
+  --card-foreground: oklch(0.94 0.012 80deg);
+
+  --primary: oklch(0.72 0.12 55deg);
+  --primary-foreground: oklch(0.18 0.02 250deg);
+  --primary-hover: oklch(0.78 0.11 55deg);
+
+  --secondary: oklch(0.28 0.03 250deg);
+  --secondary-foreground: oklch(0.92 0.01 80deg);
+
+  --accent: oklch(0.55 0.08 210deg);
+  --accent-foreground: oklch(0.96 0.01 80deg);
+
+  --muted: oklch(0.24 0.02 250deg);
+  --muted-foreground: oklch(0.72 0.02 80deg);
+
+  --border: oklch(0.32 0.025 250deg);
+  --ring: oklch(0.72 0.12 55deg);
+
+  --destructive: oklch(0.58 0.2 25deg);
+  --success: oklch(0.65 0.14 150deg);
+
+  --surface-invert: oklch(0.92 0.02 80deg);
+  --surface-invert-foreground: oklch(0.18 0.02 250deg);
+
+  --hero-veil: oklch(0.12 0.025 255deg / 0.72);
+  --grain-opacity: 0.07;
+}
