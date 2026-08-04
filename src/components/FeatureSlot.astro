@@ -1,0 +1,33 @@
+---
+/**
+ * Hot-plug slot: renders active feature UI only.
+ */
+import features from "../data/features.json";
+import site from "../data/site.json";
+import FooterSocial from "../features/social/ui/FooterSocial.svelte";
+
+const { name } = Astro.props;
+
+function envOn(key = "") {
+  const value = import.meta.env[key];
+  return Boolean(value && String(value).trim() && value !== "0" && value !== "false");
+}
+
+function isActive(id = "") {
+  const mod = features.modules.find((m) => m.id === id);
+  if (!mod) return false;
+  return (mod.publicEnv ?? []).every((key) => envOn(key));
+}
+
+const socialNetworks = [
+  { key: "instagram", label: "Instagram" },
+  { key: "facebook", label: "Facebook" },
+  { key: "x", label: "X" },
+]
+  .filter((n) => site.social?.[n.key])
+  .map((n) => ({ label: n.label, href: site.social[n.key] }));
+
+const showSocial = name === "footer.social" && isActive("social");
+---
+
+{showSocial && <FooterSocial networks={socialNetworks} />}
