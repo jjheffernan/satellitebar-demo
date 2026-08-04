@@ -1,0 +1,131 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import site from "../data/site.json";
+import catalog from "../data/catalog.json";
+
+const selected = Astro.url.searchParams.get("package");
+const selectedPkg = catalog.packages.find((p) => p.id === selected);
+---
+
+<PageLayout
+  title="Book an event"
+  description="Date, guests, package — we’ll confirm and send a quote."
+  path="/book"
+>
+  <p class="lead">
+    {site.serviceArea} · <a href={`mailto:${site.email}?subject=Event%20booking`}>{site.email}</a>
+  </p>
+
+  {
+    selectedPkg && (
+      <p class="selected">
+        Selected package: <strong>{selectedPkg.name}</strong> (from the catalog).
+      </p>
+    )
+  }
+
+  <form class="book-form" method="get" action={`mailto:${site.email}`}>
+    <div class="row">
+      <label>
+        Name
+        <input name="name" type="text" required autocomplete="name" />
+      </label>
+      <label>
+        Email
+        <input name="email" type="email" required autocomplete="email" />
+      </label>
+    </div>
+    <div class="row">
+      <label>
+        Event date
+        <input name="date" type="date" required />
+      </label>
+      <label>
+        Guests
+        <input name="guests" type="number" min="10" max="300" required />
+      </label>
+    </div>
+    <label>
+      Package
+      <select name="package" required>
+        <option value="">Select…</option>
+        {
+          catalog.packages.map((pkg) => (
+            <option value={pkg.id} selected={pkg.id === selected}>
+              {pkg.name}
+            </option>
+          ))
+        }
+      </select>
+    </label>
+    <label>
+      Notes
+      <textarea name="notes" rows="2" placeholder="Venue, vibe, must-have drinks…"></textarea>
+    </label>
+    <p class="hint">Opens your mail client for now.</p>
+    <button type="submit">Send booking request</button>
+  </form>
+</PageLayout>
+
+<style>
+  .lead,
+  .selected,
+  .hint {
+    color: var(--muted-foreground);
+    max-width: 40rem;
+    font-size: 0.9rem;
+    margin: 0 0 0.65rem;
+  }
+
+  .selected {
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--card);
+  }
+
+  .book-form {
+    display: grid;
+    gap: 0.65rem;
+    max-width: 32rem;
+    margin-top: 0.75rem;
+  }
+
+  .row {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  label {
+    display: grid;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--foreground);
+    padding: 0.45rem 0.65rem;
+  }
+
+  button {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 2.4rem;
+  }
+
+  @media (min-width: 520px) {
+    .row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

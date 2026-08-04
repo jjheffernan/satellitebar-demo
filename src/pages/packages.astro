@@ -1,0 +1,13 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import PackageCatalog from "../components/catalog/PackageCatalog.svelte";
+import catalog from "../data/catalog.json";
+---
+
+<PageLayout
+  title="Packages"
+  description="Guest count, hours, and what’s included — then request a date."
+  path="/packages"
+>
+  <PackageCatalog client:load items={catalog.packages} />
+</PageLayout>
