@@ -1,0 +1,64 @@
+---
+import Header from "../components/layout/Header.svelte";
+import Footer from "../components/layout/Footer.astro";
+import SEO from "../components/seo/SEO.astro";
+import site from "../data/site.json";
+import "../styles/global.css";
+
+const {
+  title,
+  description = site.description,
+  path = Astro.url.pathname,
+  showHeader = true,
+  showFooter = true,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO title={title} description={description} path={path} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    {showHeader && <Header client:load pathname={Astro.url.pathname} links={site.nav} />}
+    <main id="main">
+      <slot />
+    </main>
+    {showFooter && <Footer />}
+  </body>
+</html>
+
+<style is:global>
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  main {
+    flex: 1;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    z-index: 100;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--radius-md);
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+</style>

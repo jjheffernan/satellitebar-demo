@@ -1,0 +1,89 @@
+---
+import site from "../../data/site.json";
+import FeatureSlot from "../FeatureSlot.astro";
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner container-site">
+    <div>
+      <p class="site-footer__brand">{site.name}</p>
+      <p class="site-footer__meta">
+        {site.serviceArea} · <a href={`mailto:${site.email}`}>{site.email}</a> ·
+        <a href={`tel:${site.phone.replace(/\D/g, "")}`}>{site.phone}</a>
+      </p>
+      <FeatureSlot name="footer.social" />
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+      <a href="/packages">Packages</a>
+      <a href="/menu">Cocktails</a>
+      <a href="/book">Book</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+  <p class="site-footer__legal container-site">
+    © {new Date().getFullYear()} {site.legalName}
+  </p>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+    padding: 1.15rem 0 1rem;
+    background:
+      radial-gradient(
+        ellipse 60% 80% at 10% 0%,
+        color-mix(in oklch, var(--accent) 18%, transparent),
+        transparent 55%
+      ),
+      var(--background);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .site-footer__brand {
+    margin: 0 0 0.2rem;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    letter-spacing: -0.03em;
+  }
+
+  .site-footer__meta {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .site-footer a {
+    color: inherit;
+  }
+
+  .site-footer__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .site-footer__nav a {
+    text-decoration: none;
+    color: var(--muted-foreground);
+  }
+
+  .site-footer__legal {
+    margin: 0.85rem auto 0;
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+  }
+
+  @media (min-width: 800px) {
+    .site-footer__inner {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+</style>

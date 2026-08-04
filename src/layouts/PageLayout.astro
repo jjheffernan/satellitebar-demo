@@ -1,0 +1,40 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+const { title, description, path } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} path={path}>
+  <div class="page-shell">
+    <header class="page-shell__head container-site">
+      <h1>{title}</h1>
+      {description && <p>{description}</p>}
+    </header>
+    <div class="page-shell__body container-site">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-shell {
+    padding-block: var(--space-section);
+  }
+
+  .page-shell__head {
+    margin-bottom: 1.15rem;
+    max-width: 40rem;
+  }
+
+  .page-shell__head h1 {
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.7rem, 5vw, 2.75rem);
+  }
+
+  .page-shell__head p {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+</style>
