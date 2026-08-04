@@ -1,0 +1,21 @@
+{
+  "name": "Satellite Bar",
+  "legalName": "Satellite Bar Co",
+  "tagline": "Mobile bartending that shows up ready to pour.",
+  "description": "Satellite Bar Co is a mobile bartending company. Browse packages and cocktail menus, then book us for weddings, corporate, and private events.",
+  "url": "https://satellitebar.example",
+  "email": "book@satellitebar.example",
+  "phone": "(555) 014-2088",
+  "serviceArea": "Harbor City metro · within 60 miles",
+  "nav": [
+    { "href": "/packages", "label": "Packages" },
+    { "href": "/menu", "label": "Cocktails" },
+    { "href": "/book", "label": "Book" },
+    { "href": "/about", "label": "About" }
+  ],
+  "social": {
+    "instagram": "https://instagram.com/",
+    "facebook": "https://facebook.com/",
+    "x": "https://x.com/"
+  }
+}
