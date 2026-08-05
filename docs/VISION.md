@@ -69,7 +69,7 @@ JSON/CSS/Markdown for data and styles is fine. `astro.config.mjs` / `svelte.conf
 | --- | --- | --- |
 | `/` | Brand hero, rotating media, ordering snapshot, testimonials, events teaser | Done |
 | `/packages` | Catalog + quote calculator; branded & event packages (Svelte) | Done |
-| `/menu` | Sample menu tiers (continuous slider) | Done |
+| `/menu` | Interactive sample-menu depth picker (drinks pop in by tier) | Done |
 | `/book` | Availability / inquiry (map, address, context from calculator/events) | Done |
 | `/about` | Story + 3-pane social embeds (X / IG / FB) | Done |
 | `/contact` | Contact details + social profile badges (no embeds) | Done |

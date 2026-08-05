@@ -7,8 +7,8 @@ import sampleMenus from "../data/sample-menus.json";
 
 <PageLayout
   title="Sample menus"
-  description="Three example bars — simple beer & wine, mid-tier draft and cocktails, or a full custom program."
+  description="Pick a menu tier to ballpark the pours — Simple, Mid, or Full custom. Lower tiers clear when you move up."
   path="/menu"
 >
-  <SampleMenuSelector client:load menus={sampleMenus.menus} />
+  <SampleMenuSelector client:load ballpark={sampleMenus.ballpark} />
 </PageLayout>

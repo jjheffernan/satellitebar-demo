@@ -90,5 +90,75 @@
         }
       ]
     }
-  ]
+  ],
+  "ballpark": {
+    "levels": [
+      {
+        "id": "simple",
+        "label": "Simple",
+        "name": "Beer & wine",
+        "summary": "Lean guest bar — cold beer and open bottles. No cocktail station."
+      },
+      {
+        "id": "mid",
+        "label": "Mid tier",
+        "name": "Draft, cans & cocktails",
+        "summary": "Draft pours, a can wall, and a short cocktail list that still feels intentional."
+      },
+      {
+        "id": "custom",
+        "label": "Full custom",
+        "name": "Custom program",
+        "summary": "Signatures, flights, branded touches, and a full spirit + nonalcoholic line."
+      }
+    ],
+    "sections": [
+      {
+        "title": "Beer & cans",
+        "items": [
+          { "name": "Local lager", "note": "Pils / light lager", "unlock": 0 },
+          { "name": "IPA", "note": "Regional craft", "unlock": 0 },
+          { "name": "Non-alcoholic beer", "note": "One option on ice", "unlock": 0, "na": true },
+          { "name": "House lager draft", "note": "Cold tap pour", "unlock": 1 },
+          { "name": "Seasonal ale", "note": "Rotating local", "unlock": 1 },
+          { "name": "Cider", "note": "Dry draft option", "unlock": 1 },
+          { "name": "Light lager cans", "note": "High-volume easy pour", "unlock": 1 },
+          { "name": "Hard seltzer", "note": "2–3 flavors", "unlock": 1 },
+          { "name": "Nonalcoholic cans", "note": "Beer + seltzer", "unlock": 1, "na": true },
+          { "name": "Curated draft lineup", "note": "2–3 taps to brief", "unlock": 2 },
+          { "name": "Can & bottle wall", "note": "Guest self-select options", "unlock": 2 }
+        ]
+      },
+      {
+        "title": "Wine",
+        "items": [
+          { "name": "House white", "note": "Sauvignon blanc or similar", "unlock": 0 },
+          { "name": "House red", "note": "Pinot noir or similar", "unlock": 0 },
+          { "name": "Bubbles", "note": "Prosecco for toasts", "unlock": 0 },
+          { "name": "Wine flight", "note": "White, red, sparkling", "unlock": 2 }
+        ]
+      },
+      {
+        "title": "Cocktails",
+        "items": [
+          { "name": "Signal Sour", "note": "Bourbon, lemon, demerara", "unlock": 1 },
+          { "name": "Reentry Spritz", "note": "Prosecco, bitter, soda", "unlock": 1 },
+          { "name": "Gin & tonic upgrade", "note": "Citrus + botanical garnish", "unlock": 1 },
+          { "name": "Dry Dock (nonalcoholic)", "note": "Seedlip, citrus, tonic", "unlock": 1, "na": true },
+          { "name": "Couple’s namesake", "note": "Custom stirred or shaken", "unlock": 2 },
+          { "name": "Brand feature pour", "note": "Product-forward recipe", "unlock": 2 },
+          { "name": "Low Orbit Negroni", "note": "Campari, vermouth, gin", "unlock": 2 },
+          { "name": "Zero-proof twin", "note": "Matching nonalcoholic signature", "unlock": 2, "na": true }
+        ]
+      },
+      {
+        "title": "Extras",
+        "items": [
+          { "name": "Welcome punch or toast", "note": "Batch or poured", "unlock": 2 },
+          { "name": "Tasting flight format", "note": "Activations & launches", "unlock": 2 },
+          { "name": "Full nonalcoholic bar", "note": "Mocktails + nonalcoholic beer/wine", "unlock": 2, "na": true }
+        ]
+      }
+    ]
+  }
 }
