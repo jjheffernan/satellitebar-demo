@@ -1,5 +1,4 @@
 ---
-import { FacebookShareButton, TwitterShareButton } from "astro-social-share";
 import site from "../../data/site.json";
 import FeatureSlot from "../FeatureSlot.astro";
 
@@ -9,8 +8,8 @@ const {
   path = "/",
 } = Astro.props;
 
-const shareUrl = new URL(path === "/" ? "/" : path, site.url).href;
-const shareText = title === site.name ? description : title;
+const shareUrl = encodeURIComponent(new URL(path === "/" ? "/" : path, site.url).href);
+const shareText = encodeURIComponent(title === site.name ? description : title);
 
 let via = "satellitebarco";
 try {
@@ -18,20 +17,25 @@ try {
 } catch {
   /* keep default */
 }
+
+const phoneHref = site.phone.replace(/\D/g, "");
+const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+const xShare = `https://x.com/intent/tweet?url=${shareUrl}&text=${shareText}&via=${via}`;
 ---
 
 <footer class="site-footer">
   <div class="site-footer__inner container-site">
-    <div>
+    <div class="site-footer__brand-block">
       <p class="site-footer__brand">{site.name}</p>
-      <p class="site-footer__meta">
-        {site.serviceArea}<br />
+      <p class="site-footer__area">{site.serviceArea}</p>
+      <p class="site-footer__contact">
         <a href={`mailto:${site.email}`}>{site.email}</a>
-        ·
-        <a href={`tel:${site.phone.replace(/\D/g, "")}`}>{site.phone}</a>
+        <span aria-hidden="true">·</span>
+        <a href={`tel:${phoneHref}`}>{site.phone}</a>
       </p>
       <FeatureSlot name="footer.mailing-list" />
     </div>
+
     <div class="site-footer__aside">
       <nav class="site-footer__nav" aria-label="Footer">
         <a href="/book">Book</a>
@@ -41,8 +45,8 @@ try {
       <nav class="site-footer__share" aria-label="Share this page">
         <p class="site-footer__share-label">Share</p>
         <div class="site-footer__share-links">
-          <FacebookShareButton url={shareUrl}>Facebook</FacebookShareButton>
-          <TwitterShareButton url={shareUrl} description={shareText} via={via}>X</TwitterShareButton>
+          <a href={facebookShare} rel="noopener noreferrer" target="_blank">Facebook</a>
+          <a href={xShare} rel="noopener noreferrer" target="_blank">X</a>
         </div>
       </nav>
     </div>
@@ -56,49 +60,66 @@ try {
   .site-footer {
     margin-top: auto;
     border-top: 1px solid var(--border);
-    padding: 1rem 0 0.85rem;
+    padding: 1.25rem 0 1rem;
     background: var(--background);
   }
 
   .site-footer__inner {
     display: grid;
-    gap: 0.75rem;
+    gap: 1.25rem;
   }
 
   .site-footer__brand {
-    margin: 0 0 0.2rem;
+    margin: 0 0 0.25rem;
     font-family: var(--font-heading);
     font-size: 1rem;
     letter-spacing: -0.03em;
   }
 
-  .site-footer__meta {
+  .site-footer__area {
+    margin: 0 0 0.35rem;
+    color: var(--muted-foreground);
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .site-footer__contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.5rem;
     margin: 0;
     color: var(--muted-foreground);
     font-size: 0.8rem;
     line-height: 1.45;
   }
 
-  .site-footer__meta a {
+  .site-footer__contact a {
     color: inherit;
+    text-decoration: none;
+  }
+
+  .site-footer__contact a:hover {
+    color: var(--foreground);
   }
 
   .site-footer__aside {
     display: grid;
-    gap: 0.75rem;
+    gap: 0.85rem;
   }
 
   .site-footer__nav,
   .site-footer__share-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.65rem 1rem;
-    font-size: 0.82rem;
+    gap: 0.5rem 1.1rem;
+    margin: 0;
   }
 
   .site-footer__nav a {
     text-decoration: none;
     color: var(--muted-foreground);
+    font-size: 0.82rem;
   }
 
   .site-footer__nav a:hover {
@@ -108,6 +129,7 @@ try {
   .site-footer__share {
     display: grid;
     gap: 0.35rem;
+    justify-items: start;
   }
 
   .site-footer__share-label {
@@ -118,34 +140,21 @@ try {
     color: var(--muted-foreground);
   }
 
-  /* Override astro-social-share defaults to match footer / SocialLinks */
-  .site-footer__share-links :global(a.social-share-btn) {
-    display: inline;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: none;
+  .site-footer__share-links a {
     color: var(--primary);
-    font: inherit;
+    text-decoration: none;
     font-size: 0.82rem;
     font-weight: 600;
-    text-decoration: none;
     border-bottom: 1px solid color-mix(in oklch, var(--primary) 45%, transparent);
-    cursor: pointer;
   }
 
-  .site-footer__share-links :global(a.social-share-btn:hover) {
+  .site-footer__share-links a:hover {
     color: var(--foreground);
     border-bottom-color: var(--foreground);
   }
 
-  .site-footer__share-links :global(a.social-share-btn svg),
-  .site-footer__share-links :global(a.social-share-btn style) {
-    display: none;
-  }
-
   .site-footer__legal {
-    margin: 0.75rem auto 0;
+    margin: 1rem auto 0;
     color: var(--muted-foreground);
     font-size: 0.72rem;
   }
@@ -153,12 +162,21 @@ try {
   @media (min-width: 800px) {
     .site-footer__inner {
       grid-template-columns: 1fr auto;
-      align-items: end;
+      align-items: start;
+      column-gap: 2rem;
     }
 
     .site-footer__aside {
       justify-items: end;
-      text-align: right;
+    }
+
+    .site-footer__share {
+      justify-items: end;
+    }
+
+    .site-footer__nav,
+    .site-footer__share-links {
+      justify-content: flex-end;
     }
   }
 </style>
