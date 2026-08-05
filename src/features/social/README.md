@@ -6,16 +6,14 @@ Profile URLs live in `src/data/site.json` → `social`:
 - `facebook`
 - `twitter` (X / Twitter — one link)
 
-Rendered on **About** (`SocialLinks.astro`). Header stays nav/CTAs only; footer stays contact utilities.
+## About — three-pane embeds
 
-## Contact embeds
+`/about` uses `SocialProfileEmbeds.svelte` (X timeline, Instagram official profile embed, Facebook page plugin).
 
-`/contact` embeds:
+## Contact — profile badges
 
-- **X** — timeline widget (`platform.twitter.com/widgets.js`)
-- **Instagram** — profile link for now; live feed TBD (see `docs/PLAN.md` → Instagram feed options)
-- **Facebook** — page plugin iframe
+`/contact` links phone / email / service area, then compact SVG profile badges (no embeds).
 
-## Instagram feed
+## Pane (live feed grid)
 
-Behold was removed (requires an external SaaS dashboard). Options for a business-account feed are tracked in [PLAN.md](../../../docs/PLAN.md).
+Live multi-post grid still planned via Pane (`PUBLIC_PANE_FEED_ID`). See [PLAN.md](../../../docs/PLAN.md) Phase 1.

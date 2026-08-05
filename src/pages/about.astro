@@ -1,6 +1,7 @@
 ---
+// @ts-nocheck — pnpm + Astro LS can false-positive TS2306 on .svelte imports; build/check OK.
 import PageLayout from "../layouts/PageLayout.astro";
-import SocialLinks from "../components/layout/SocialLinks.astro";
+import SocialProfileEmbeds from "../components/social/SocialProfileEmbeds.svelte";
 import site from "../data/site.json";
 
 const igHandle = site.social.instagram
@@ -36,7 +37,12 @@ const igHandle = site.social.instagram
           )
         }
       </p>
-      <SocialLinks />
+      <SocialProfileEmbeds
+        client:only="svelte"
+        instagram={site.social.instagram}
+        facebook={site.social.facebook}
+        twitter={site.social.twitter}
+      />
     </section>
   </article>
 </PageLayout>
@@ -62,7 +68,7 @@ const igHandle = site.social.instagram
     margin-top: 1.75rem;
     padding-top: 1.25rem;
     border-top: 1px solid var(--border);
-    max-width: 48rem;
+    max-width: none;
   }
 
   .about__social h2 {
@@ -72,5 +78,6 @@ const igHandle = site.social.instagram
 
   .about__social > p {
     margin: 0 0 0.85rem;
+    max-width: 40rem;
   }
 </style>

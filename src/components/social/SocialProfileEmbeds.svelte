@@ -15,8 +15,15 @@
     }
   }
 
+  function profilePermalink(url = "") {
+    if (!url) return "";
+    const base = url.endsWith("/") ? url : `${url}/`;
+    return `${base}?utm_source=ig_embed&utm_campaign=loading`;
+  }
+
   const igHandle = $derived(handleFromUrl(instagram));
   const xHandle = $derived(handleFromUrl(twitter));
+  const igPermalink = $derived(profilePermalink(instagram));
 
   const facebookEmbed = $derived(
     facebook
@@ -25,17 +32,32 @@
   );
 
   onMount(() => {
-    if (!twitter) return;
-    const existing = document.querySelector('script[src*="platform.twitter.com/widgets.js"]');
-    if (existing) {
-      window.twttr?.widgets?.load?.();
-      return;
+    if (twitter) {
+      const existing = document.querySelector('script[src*="platform.twitter.com/widgets.js"]');
+      if (existing) {
+        window.twttr?.widgets?.load?.();
+      } else {
+        const script = document.createElement("script");
+        script.src = "https://platform.twitter.com/widgets.js";
+        script.async = true;
+        script.charset = "utf-8";
+        document.body.appendChild(script);
+      }
     }
-    const script = document.createElement("script");
-    script.src = "https://platform.twitter.com/widgets.js";
-    script.async = true;
-    script.charset = "utf-8";
-    document.body.appendChild(script);
+
+    if (instagram) {
+      const boot = () => window.instgrm?.Embeds?.process?.();
+      const existing = document.querySelector('script[src*="instagram.com/embed.js"]');
+      if (existing) {
+        boot();
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = "https://www.instagram.com/embed.js";
+      script.async = true;
+      script.onload = boot;
+      document.body.appendChild(script);
+    }
   });
 </script>
 
@@ -65,9 +87,34 @@
       <p class="embed__link">
         <a href={instagram} rel="noopener noreferrer" target="_blank">@{igHandle || "profile"}</a>
       </p>
-      <p class="embed__fallback">
-        Live feed embed is planned — follow @{igHandle || "us"} on Instagram meanwhile.
-      </p>
+      <div class="embed__frame embed__frame--ig">
+        <blockquote
+          class="instagram-media"
+          data-instgrm-permalink={igPermalink}
+          data-instgrm-version="14"
+          style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:calc(100% - 2px);"
+        >
+          <div style="padding:16px;">
+            <a href={igPermalink} style="background:#FFF; line-height:0; padding:0; text-align:center; text-decoration:none; width:100%;" target="_blank" rel="noopener noreferrer">
+              <div style="display:flex; flex-direction:row; align-items:center;">
+                <div style="background-color:#F4F4F4; border-radius:50%; flex-grow:0; height:40px; margin-right:14px; width:40px;"></div>
+                <div style="display:flex; flex-direction:column; flex-grow:1; justify-content:center;">
+                  <div style="background-color:#F4F4F4; border-radius:4px; flex-grow:0; height:14px; margin-bottom:6px; width:100px;"></div>
+                  <div style="background-color:#F4F4F4; border-radius:4px; flex-grow:0; height:14px; width:60px;"></div>
+                </div>
+              </div>
+              <div style="padding:19% 0;"></div>
+              <div style="color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-weight:550; line-height:18px; text-align:center;">
+                View this profile on Instagram
+              </div>
+            </a>
+            <p style="color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin:8px 0 0; text-align:center;">
+              <a href={igPermalink} style="color:#c9c8cd;" target="_blank" rel="noopener noreferrer">@{igHandle || "profile"}</a>
+              · Instagram photos and videos
+            </p>
+          </div>
+        </blockquote>
+      </div>
     </section>
   {/if}
 
@@ -75,7 +122,9 @@
     <section class="embed" aria-labelledby="embed-fb">
       <h2 id="embed-fb">Facebook</h2>
       <p class="embed__link">
-        <a href={facebook} rel="noopener noreferrer" target="_blank">facebook.com/{handleFromUrl(facebook) || "page"}</a>
+        <a href={facebook} rel="noopener noreferrer" target="_blank"
+          >facebook.com/{handleFromUrl(facebook) || "page"}</a
+        >
       </p>
       <div class="embed__frame embed__frame--fb">
         <iframe
@@ -134,6 +183,9 @@
 
   .embed__frame--ig {
     min-height: 24rem;
+    padding: 0.35rem;
+    display: flex;
+    justify-content: center;
   }
 
   .embed__frame--x,
@@ -147,17 +199,7 @@
     max-width: 100%;
   }
 
-  .embed__fallback {
-    margin: 0;
-    padding: 1rem;
-    color: var(--muted-foreground);
-    font-size: 0.85rem;
-    line-height: 1.4;
-    border: 1px dashed var(--border);
-    border-radius: var(--radius-md);
-  }
-
-  .embed__fallback code {
-    font-size: 0.8em;
+  :global(.instagram-media) {
+    margin: 0 auto !important;
   }
 </style>
