@@ -1,0 +1,86 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import eventTypes from "../../data/event-types.json";
+import catalog from "../../data/catalog.json";
+import features from "../../data/features.json";
+
+export function getStaticPaths() {
+  return eventTypes.types.map((type) => ({ params: { type: type.id } }));
+}
+
+function envOn(key = "") {
+  const value = import.meta.env[key];
+  return Boolean(value && String(value).trim() && value !== "0" && value !== "false");
+}
+
+function isActive(id = "") {
+  const mod = features.modules.find((m) => m.id === id);
+  if (!mod) return false;
+  return (mod.publicEnv ?? []).every((key) => envOn(key));
+}
+
+const type = eventTypes.types.find((t) => t.id === Astro.params.type);
+if (!type || !isActive("event-types")) {
+  return Astro.redirect("/");
+}
+
+const recommended = catalog.packages.filter((p) => type.recommendedPackages.includes(p.id));
+const money = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
+---
+
+<PageLayout title={type.title} description={type.summary} path={`/events/${type.id}`}>
+  <ul class="recs">
+    {
+      recommended.map((pkg) => (
+        <li>
+          <h2>{pkg.name}</h2>
+          <p>
+            {pkg.guests} · from {money.format(pkg.fromPrice)}
+          </p>
+          <a href={`/book?package=${pkg.id}&eventType=${type.id}`}>Check availability</a>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="more"><a href="/tools/drink-calculator">Estimate drinks</a> · <a href="/packages">All packages</a></p>
+</PageLayout>
+
+<style>
+  .recs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  li {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+    background: var(--card);
+  }
+
+  h2 {
+    margin: 0 0 0.25rem;
+    font-size: 1.1rem;
+  }
+
+  p {
+    margin: 0 0 0.55rem;
+    color: var(--muted-foreground);
+    font-size: 0.9rem;
+  }
+
+  a {
+    color: var(--primary);
+  }
+
+  .more {
+    margin-top: 1rem;
+  }
+</style>

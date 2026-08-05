@@ -1,0 +1,29 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import DrinkCalculator from "../../features/drink-calculator/ui/DrinkCalculator.svelte";
+import catalog from "../../data/catalog.json";
+import features from "../../data/features.json";
+
+function envOn(key = "") {
+  const value = import.meta.env[key];
+  return Boolean(value && String(value).trim() && value !== "0" && value !== "false");
+}
+
+function isActive(id = "") {
+  const mod = features.modules.find((m) => m.id === id);
+  if (!mod) return false;
+  return (mod.publicEnv ?? []).every((key) => envOn(key));
+}
+
+if (!isActive("drink-calculator")) {
+  return Astro.redirect("/packages");
+}
+---
+
+<PageLayout
+  title="Drink calculator"
+  description="Estimate volume from guests, hours, and drink style — then jump into a package band."
+  path="/tools/drink-calculator"
+>
+  <DrinkCalculator client:load packages={catalog.packages} />
+</PageLayout>

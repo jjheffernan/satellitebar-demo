@@ -1,0 +1,18 @@
+{
+  "events": [
+    {
+      "id": "harbor-tasting-aug",
+      "title": "Harbor tasting night",
+      "date": "2026-08-22",
+      "place": "Harbor City — invite only",
+      "href": "/book"
+    },
+    {
+      "id": "rivermouth-popup",
+      "title": "Rivermouth popup bar",
+      "date": "2026-09-05",
+      "place": "Rivermouth warehouse row",
+      "href": "/locations/rivermouth"
+    }
+  ]
+}

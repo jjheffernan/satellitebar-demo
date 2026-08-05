@@ -6,16 +6,38 @@
   "url": "https://satellitebar.example",
   "email": "book@satellitebar.example",
   "phone": "(555) 014-2088",
+  "defaultMarket": "harbor-city",
   "serviceArea": "Harbor City metro · within 60 miles",
   "nav": [
+    {
+      "label": "Events",
+      "feature": "event-types",
+      "children": [
+        { "href": "/events/social", "label": "Social" },
+        { "href": "/events/weddings", "label": "Weddings" },
+        { "href": "/events/corporate", "label": "Corporate" },
+        { "href": "/events/brand-activations", "label": "Brand activations" },
+        { "href": "/tools/drink-calculator", "label": "Drink calculator", "feature": "drink-calculator" }
+      ]
+    },
+    {
+      "label": "Locations",
+      "feature": "locations",
+      "children": [
+        { "href": "/locations/harbor-city", "label": "Harbor City" },
+        { "href": "/locations/rivermouth", "label": "Rivermouth" },
+        { "href": "/open", "label": "Open a new location", "feature": "franchise" }
+      ]
+    },
     { "href": "/packages", "label": "Packages" },
     { "href": "/menu", "label": "Cocktails" },
-    { "href": "/book", "label": "Book" },
-    { "href": "/about", "label": "About" }
+    { "href": "/blog", "label": "Blog", "feature": "blog" },
+    { "href": "/about", "label": "About" },
+    { "href": "/contact", "label": "Contact" }
   ],
   "social": {
-    "instagram": "https://instagram.com/",
-    "facebook": "https://facebook.com/",
-    "x": "https://x.com/"
+    "instagram": "https://instagram.com/satellitebarco",
+    "facebook": "https://facebook.com/satellitebarco",
+    "x": "https://x.com/satellitebarco"
   }
 }

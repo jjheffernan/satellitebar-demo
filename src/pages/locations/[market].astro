@@ -1,0 +1,57 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import locations from "../../data/locations.json";
+import features from "../../data/features.json";
+
+export function getStaticPaths() {
+  return locations.markets.map((market) => ({ params: { market: market.id } }));
+}
+
+function envOn(key = "") {
+  const value = import.meta.env[key];
+  return Boolean(value && String(value).trim() && value !== "0" && value !== "false");
+}
+
+function isActive(id = "") {
+  const mod = features.modules.find((m) => m.id === id);
+  if (!mod) return false;
+  return (mod.publicEnv ?? []).every((key) => envOn(key));
+}
+
+const market = locations.markets.find((m) => m.id === Astro.params.market);
+if (!market || !isActive("locations")) {
+  return Astro.redirect("/");
+}
+---
+
+<PageLayout title={market.name} description={market.headline} path={`/locations/${market.id}`}>
+  <p class="eyebrow">{market.eyebrow}</p>
+  <p>{market.serviceArea}</p>
+  <p>
+    <a href={`mailto:${market.email}`}>{market.email}</a> ·
+    <a href={`tel:${market.phone.replace(/\D/g, "")}`}>{market.phone}</a>
+  </p>
+  <p class="cta">
+    <a href={`/book?market=${market.id}`}>Check availability in {market.name}</a>
+  </p>
+</PageLayout>
+
+<style>
+  .eyebrow {
+    margin: 0 0 0.5rem;
+    color: var(--primary);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  p {
+    color: var(--muted-foreground);
+    max-width: 36rem;
+  }
+
+  .cta a {
+    color: var(--primary);
+    font-weight: 600;
+  }
+</style>

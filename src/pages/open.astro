@@ -1,0 +1,86 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import site from "../data/site.json";
+import features from "../data/features.json";
+
+function envOn(key = "") {
+  const value = import.meta.env[key];
+  return Boolean(value && String(value).trim() && value !== "0" && value !== "false");
+}
+
+function isActive(id = "") {
+  const mod = features.modules.find((m) => m.id === id);
+  if (!mod) return false;
+  return (mod.publicEnv ?? []).every((key) => envOn(key));
+}
+
+if (!isActive("franchise")) {
+  return Astro.redirect("/");
+}
+---
+
+<PageLayout
+  title="Open a new location"
+  description="Partner with Satellite Bar Co to open a service market."
+  path="/open"
+>
+  <form class="open-form" method="post" action="/api/franchise">
+    <label>
+      Name
+      <input name="name" required autocomplete="name" />
+    </label>
+    <label>
+      Email
+      <input name="email" type="email" required autocomplete="email" />
+    </label>
+    <label>
+      Target market
+      <input name="market" required placeholder="City / region" />
+    </label>
+    <label>
+      Notes
+      <textarea name="notes" rows="3" placeholder="Experience, timeline, capital…"></textarea>
+    </label>
+    <button type="submit">Send partner inquiry</button>
+  </form>
+  <p class="alt">Or email <a href={`mailto:${site.email}`}>{site.email}</a></p>
+</PageLayout>
+
+<style>
+  .open-form {
+    display: grid;
+    gap: 0.65rem;
+    max-width: 28rem;
+  }
+
+  label {
+    display: grid;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+  }
+
+  input,
+  textarea,
+  button {
+    font: inherit;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--foreground);
+    padding: 0.45rem 0.65rem;
+  }
+
+  button {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .alt {
+    margin-top: 0.85rem;
+    color: var(--muted-foreground);
+    font-size: 0.9rem;
+  }
+</style>

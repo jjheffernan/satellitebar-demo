@@ -2,9 +2,30 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import site from "../data/site.json";
 import catalog from "../data/catalog.json";
+import locations from "../data/locations.json";
+import eventTypes from "../data/event-types.json";
+import features from "../data/features.json";
 
 const selected = Astro.url.searchParams.get("package");
 const selectedPkg = catalog.packages.find((p) => p.id === selected);
+const guestsParam = Astro.url.searchParams.get("guests") ?? "";
+const marketParam = Astro.url.searchParams.get("market") ?? site.defaultMarket;
+const eventTypeParam = Astro.url.searchParams.get("eventType") ?? "";
+
+function envOn(key = "") {
+  const value = import.meta.env[key];
+  return Boolean(value && String(value).trim() && value !== "0" && value !== "false");
+}
+
+function isActive(id = "") {
+  const mod = features.modules.find((m) => m.id === id);
+  if (!mod) return false;
+  return (mod.publicEnv ?? []).every((key) => envOn(key));
+}
+
+const bookingModule = isActive("booking");
+const formAction = bookingModule ? "/api/booking" : `mailto:${site.email}`;
+const formMethod = bookingModule ? "post" : "get";
 ---
 
 <PageLayout
@@ -19,12 +40,12 @@ const selectedPkg = catalog.packages.find((p) => p.id === selected);
   {
     selectedPkg && (
       <p class="selected">
-        Selected package: <strong>{selectedPkg.name}</strong> (from the catalog).
+        Selected package: <strong>{selectedPkg.name}</strong>
       </p>
     )
   }
 
-  <form class="book-form" method="get" action={`mailto:${site.email}`}>
+  <form class="book-form" method={formMethod} action={formAction}>
     <div class="row">
       <label>
         Name
@@ -42,9 +63,34 @@ const selectedPkg = catalog.packages.find((p) => p.id === selected);
       </label>
       <label>
         Guests
-        <input name="guests" type="number" min="10" max="300" required />
+        <input name="guests" type="number" min="10" max="300" required value={guestsParam} />
       </label>
     </div>
+    <label>
+      Market
+      <select name="market" required>
+        {
+          locations.markets.map((market) => (
+            <option value={market.id} selected={market.id === marketParam}>
+              {market.name}
+            </option>
+          ))
+        }
+      </select>
+    </label>
+    <label>
+      Event type
+      <select name="eventType">
+        <option value="">Select…</option>
+        {
+          eventTypes.types.map((type) => (
+            <option value={type.id} selected={type.id === eventTypeParam}>
+              {type.title}
+            </option>
+          ))
+        }
+      </select>
+    </label>
     <label>
       Package
       <select name="package" required>
@@ -62,8 +108,14 @@ const selectedPkg = catalog.packages.find((p) => p.id === selected);
       Notes
       <textarea name="notes" rows="2" placeholder="Venue, vibe, must-have drinks…"></textarea>
     </label>
-    <p class="hint">Opens your mail client for now.</p>
-    <button type="submit">Send booking request</button>
+    <p class="hint">
+      {
+        bookingModule
+          ? "Submits to the booking Function when PUBLIC_FEATURE_BOOKING is on."
+          : "Opens your mail client until the booking module is enabled."
+      }
+    </p>
+    <button type="submit">Check availability</button>
   </form>
 </PageLayout>
 

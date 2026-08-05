@@ -1,0 +1,22 @@
+{
+  "markets": [
+    {
+      "id": "harbor-city",
+      "name": "Harbor City",
+      "eyebrow": "Mobile bar Harbor City",
+      "headline": "An elevated bar experience that rolls to your venue.",
+      "serviceArea": "Harbor City metro · within 60 miles",
+      "email": "harbor@satellitebar.example",
+      "phone": "(555) 014-2088"
+    },
+    {
+      "id": "rivermouth",
+      "name": "Rivermouth",
+      "eyebrow": "Mobile bar Rivermouth",
+      "headline": "Staffed bars for riverside venues and warehouse loft parties.",
+      "serviceArea": "Rivermouth · within 45 miles",
+      "email": "rivermouth@satellitebar.example",
+      "phone": "(555) 014-2099"
+    }
+  ]
+}

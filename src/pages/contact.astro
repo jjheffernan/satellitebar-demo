@@ -1,0 +1,29 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import site from "../data/site.json";
+---
+
+<PageLayout
+  title="Contact"
+  description="Reach Satellite Bar Co for quotes, menus, and service-area questions."
+  path="/contact"
+>
+  <p>
+    <a href={`tel:${site.phone.replace(/\D/g, "")}`}>{site.phone}</a><br />
+    <a href={`mailto:${site.email}`}>{site.email}</a><br />
+    {site.serviceArea}
+  </p>
+  <p><a class="cta" href="/book">Check availability</a></p>
+</PageLayout>
+
+<style>
+  p {
+    color: var(--muted-foreground);
+    line-height: 1.5;
+  }
+
+  .cta {
+    color: var(--primary);
+    font-weight: 600;
+  }
+</style>

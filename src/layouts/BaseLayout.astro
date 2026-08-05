@@ -2,7 +2,9 @@
 import Header from "../components/layout/Header.svelte";
 import Footer from "../components/layout/Footer.astro";
 import SEO from "../components/seo/SEO.astro";
+import FeatureSlot from "../components/FeatureSlot.astro";
 import site from "../data/site.json";
+import features from "../data/features.json";
 import "../styles/global.css";
 
 const {
@@ -12,6 +14,15 @@ const {
   showHeader = true,
   showFooter = true,
 } = Astro.props;
+
+function envOn(key = "") {
+  const value = import.meta.env[key];
+  return Boolean(value && String(value).trim() && value !== "0" && value !== "false");
+}
+
+const activeFeatures = features.modules
+  .filter((mod) => (mod.publicEnv ?? []).every((key) => envOn(key)))
+  .map((mod) => mod.id);
 ---
 
 <!doctype html>
@@ -26,11 +37,23 @@ const {
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    {showHeader && <Header client:load pathname={Astro.url.pathname} links={site.nav} />}
+    {
+      showHeader && (
+        <Header
+          client:load
+          pathname={Astro.url.pathname}
+          links={site.nav}
+          phone={site.phone}
+          activeFeatures={activeFeatures}
+        />
+      )
+    }
     <main id="main">
       <slot />
     </main>
     {showFooter && <Footer />}
+    <FeatureSlot name="global.live-chat" />
+    <FeatureSlot name="global.locale" />
   </body>
 </html>
 

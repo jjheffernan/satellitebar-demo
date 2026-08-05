@@ -4,7 +4,16 @@
  */
 import features from "../data/features.json";
 import site from "../data/site.json";
+import heroMedia from "../data/hero-media.json";
+import calendar from "../data/calendar.json";
+import liveChat from "../data/live-chat.json";
+import i18n from "../data/i18n.json";
 import FooterSocial from "../features/social/ui/FooterSocial.svelte";
+import HeroMedia from "../features/hero-media/ui/HeroMedia.svelte";
+import EventsCalendar from "../features/events-calendar/ui/EventsCalendar.svelte";
+import LiveChat from "../features/live-chat/ui/LiveChat.svelte";
+import LocaleSwitcher from "../features/i18n/ui/LocaleSwitcher.svelte";
+import MailingListSignup from "../features/mailing-list/ui/MailingListSignup.svelte";
 
 const { name } = Astro.props;
 
@@ -26,8 +35,32 @@ const socialNetworks = [
 ]
   .filter((n) => site.social?.[n.key])
   .map((n) => ({ label: n.label, href: site.social[n.key] }));
-
-const showSocial = name === "footer.social" && isActive("social");
 ---
 
-{showSocial && <FooterSocial networks={socialNetworks} />}
+{name === "footer.social" && isActive("social") && <FooterSocial networks={socialNetworks} />}
+{
+  name === "home.hero-media" && isActive("hero-media") && (
+    <HeroMedia client:load slides={heroMedia.slides} intervalMs={heroMedia.intervalMs} />
+  )
+}
+{
+  name === "home.events-calendar" && isActive("events-calendar") && (
+    <EventsCalendar client:visible events={calendar.events} />
+  )
+}
+{
+  name === "global.live-chat" && isActive("live-chat") && (
+    <LiveChat
+      client:idle
+      greeting={liveChat.greeting}
+      agentName={liveChat.agentName}
+      mailtoFallback={liveChat.mailtoFallback}
+    />
+  )
+}
+{
+  name === "global.locale" && isActive("i18n") && (
+    <LocaleSwitcher client:idle locales={i18n.locales} defaultLocale={i18n.defaultLocale} />
+  )
+}
+{name === "footer.mailing-list" && isActive("mailing-list") && <MailingListSignup client:visible />}

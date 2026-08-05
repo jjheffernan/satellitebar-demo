@@ -43,88 +43,88 @@ Reference mobile-bar marketing site (Sip). **Adopt capability, not clone brandin
 ### Phase 1 — Social (`social`)
 
 - [x] Slot `footer.social`
-- [ ] Production profile URLs
+- [x] Production profile URLs
 - [ ] Optional Instagram embed island
 
 ### Phase 2 — Brand chrome & conversion CTAs
 
-- [ ] Header logo mark (not text-only)
-- [ ] Persistent **Call us** (`tel:`) in header
-- [ ] Persistent **Book now** CTA in header (wire to `/book` / availability)
-- [ ] Dedicated **Contact** page (`/contact`)
-- [ ] Hero primary CTA: **Check availability**
+- [x] Header logo mark (not text-only)
+- [x] Persistent **Call us** (`tel:`) in header
+- [x] Persistent **Book now** CTA in header (wire to `/book` / availability)
+- [x] Dedicated **Contact** page (`/contact`)
+- [x] Hero primary CTA: **Check availability**
 
 ### Phase 3 — Hero media (`hero-media`)
 
-- [ ] Full-bleed hero with market eyebrow + headline
-- [ ] Central **auto-rotating image** island (constantly changing slides; pause on reduce-motion / focus)
-- [ ] Slide data in JSON (`src/data/hero-media.json` or similar)
-- [ ] Flag: `PUBLIC_FEATURE_HERO_MEDIA`
+- [x] Full-bleed hero with market eyebrow + headline
+- [x] Central **auto-rotating image** island (constantly changing slides; pause on reduce-motion / focus)
+- [x] Slide data in JSON (`src/data/hero-media.json` or similar)
+- [x] Flag: `PUBLIC_FEATURE_HERO_MEDIA`
 
 ### Phase 4 — Event types (`event-types`)
 
-- [ ] Nav group **Events** with: Social, Weddings, Corporate, Brand activations
-- [ ] One landing surface per type (copy + recommended packages + CTA)
-- [ ] Data-driven from JSON; Astro pages + optional Svelte bits only if interactive
+- [x] Nav group **Events** with: Social, Weddings, Corporate, Brand activations
+- [x] One landing surface per type (copy + recommended packages + CTA)
+- [x] Data-driven from JSON; Astro pages + optional Svelte bits only if interactive
 
 ### Phase 5 — Drink calculator (`drink-calculator`)
 
-- [ ] Utility under Events (or `/tools/drink-calculator`)
-- [ ] Svelte island: guests × hours × drink style → suggested volume / package band
-- [ ] Deep-link into packages / book with prefilled context
-- [ ] Flag: `PUBLIC_FEATURE_DRINK_CALCULATOR`
+- [x] Utility under Events (or `/tools/drink-calculator`)
+- [x] Svelte island: guests × hours × drink style → suggested volume / package band
+- [x] Deep-link into packages / book with prefilled context
+- [x] Flag: `PUBLIC_FEATURE_DRINK_CALCULATOR`
 
 ### Phase 6 — Locations & expansion (`locations`)
 
-- [ ] Locations nav (dropdown of markets / service areas)
-- [ ] Per-market page or section (city hero copy, local contact, local media)
-- [ ] **Open a new location** / partner inquiry flow
-- [ ] Flag: `PUBLIC_FEATURE_LOCATIONS` (± `PUBLIC_FEATURE_FRANCHISE`)
+- [x] Locations nav (dropdown of markets / service areas)
+- [x] Per-market page or section (city hero copy, local contact, local media)
+- [x] **Open a new location** / partner inquiry flow
+- [x] Flag: `PUBLIC_FEATURE_LOCATIONS` (± `PUBLIC_FEATURE_FRANCHISE`)
 
 ### Phase 7 — Blog (`blog`)
 
-- [ ] Lightweight posts (Markdown / Astro content collections — **not** Contentful-required)
-- [ ] Index + post pages; nav link
-- [ ] Flag: `PUBLIC_FEATURE_BLOG` (optional; can ship always-on if owner prefers)
+- [x] Lightweight posts (Markdown / Astro content collections — **not** Contentful-required)
+- [x] Index + post pages; nav link
+- [x] Flag: `PUBLIC_FEATURE_BLOG` (optional; can ship always-on if owner prefers)
 
 ### Phase 8 — Events calendar (optional) (`events-calendar`)
 
-- [ ] Static/list adapter when flagged (public upcoming appearances)
+- [x] Static/list adapter when flagged (public upcoming appearances)
 
 ### Phase 9 — Live chat (`live-chat`)
 
-- [ ] Floating chat launcher + vendor embed (or custom later)
-- [ ] Proactive greeting bubble (copy in JSON)
-- [ ] Flag: `PUBLIC_FEATURE_LIVE_CHAT` + vendor keys as secrets
+- [x] Floating chat launcher + vendor embed (or custom later)
+- [x] Proactive greeting bubble (copy in JSON)
+- [x] Flag: `PUBLIC_FEATURE_LIVE_CHAT` + vendor keys as secrets
 
 ### Phase 10 — i18n (`i18n`)
 
-- [ ] Locale selector UI (e.g. English + future locales)
+- [x] Locale selector UI (e.g. English + future locales)
 - [ ] Translated strings / market copy strategy
-- [ ] Flag: `PUBLIC_FEATURE_I18N`
+- [x] Flag: `PUBLIC_FEATURE_I18N`
 
 ### Phase 11 — Mailing list (`mailing-list`)
 
-- [ ] Signup island + ESP Function
+- [x] Signup island + ESP Function
 
 ### Phase 12 — Accounts (`accounts`)
 
-- [ ] Hosted IdP; guest + admin (Svelte islands for auth UI)
+- [ ] Hosted IdP; guest + admin (Svelte islands for auth UI) — **blocked overnight (high-risk)**
 
 ### Phase 13 — Booking / availability (`booking`)
 
-- [ ] Replace mailto stub; keep form in Astro/Svelte
-- [ ] **Check availability** / **Book now** share one booking module
-- [ ] Date + market + event-type context from calculator / event pages
+- [x] Replace mailto stub; keep form in Astro/Svelte
+- [x] **Check availability** / **Book now** share one booking module
+- [x] Date + market + event-type context from calculator / event pages
 
 ### Phase 14 — Payments (`payments`)
 
-- [ ] Stripe + PayPal (± Venmo)
+- [ ] Stripe + PayPal (± Venmo) — **blocked overnight (high-risk)**
 - [ ] Deposit after availability confirm
 
 ### Phase 15 — Owner hosting guide
 
-- [ ] Expand `docs/hosting/*` for every module above (toggle + secrets checklist)
+- [x] Expand `docs/hosting/*` for every module above (toggle + secrets checklist)
 
 ## Module flag map (planned)
 

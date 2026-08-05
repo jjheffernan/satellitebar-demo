@@ -1,14 +1,19 @@
 ---
 import site from "../../data/site.json";
+import locations from "../../data/locations.json";
+
+const market =
+  locations.markets.find((m) => m.id === site.defaultMarket) ?? locations.markets[0];
 
 const {
   brand = site.name,
-  headline = site.tagline,
+  eyebrow = market?.eyebrow ?? "Mobile bartending",
+  headline = market?.headline ?? site.tagline,
   support = site.description,
-  primaryHref = "/packages",
-  primaryLabel = "View packages",
-  secondaryHref = "/book",
-  secondaryLabel = "Book an event",
+  primaryHref = "/book",
+  primaryLabel = "Check availability",
+  secondaryHref = "/packages",
+  secondaryLabel = "View packages",
 } = Astro.props;
 ---
 
@@ -20,12 +25,14 @@ const {
   </div>
   <div class="hero__content container-site">
     <p class="hero__brand motion-rise">{brand}</p>
+    <p class="hero__eyebrow motion-rise-delay">{eyebrow}</p>
     <h1 class="hero__headline motion-rise-delay">{headline}</h1>
     <p class="hero__support motion-rise-delay">{support}</p>
     <div class="hero__actions motion-rise-delay">
       <a class="hero__cta" href={primaryHref}>{primaryLabel}</a>
       <a class="hero__cta hero__cta--ghost" href={secondaryHref}>{secondaryLabel}</a>
     </div>
+    <slot />
   </div>
 </section>
 
@@ -88,15 +95,23 @@ const {
   }
 
   .hero__content {
-    max-width: 40rem;
+    max-width: 42rem;
   }
 
   .hero__brand {
-    margin: 0 0 0.35rem;
+    margin: 0 0 0.25rem;
     font-family: var(--font-heading);
     font-size: clamp(2.15rem, 9vw, 4.25rem);
     letter-spacing: -0.045em;
     line-height: 0.92;
+  }
+
+  .hero__eyebrow {
+    margin: 0 0 0.35rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
   }
 
   .hero__headline {
@@ -142,8 +157,8 @@ const {
 
   @media (min-width: 800px) {
     .hero {
-      min-height: min(62vh, 36rem);
-      padding-block: 4rem 3rem;
+      min-height: min(52vh, 32rem);
+      padding-block: 3.5rem 2.5rem;
     }
   }
 </style>

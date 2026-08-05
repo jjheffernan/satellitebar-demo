@@ -1,0 +1,23 @@
+{
+  "intervalMs": 4500,
+  "slides": [
+    {
+      "id": "orbit-pour",
+      "title": "Orbit pour",
+      "alt": "Bartender pouring a cocktail at an outdoor reception",
+      "src": "/media/hero-orbit.svg"
+    },
+    {
+      "id": "signal-setup",
+      "title": "Signal setup",
+      "alt": "Mobile bar station ready before guests arrive",
+      "src": "/media/hero-signal.svg"
+    },
+    {
+      "id": "deep-space",
+      "title": "Deep space night",
+      "alt": "Evening event with lit mobile bar",
+      "src": "/media/hero-deep.svg"
+    }
+  ]
+}

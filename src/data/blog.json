@@ -1,0 +1,18 @@
+{
+  "posts": [
+    {
+      "slug": "how-we-size-a-wedding-bar",
+      "title": "How we size a wedding bar",
+      "date": "2026-07-12",
+      "excerpt": "Guest count, ceremony timing, and cocktail mix — the three numbers that set your package band.",
+      "body": "Start with headcount, then hours of open pour, then how adventurous the menu is. Our drink calculator turns those into a package recommendation you can book from."
+    },
+    {
+      "slug": "what-we-bring-vs-what-you-provide",
+      "title": "What we bring vs what you provide",
+      "date": "2026-06-03",
+      "excerpt": "A clear split so planners are not guessing on ice, glassware, or power.",
+      "body": "We bring bartenders, bar toolkits, ice plans, and the cocktail program. Venue provides space, power access, and guest list timing. Package pages list inclusions line by line."
+    }
+  ]
+}

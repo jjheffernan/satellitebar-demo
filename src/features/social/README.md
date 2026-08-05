@@ -1,9 +1,13 @@
-# Social module
+# Social (`social`)
+
+Footer social links.
 
 ## Enable
 
-1. Set `PUBLIC_FEATURE_SOCIAL=1` in Cloudflare / `.env`.
-2. Fill `social` URLs in `src/data/site.json`.
-3. Restart `pnpm dev` / redeploy.
+1. Set production profile URLs in `src/data/site.json` → `social`.
+2. Set `PUBLIC_FEATURE_SOCIAL=1`.
+3. Optional: Instagram embed island (future).
 
-Footer social row: `FeatureSlot.astro` → `FooterSocial.svelte`.
+## Slot
+
+`footer.social` → `FooterSocial.svelte`
