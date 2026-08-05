@@ -1,0 +1,88 @@
+---
+import testimonials from "../../data/testimonials.json";
+---
+
+<section class="quotes" aria-labelledby="quotes-heading">
+  <div class="quotes__head">
+    <h2 id="quotes-heading">What hosts say</h2>
+  </div>
+  <ul>
+    {
+      testimonials.items.map((item) => (
+        <li>
+          <blockquote>
+            <p>“{item.quote}”</p>
+            <footer>
+              <cite>{item.name}</cite>
+              <span>{item.role}</span>
+            </footer>
+          </blockquote>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .quotes {
+    margin-top: 1.35rem;
+  }
+
+  .quotes__head h2 {
+    margin: 0 0 0.55rem;
+    font-size: 1.05rem;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+    display: grid;
+    gap: 0;
+  }
+
+  li {
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 0;
+  }
+
+  blockquote {
+    margin: 0;
+  }
+
+  blockquote p {
+    margin: 0 0 0.4rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+  }
+
+  cite {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--foreground);
+  }
+
+  @media (min-width: 800px) {
+    ul {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      border-top: 0;
+    }
+
+    li {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      background: var(--card);
+    }
+  }
+</style>

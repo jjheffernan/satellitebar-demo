@@ -2,16 +2,12 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/sections/Hero.astro";
 import FeatureSlot from "../components/FeatureSlot.astro";
+import Testimonials from "../components/sections/Testimonials.astro";
 import site from "../data/site.json";
 import catalog from "../data/catalog.json";
 
 const featured = catalog.packages.filter((p) => p.featured).slice(0, 3);
 const sampleDrinks = catalog.cocktails.slice(0, 3);
-const money = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  maximumFractionDigits: 0,
-});
 ---
 
 <BaseLayout title={site.name} description={site.description} path="/">
@@ -22,22 +18,23 @@ const money = new Intl.NumberFormat("en-US", {
   <section class="hub container-site" aria-labelledby="order-heading">
     <div class="hub__head">
       <h2 id="order-heading">Packages</h2>
-      <a href="/packages">All packages</a>
+      <a href="/tools/drink-calculator">Drink calculator</a>
     </div>
     <ul class="hub__packages">
       {
         featured.map((pkg) => (
           <li>
-            <a href={`/book?package=${pkg.id}`}>
+            <a href={`/packages#${pkg.id}`}>
               <span class="name">{pkg.name}</span>
               <span class="meta">
-                {pkg.guests} · from {money.format(pkg.fromPrice)}
+                {pkg.guests} guests · {pkg.duration} · see what’s included
               </span>
             </a>
           </li>
         ))
       }
     </ul>
+    <p class="hub__more"><a href="/packages">Compare packages &amp; pricing</a></p>
 
     <div class="hub__head hub__head--next">
       <h2 id="drinks-heading">Cocktails</h2>
@@ -53,6 +50,8 @@ const money = new Intl.NumberFormat("en-US", {
         ))
       }
     </ul>
+
+    <Testimonials />
 
     <div class="hub__head hub__head--next">
       <h2 id="cal-heading">Upcoming</h2>
@@ -78,16 +77,21 @@ const money = new Intl.NumberFormat("en-US", {
     margin-top: 1.35rem;
   }
 
+  .hub__head a,
+  .hub__more a {
+    color: var(--primary);
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
   .hub__head h2 {
     margin: 0;
     font-size: 1.05rem;
     letter-spacing: -0.02em;
   }
 
-  .hub__head a {
-    color: var(--primary);
-    font-size: 0.85rem;
-    text-decoration: none;
+  .hub__more {
+    margin: 0.65rem 0 0;
   }
 
   .hub__packages,
