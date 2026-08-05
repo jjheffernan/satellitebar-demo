@@ -14,10 +14,12 @@
   let drinks = $derived(Math.round(guests * hours * 1.3 * (styles.find((s) => s.id === style)?.factor ?? 1)));
 
   let suggested = $derived.by(() => {
-    if (!packages.length) return null;
-    if (guests <= 50) return packages.find((p) => p.guests.startsWith("25")) ?? packages[0];
-    if (guests <= 100) return packages.find((p) => p.guests.startsWith("50")) ?? packages[1] ?? packages[0];
-    return packages.find((p) => p.guests.startsWith("100")) ?? packages.at(-1);
+    const sized = packages.filter((p) => p.kind !== "event");
+    const pool = sized.length ? sized : packages;
+    if (!pool.length) return null;
+    if (guests <= 50) return pool.find((p) => (p.guestsMin ?? 25) <= 50) ?? pool[0];
+    if (guests <= 100) return pool.find((p) => (p.guestsMin ?? 0) >= 50 && (p.guestsMax ?? 100) <= 100) ?? pool[1] ?? pool[0];
+    return pool.find((p) => (p.guestsMin ?? 0) >= 100) ?? pool.at(-1);
   });
 </script>
 

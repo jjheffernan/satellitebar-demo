@@ -2,12 +2,18 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import PackageCatalog from "../components/catalog/PackageCatalog.svelte";
 import catalog from "../data/catalog.json";
+import eventTypes from "../data/event-types.json";
 ---
 
 <PageLayout
   title="Packages"
-  description="Guest count, hours, and what’s included. Starting prices available when you’re ready."
+  description="Premade event packages plus a slider quote builder for guests, hours, and menu style."
   path="/packages"
 >
-  <PackageCatalog client:load items={catalog.packages} />
+  <PackageCatalog
+    client:load
+    items={catalog.packages}
+    quote={catalog.quote}
+    eventTypes={eventTypes.types}
+  />
 </PageLayout>

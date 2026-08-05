@@ -4,25 +4,25 @@
       "id": "social",
       "title": "Social",
       "summary": "Birthdays, backyard nights, and celebrations that need a real pour without a venue build.",
-      "recommendedPackages": ["orbit-essentials", "signal-soirée"]
+      "recommendedPackages": ["social-gathering", "orbit-essentials"]
     },
     {
       "id": "weddings",
       "title": "Weddings",
       "summary": "Ceremony-to-reception bars with menu consult and guest-count bands that scale.",
-      "recommendedPackages": ["signal-soirée", "deep-space"]
+      "recommendedPackages": ["wedding-reception", "signal-soirée", "deep-space"]
     },
     {
       "id": "corporate",
       "title": "Corporate",
       "summary": "Mixers, offsites, and client nights with clean branding and paced service.",
-      "recommendedPackages": ["signal-soirée", "deep-space"]
+      "recommendedPackages": ["corporate-mixer", "signal-soirée"]
     },
     {
       "id": "brand-activations",
       "title": "Brand activations",
       "summary": "Pop-up bars and tasting programs built around your product story.",
-      "recommendedPackages": ["deep-space"]
+      "recommendedPackages": ["brand-activation", "deep-space"]
     }
   ]
 }

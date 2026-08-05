@@ -3,65 +3,130 @@
     {
       "id": "orbit-essentials",
       "name": "Orbit Essentials",
+      "kind": "size",
       "guests": "25–50",
+      "guestsMin": 25,
+      "guestsMax": 50,
       "duration": "3 hours",
       "fromPrice": 850,
-      "summary": "One bartender, beer + wine + two house cocktails, disposable serviceware.",
+      "summary": "Beer + wine + two house cocktails, ice & garnishes, disposable serviceware.",
       "includes": ["Setup & breakdown", "Ice & garnishes", "Basic glassware or compostables"],
       "bestFor": "Backyard parties, small birthdays",
-      "featured": true
+      "featured": true,
+      "preset": { "guests": 40, "hours": 3, "menuIndex": 1, "glassIndex": 0, "naIndex": 0 }
     },
     {
       "id": "signal-soirée",
       "name": "Signal Soirée",
+      "kind": "size",
       "guests": "50–100",
+      "guestsMin": 50,
+      "guestsMax": 100,
       "duration": "4 hours",
       "fromPrice": 1600,
-      "summary": "Two bartenders, full cocktail menu (6 drinks), beer & wine, branded napkins.",
+      "summary": "Full cocktail menu (6 drinks), beer & wine, branded napkins, premium mixers.",
       "includes": ["Menu consult", "Premium mixers", "Bar linens"],
-      "bestFor": "Weddings, corporate mixers",
-      "featured": true
+      "bestFor": "Mid-size receptions and mixers",
+      "featured": true,
+      "preset": { "guests": 75, "hours": 4, "menuIndex": 2, "glassIndex": 1, "naIndex": 1 }
     },
     {
       "id": "deep-space",
       "name": "Deep Space",
+      "kind": "size",
       "guests": "100–180",
+      "guestsMin": 100,
+      "guestsMax": 180,
       "duration": "5 hours",
       "fromPrice": 2800,
-      "summary": "Full mobile bar build, three bartenders, custom menu, non-alcoholic program.",
+      "summary": "Full mobile bar build, custom menu, non-alcoholic program, site walkthrough.",
       "includes": ["Site walkthrough", "Custom recipes", "Bar lead on radio"],
-      "bestFor": "Large weddings, festivals",
-      "featured": true
+      "bestFor": "Large celebrations and festivals",
+      "featured": true,
+      "preset": { "guests": 140, "hours": 5, "menuIndex": 3, "glassIndex": 2, "naIndex": 2 }
+    },
+    {
+      "id": "social-gathering",
+      "name": "Social Gathering",
+      "kind": "event",
+      "eventType": "social",
+      "guests": "30–70",
+      "guestsMin": 30,
+      "guestsMax": 70,
+      "duration": "3 hours",
+      "fromPrice": 1100,
+      "summary": "Birthday and backyard energy — house cocktails, beer & wine, easy setup.",
+      "includes": ["House cocktail trio", "Beer & wine", "Ice, garnishes, compostables", "Playlist-friendly pacing"],
+      "bestFor": "Birthdays, backyard nights, casual celebrations",
+      "featured": false,
+      "preset": { "guests": 45, "hours": 3, "menuIndex": 1, "glassIndex": 0, "naIndex": 1 }
+    },
+    {
+      "id": "wedding-reception",
+      "name": "Wedding Reception",
+      "kind": "event",
+      "eventType": "weddings",
+      "guests": "60–140",
+      "guestsMin": 60,
+      "guestsMax": 140,
+      "duration": "5 hours",
+      "fromPrice": 2400,
+      "summary": "Ceremony-to-reception flow with a full cocktail menu and glassware.",
+      "includes": ["Menu consult", "Champagne toast option", "Full cocktail list", "Glassware & linens", "Light NA options"],
+      "bestFor": "Weddings and rehearsal dinners",
+      "featured": false,
+      "preset": { "guests": 100, "hours": 5, "menuIndex": 2, "glassIndex": 2, "naIndex": 1 }
+    },
+    {
+      "id": "corporate-mixer",
+      "name": "Corporate Mixer",
+      "kind": "event",
+      "eventType": "corporate",
+      "guests": "40–120",
+      "guestsMin": 40,
+      "guestsMax": 120,
+      "duration": "3 hours",
+      "fromPrice": 1800,
+      "summary": "Clean branding, paced pours, and a menu that works for client nights and offsites.",
+      "includes": ["Branded napkins option", "Beer, wine & signature drinks", "Paced service windows", "Mixed serviceware"],
+      "bestFor": "Offsites, client nights, team mixers",
+      "featured": false,
+      "preset": { "guests": 70, "hours": 3, "menuIndex": 2, "glassIndex": 1, "naIndex": 1 }
+    },
+    {
+      "id": "brand-activation",
+      "name": "Brand Activation",
+      "kind": "event",
+      "eventType": "brand-activations",
+      "guests": "50–160",
+      "guestsMin": 50,
+      "guestsMax": 160,
+      "duration": "4 hours",
+      "fromPrice": 2600,
+      "summary": "Pop-up tasting bar built around your product story and custom recipes.",
+      "includes": ["Custom recipe development", "Branded garnish & napkin program", "Tasting flight format", "Full NA + spirit options"],
+      "bestFor": "Pop-ups, launches, tasting programs",
+      "featured": false,
+      "preset": { "guests": 90, "hours": 4, "menuIndex": 3, "glassIndex": 2, "naIndex": 2 }
     }
   ],
-  "cocktails": [
-    {
-      "id": "low-orbit-negroni",
-      "name": "Low Orbit Negroni",
-      "style": "stirred",
-      "priceNote": "Included in Signal+",
-      "description": "Campari, sweet vermouth, gin, orange oil."
-    },
-    {
-      "id": "signal-sour",
-      "name": "Signal Sour",
-      "style": "shaken",
-      "priceNote": "Included in Signal+",
-      "description": "Bourbon, lemon, demerara, optional egg white."
-    },
-    {
-      "id": "reentry-spritz",
-      "name": "Reentry Spritz",
-      "style": "built",
-      "priceNote": "Add-on",
-      "description": "Prosecco, bitter aperitivo, soda, citrus."
-    },
-    {
-      "id": "dry-dock",
-      "name": "Dry Dock (NA)",
-      "style": "shaken",
-      "priceNote": "NA program",
-      "description": "Seedlip, citrus, tonic, herb garnish."
-    }
-  ]
+  "quote": {
+    "setupFee": 275,
+    "menuTiers": [
+      { "id": "beer-wine", "label": "Beer & wine", "perGuestHour": 7 },
+      { "id": "house", "label": "House cocktails", "perGuestHour": 11 },
+      { "id": "full", "label": "Full cocktail menu", "perGuestHour": 15 },
+      { "id": "custom", "label": "Custom program", "perGuestHour": 19 }
+    ],
+    "glassware": [
+      { "id": "compostable", "label": "Compostables", "perGuest": 0 },
+      { "id": "mixed", "label": "Mixed serviceware", "perGuest": 2 },
+      { "id": "glass", "label": "Glassware", "perGuest": 4 }
+    ],
+    "naProgram": [
+      { "id": "none", "label": "No NA add-on", "perGuest": 0 },
+      { "id": "light", "label": "Light NA", "perGuest": 3 },
+      { "id": "full", "label": "Full NA bar", "perGuest": 6 }
+    ]
+  }
 }
