@@ -1,0 +1,52 @@
+{
+  "images": [
+    {
+      "id": "orbit-pour",
+      "src": "/media/events/orbit-pour.svg",
+      "alt": "Bartender pouring a cocktail at an outdoor reception",
+      "caption": "Orbit pour"
+    },
+    {
+      "id": "signal-setup",
+      "src": "/media/events/signal-setup.svg",
+      "alt": "Mobile bar station ready before guests arrive",
+      "caption": "Signal setup"
+    },
+    {
+      "id": "deep-space",
+      "src": "/media/events/deep-space.svg",
+      "alt": "Evening event with lit mobile bar",
+      "caption": "Deep space"
+    },
+    {
+      "id": "backyard-toast",
+      "src": "/media/events/backyard-toast.svg",
+      "alt": "Guests toasting at a backyard celebration",
+      "caption": "Backyard toast"
+    },
+    {
+      "id": "aisle-glow",
+      "src": "/media/events/aisle-glow.svg",
+      "alt": "Wedding reception bar under warm lights",
+      "caption": "Aisle glow"
+    },
+    {
+      "id": "mixer-line",
+      "src": "/media/events/mixer-line.svg",
+      "alt": "Corporate mixer with paced bar service",
+      "caption": "Mixer line"
+    },
+    {
+      "id": "activation-pop",
+      "src": "/media/events/activation-pop.svg",
+      "alt": "Brand activation pop-up bar",
+      "caption": "Activation pop"
+    },
+    {
+      "id": "last-call",
+      "src": "/media/events/last-call.svg",
+      "alt": "Late-night pour at a private event",
+      "caption": "Last call"
+    }
+  ]
+}

@@ -1,73 +1,226 @@
 ---
-import PageLayout from "../../layouts/PageLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import eventTypes from "../../data/event-types.json";
+import eventsMedia from "../../data/events-media.json";
 
 const description =
-  "Mobile bartending for socials, weddings, corporate mixers, and brand activations across Northern Delaware.";
+  "A look at the nights we pour — socials, weddings, corporate mixers, and brand activations.";
+
+const byId = Object.fromEntries(eventsMedia.images.map((img) => [img.id, img]));
+
+const types = eventTypes.types.map((type) => ({
+  ...type,
+  cover: byId[type.images[0]],
+}));
 ---
 
-<PageLayout title="Events" description={description} path="/events">
-  <ul class="types">
-    {
-      eventTypes.types.map((type) => (
-        <li>
-          <a href={`/events/${type.id}`}>
-            <span>{type.title}</span>
-            <span>{type.summary}</span>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+<BaseLayout title="Events" description={description} path="/events">
+  <section class="showcase" aria-label="Event photography">
+    <div class="showcase__grid">
+      {
+        eventsMedia.images.map((img, i) => (
+          <figure class:list={["shot", i === 0 && "shot--lead"]}>
+            <img
+              src={img.src}
+              alt={img.alt}
+              width="1200"
+              height="675"
+              loading={i < 2 ? "eager" : "lazy"}
+            />
+            <figcaption>{img.caption}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
 
-  <p class="cta">
-    Ready to pour? <a href="/book">Check availability</a>
-    {" · "}
-    <a href="/packages">Browse packages</a>
-  </p>
-</PageLayout>
+  <section class="types container-site" aria-labelledby="types-heading">
+    <h1 id="types-heading">Events</h1>
+    <p class="lede">{description}</p>
+
+    <ul class="types__list">
+      {
+        types.map((type) => (
+          <li>
+            <a href={`/events/${type.id}`}>
+              {type.cover && (
+                <img
+                  src={type.cover.src}
+                  alt=""
+                  width="800"
+                  height="450"
+                  loading="lazy"
+                />
+              )}
+              <span class="types__copy">
+                <span class="types__title">{type.title}</span>
+                <span class="types__summary">{type.summary}</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
 
 <style>
+  .showcase {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .showcase__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.15rem;
+  }
+
+  @media (min-width: 720px) {
+    .showcase__grid {
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: minmax(7rem, 18vw);
+    }
+
+    .shot--lead {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+  }
+
+  .shot {
+    position: relative;
+    margin: 0;
+    overflow: clip;
+    min-height: 7.5rem;
+    background: var(--muted);
+  }
+
+  .shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+  }
+
+  @media (min-width: 720px) {
+    .shot img {
+      aspect-ratio: auto;
+      position: absolute;
+      inset: 0;
+    }
+  }
+
+  .shot figcaption {
+    position: absolute;
+    left: 0.55rem;
+    bottom: 0.45rem;
+    margin: 0;
+    padding: 0.15rem 0.4rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    color: var(--foreground);
+    background: color-mix(in oklch, var(--background) 72%, transparent);
+  }
+
   .types {
+    padding-block: var(--space-section);
+  }
+
+  .types h1 {
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.7rem, 5vw, 2.75rem);
+  }
+
+  .lede {
+    margin: 0 0 1.35rem;
+    max-width: 36rem;
+    color: var(--muted-foreground);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .types__list {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 0.65rem;
+    gap: 0.85rem;
   }
 
-  .types a {
+  @media (min-width: 720px) {
+    .types__list {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .types__list a {
+    position: relative;
     display: grid;
-    gap: 0.2rem;
+    place-items: end start;
+    min-height: 11rem;
+    overflow: clip;
     text-decoration: none;
-    padding: 0.85rem 0;
-    border-bottom: 1px solid var(--border);
     color: inherit;
+    border: 1px solid var(--border);
   }
 
-  .types a span:first-child {
+  .types__list img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.78;
+    transition: transform 0.45s ease, opacity 0.35s ease;
+  }
+
+  .types__list a:hover img {
+    opacity: 0.92;
+    transform: scale(1.03);
+  }
+
+  .types__list a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      color-mix(in oklch, var(--background) 90%, transparent) 0%,
+      color-mix(in oklch, var(--background) 25%, transparent) 55%,
+      transparent 100%
+    );
+  }
+
+  .types__copy {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.95rem 1rem;
+    max-width: 28rem;
+  }
+
+  .types__title {
     font-family: var(--font-heading);
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 700;
   }
 
-  .types a span:last-child {
+  .types__summary {
     color: var(--muted-foreground);
-    font-size: 0.9rem;
-    line-height: 1.45;
+    font-size: 0.88rem;
+    line-height: 1.4;
   }
 
-  .types a:hover span:first-child {
-    color: var(--primary);
-  }
+  @media (prefers-reduced-motion: reduce) {
+    .types__list img {
+      transition: none;
+    }
 
-  .cta {
-    margin: 1.5rem 0 0;
-    color: var(--muted-foreground);
-  }
-
-  .cta a {
-    color: var(--primary);
-    font-weight: 600;
+    .types__list a:hover img {
+      transform: none;
+    }
   }
 </style>
