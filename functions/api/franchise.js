@@ -1,14 +1,4 @@
-function envOn(env, key) {
-  const value = env?.[key];
-  return Boolean(value && String(value).trim() && value !== "0" && value !== "false");
-}
-
 export async function onRequestPost(context) {
-  const env = context.env ?? {};
-  if (!envOn(env, "PUBLIC_FEATURE_FRANCHISE")) {
-    return new Response("Franchise module off", { status: 404 });
-  }
-
   const form = await context.request.formData();
   const name = String(form.get("name") || "").trim();
   const email = String(form.get("email") || "").trim();

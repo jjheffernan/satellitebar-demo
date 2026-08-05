@@ -2,34 +2,17 @@
 import PageLayout from "../../layouts/PageLayout.astro";
 import eventTypes from "../../data/event-types.json";
 import catalog from "../../data/catalog.json";
-import features from "../../data/features.json";
 
 export function getStaticPaths() {
   return eventTypes.types.map((type) => ({ params: { type: type.id } }));
 }
 
-function envOn(key = "") {
-  const value = import.meta.env[key];
-  return Boolean(value && String(value).trim() && value !== "0" && value !== "false");
-}
-
-function isActive(id = "") {
-  const mod = features.modules.find((m) => m.id === id);
-  if (!mod) return false;
-  return (mod.publicEnv ?? []).every((key) => envOn(key));
-}
-
 const type = eventTypes.types.find((t) => t.id === Astro.params.type);
-if (!type || !isActive("event-types")) {
+if (!type) {
   return Astro.redirect("/");
 }
 
 const recommended = catalog.packages.filter((p) => type.recommendedPackages.includes(p.id));
-const money = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  maximumFractionDigits: 0,
-});
 ---
 
 <PageLayout title={type.title} description={type.summary} path={`/events/${type.id}`}>
@@ -39,8 +22,10 @@ const money = new Intl.NumberFormat("en-US", {
         <li>
           <h2>{pkg.name}</h2>
           <p>
-            {pkg.guests} · from {money.format(pkg.fromPrice)}
+            {pkg.guests} guests · {pkg.duration} · {pkg.bestFor}
           </p>
+          <a href={`/packages#${pkg.id}`}>See inclusions &amp; pricing</a>
+          {" · "}
           <a href={`/book?package=${pkg.id}&eventType=${type.id}`}>Check availability</a>
         </li>
       ))

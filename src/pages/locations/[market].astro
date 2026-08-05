@@ -1,25 +1,13 @@
 ---
 import PageLayout from "../../layouts/PageLayout.astro";
 import locations from "../../data/locations.json";
-import features from "../../data/features.json";
 
 export function getStaticPaths() {
   return locations.markets.map((market) => ({ params: { market: market.id } }));
 }
 
-function envOn(key = "") {
-  const value = import.meta.env[key];
-  return Boolean(value && String(value).trim() && value !== "0" && value !== "false");
-}
-
-function isActive(id = "") {
-  const mod = features.modules.find((m) => m.id === id);
-  if (!mod) return false;
-  return (mod.publicEnv ?? []).every((key) => envOn(key));
-}
-
 const market = locations.markets.find((m) => m.id === Astro.params.market);
-if (!market || !isActive("locations")) {
+if (!market) {
   return Astro.redirect("/");
 }
 ---
