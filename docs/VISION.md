@@ -35,7 +35,7 @@ JSON/CSS/Markdown for data and styles is fine. `astro.config.mjs` / `svelte.conf
 
 ## Goals
 
-1. Order clarity — packages + cocktails as primary content (`src/data/*.json`).
+1. Order clarity — packages + sample menus as primary content (`src/data/*.json`).
 2. Conversion — package / calculator / event type → check availability → book → (later) deposit.
 3. Category parity — Sip-class marketing surfaces (event types, markets, media, chat, i18n) as **optional modules**.
 4. Owner independence — hosting checklists without an engineer.
@@ -48,6 +48,8 @@ JSON/CSS/Markdown for data and styles is fine. `astro.config.mjs` / `svelte.conf
 - DIY IdP / payment processor / ESP / chat vendor — prefer hosted providers behind flags
 - Native apps
 - Pixel-perfect Sip visual clone (brand + compact Satellite UX stay ours)
+- Shipping **accounts** or **payments** overnight — both are parked with an adoption plan in [PLAN.md](./PLAN.md)
+- Turning on **i18n** before real translated copy exists
 
 ---
 
@@ -57,34 +59,39 @@ JSON/CSS/Markdown for data and styles is fine. `astro.config.mjs` / `svelte.conf
 | --- | --- |
 | Event host | Compare packages, see drinks, check availability, request a date |
 | Planner | Event-type pages, inclusions, service area / market, contact, calculator |
-| Franchise / partner prospect | Open-a-location inquiry |
-| Admin (later) | Booking queue, payouts |
+| Franchise / partner prospect | Open-a-location / out-of-orbit travel inquiry |
+| Admin (later) | Booking queue, payouts — after accounts/payments adoption |
 | Owner | Deploy + toggle modules; multi-market copy |
 
-## Surfaces (current + planned)
+## Surfaces (current)
 
 | Path / surface | Role | Status |
 | --- | --- | --- |
-| `/` | Brand + ordering snapshot + (planned) rotating hero media | Partial |
-| `/packages` | Catalog (Svelte filters) | Done |
-| `/menu` | Cocktails | Done |
-| `/book` | Inquiry / availability | Stub |
-| `/about` | Who we are | Done |
-| `/contact` | Contact | Done |
-| `/events/{type}` | Social, weddings, corporate, brand activations | Done |
-| `/tools/drink-calculator` | Drink / volume planner | Done |
-| `/locations` (+ `/locations/{market}`) | Markets / service areas | Done |
-| `/open` | Open a new location | Done |
-| Home testimonials | Host quotes | Done |
-| Header | Logo, nav mega-menus, Call us, Book now | Done |
-| Chat launcher | Live chat module | Flagged |
-| Locale control | Language selector | Flagged |
+| `/` | Brand hero, rotating media, ordering snapshot, testimonials, events teaser | Done |
+| `/packages` | Catalog + quote calculator; branded & event packages (Svelte) | Done |
+| `/menu` | Sample menu tiers (continuous slider) | Done |
+| `/book` | Availability / inquiry (map, address, context from calculator/events) | Done |
+| `/about` | Story + 3-pane social embeds (X / IG / FB) | Done |
+| `/contact` | Contact details + social profile badges (no embeds) | Done |
+| `/events` | Full photo pool showcase + event-type landings (not conversion-led) | Done |
+| `/events/{type}` | Full-bleed landing from shared pool subset + fitting packages | Done |
+| `/tools/drink-calculator` | Guests × hours × style → volume / package band | Done |
+| `/locations` | Markets hub + map | Done |
+| `/locations/{market}` | Per-market landing | Done |
+| `/open` | Open a location / out-of-orbit travel inquiry | Done |
+| Header | Logo, nav (Events / Locations / Menu), Call us, Book now | Done |
+| Footer | Contact utilities, share links, social | Done |
+| Home testimonials | Host quotes from JSON | Done |
+| Chat launcher | Live chat module | Flagged (`PUBLIC_FEATURE_LIVE_CHAT`) |
+| Locale control | Language selector | **Parked** — leave `PUBLIC_FEATURE_I18N` off |
+| Guest / admin accounts | Auth + queue | **Parked** — see PLAN adoption |
+| Payments / deposit | Stripe (± PayPal) after confirm | **Parked** — see PLAN adoption |
 
 ## Feature modules
 
-Hot-plug contract: UI in Astro slots + Svelte islands; flags via `PUBLIC_FEATURE_*`. Full phase list and flag map: [PLAN.md](./PLAN.md).
+Hot-plug contract: UI in Astro slots + Svelte islands; flags via `PUBLIC_FEATURE_*`. Full phase list, Pane social decision, and accounts/payments adoption plan: [PLAN.md](./PLAN.md).
 
-Core planned set: social, hero-media (rotating images), event-types, drink-calculator, locations, franchise, testimonials (not blog), events-calendar, live-chat, i18n, mailing-list, accounts, booking, payments.
+Core set: social (Pane IG feed), hero-media, event-types, drink-calculator, locations, franchise, testimonials (not blog), events-calendar, live-chat, i18n (parked), mailing-list, accounts (parked), booking, payments (parked).
 
 Customer content modules are **always on**. Ops widgets (chat, i18n, mail, booking Function, accounts, payments) stay behind `PUBLIC_FEATURE_*`.
 
@@ -93,7 +100,8 @@ Customer content modules are **always on**. Ops widgets (chat, i18n, mail, booki
 | Signal | Target |
 | --- | --- |
 | Host understands offer | Packages + event-type pages answer “what do I get?” |
-| Media proves the vibe | Rotating hero media loads; reduce-motion respected |
+| Media proves the vibe | Rotating hero media loads; reduce-motion respected; IG feed (Pane) when configured |
 | Calculator helps decide | Output deep-links into package/book with context |
 | Module off | No dead CTAs / empty mega-nav items |
 | Owner | Enables social / media / chat / mail from checklist alone |
+| Later: deposit | Confirmed booking → pay link → paid status without DIY card handling |
