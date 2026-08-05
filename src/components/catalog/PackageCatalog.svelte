@@ -85,19 +85,19 @@
       <label class="slider">
         <span class="slider__head">
           <span>Guests</span>
-          <strong>{guestCount}</strong>
+          <strong class="quote-num">{guestCount}</strong>
         </span>
         <input type="range" min="20" max="180" step="5" bind:value={guests} />
-        <span class="slider__scale"><span>20</span><span>180</span></span>
+        <span class="slider__scale quote-num"><span>20</span><span>180</span></span>
       </label>
 
       <label class="slider">
         <span class="slider__head">
           <span>Service hours</span>
-          <strong>{hourCount} hr</strong>
+          <strong class="quote-num">{hourCount} hr</strong>
         </span>
         <input type="range" min="2" max="6" step="1" bind:value={hours} />
-        <span class="slider__scale"><span>2</span><span>6</span></span>
+        <span class="slider__scale quote-num"><span>2</span><span>6</span></span>
       </label>
 
       <label class="slider">
@@ -157,12 +157,12 @@
 
     <aside class="quote__result" aria-live="polite">
       <p class="quote__eyebrow">Estimated quote</p>
-      <p class="quote__total">{formatUsd(estimated)}</p>
+      <p class="quote__total quote-num">{formatUsd(estimated)}</p>
       <p class="quote__band">
         Suggested package: <strong>{suggested?.name ?? "Custom"}</strong>
         {#if suggested}
           <span>
-            {suggested.guests} guests · {suggested.duration}
+            <span class="quote-num">{suggested.guests}</span> guests · {suggested.duration}
             {#if suggested.eventType}
               · {eventLabel(suggested.eventType)}
             {/if}
@@ -170,21 +170,24 @@
         {/if}
       </p>
       <ul class="quote__breakdown">
-        <li>Setup <span>{formatUsd(setupFee)}</span></li>
+        <li>Setup <span class="quote-num">{formatUsd(setupFee)}</span></li>
         <li>
-          {menu?.label ?? "Menu"} · {guestCount} × {hourCount} hr
-          <span>{formatUsd(guestCount * hourCount * (menu?.perGuestHour ?? 0))}</span>
+          {menu?.label ?? "Menu"} · <span class="quote-num">{guestCount}</span> ×
+          <span class="quote-num">{hourCount}</span> hr
+          <span class="quote-num"
+            >{formatUsd(guestCount * hourCount * (menu?.perGuestHour ?? 0))}</span
+          >
         </li>
         {#if (glass?.perGuest ?? 0) > 0}
           <li>
             {glass.label}
-            <span>{formatUsd(guestCount * glass.perGuest)}</span>
+            <span class="quote-num">{formatUsd(guestCount * glass.perGuest)}</span>
           </li>
         {/if}
         {#if (na?.perGuest ?? 0) > 0}
           <li>
             {na.label}
-            <span>{formatUsd(guestCount * na.perGuest)}</span>
+            <span class="quote-num">{formatUsd(guestCount * na.perGuest)}</span>
           </li>
         {/if}
       </ul>
@@ -429,10 +432,21 @@
     font-size: 0.9rem;
   }
 
+  .quote-num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+    letter-spacing: 0;
+  }
+
   .slider__head strong {
     color: var(--primary);
     font-weight: 700;
     text-align: right;
+  }
+
+  .slider__head strong.quote-num {
+    font-size: 1.02rem;
   }
 
   .slider input[type="range"] {
@@ -465,11 +479,14 @@
 
   .quote__total {
     margin: 0.25rem 0 0.45rem;
-    font-family: var(--font-heading);
     font-size: clamp(1.8rem, 4vw, 2.4rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
+    font-weight: 700;
     color: var(--primary);
+  }
+
+  .quote__total.quote-num {
+    font-size: clamp(1.85rem, 4.2vw, 2.5rem);
+    font-weight: 700;
   }
 
   .quote__band {
