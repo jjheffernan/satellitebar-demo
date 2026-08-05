@@ -81,15 +81,14 @@ Reference mobile-bar marketing site (Sip). **Adopt capability, not clone brandin
 - [x] **Open a new location** / partner inquiry flow
 - [x] Flag: `PUBLIC_FEATURE_LOCATIONS` (± `PUBLIC_FEATURE_FRANCHISE`)
 
-### Phase 7 — Blog (`blog`)
+### Phase 7 — Testimonials (not blog)
 
-- [x] Lightweight posts (Markdown / Astro content collections — **not** Contentful-required)
-- [x] Index + post pages; nav link
-- [x] Flag: `PUBLIC_FEATURE_BLOG` (optional; can ship always-on if owner prefers)
+- [x] Home testimonials from `src/data/testimonials.json`
+- [x] **No blog** — dropped; social proof via quotes instead
 
 ### Phase 8 — Events calendar (optional) (`events-calendar`)
 
-- [x] Static/list adapter when flagged (public upcoming appearances)
+- [x] Static/list adapter (always on with other content modules)
 
 ### Phase 9 — Live chat (`live-chat`)
 
@@ -130,19 +129,18 @@ Reference mobile-bar marketing site (Sip). **Adopt capability, not clone brandin
 
 | Module id | Env gate (planned) | Notes |
 | --- | --- | --- |
-| `social` | `PUBLIC_FEATURE_SOCIAL` | Exists |
-| `hero-media` | `PUBLIC_FEATURE_HERO_MEDIA` | Rotating central images |
-| `event-types` | `PUBLIC_FEATURE_EVENT_TYPES` | Social / weddings / corporate / activations |
-| `drink-calculator` | `PUBLIC_FEATURE_DRINK_CALCULATOR` | Planning utility |
-| `locations` | `PUBLIC_FEATURE_LOCATIONS` | Markets dropdown + pages |
-| `franchise` | `PUBLIC_FEATURE_FRANCHISE` | Open-a-location inquiry |
-| `blog` | `PUBLIC_FEATURE_BLOG` | Optional |
-| `events-calendar` | `PUBLIC_FEATURE_EVENTS_CALENDAR` | Exists in features.json |
+| `social` | _(always on)_ | Footer social |
+| `hero-media` | _(always on)_ | Rotating central images |
+| `event-types` | _(always on)_ | Social / weddings / corporate / activations |
+| `drink-calculator` | _(always on)_ | Planning utility |
+| `locations` | _(always on)_ | Markets dropdown + pages |
+| `franchise` | _(always on)_ | Open-a-location inquiry |
+| `events-calendar` | _(always on)_ | Upcoming list |
 | `live-chat` | `PUBLIC_FEATURE_LIVE_CHAT` | Vendor embed |
 | `i18n` | `PUBLIC_FEATURE_I18N` | Locale switcher |
 | `mailing-list` | `PUBLIC_FEATURE_MAILING_LIST` | Exists in features.json |
 | `accounts` | `PUBLIC_FEATURE_ACCOUNTS` | Exists in features.json |
-| `booking` | `PUBLIC_FEATURE_BOOKING` | Exists in features.json |
+| `booking` | `PUBLIC_FEATURE_BOOKING` | Form posts to Function when on |
 | `payments` | `PUBLIC_FEATURE_PAYMENTS` | Exists in features.json |
 
 ## Decision log
@@ -156,6 +154,7 @@ Reference mobile-bar marketing site (Sip). **Adopt capability, not clone brandin
 | Hosting | Cloudflare Pages |
 | Mistake corrected | SvelteKit-only migration reverted — Astro stays |
 | Competitive ref | Sip feature set adopted into plan; Satellite brand + compact UX kept |
-| Blog | Allowed as lightweight Astro content — **not** Contentful-required |
+| Blog | **Dropped** — use testimonials instead |
 | Hero media | Auto-rotating images are a first-class module, not decorative fluff |
 | Locations | Service markets / cities — not brick-and-mortar bar hours as the product |
+| Content modules | Always on (empty `publicEnv`); ops widgets stay flagged |

@@ -70,21 +70,23 @@ JSON/CSS/Markdown for data and styles is fine. `astro.config.mjs` / `svelte.conf
 | `/menu` | Cocktails | Done |
 | `/book` | Inquiry / availability | Stub |
 | `/about` | Who we are | Done |
-| `/contact` | Contact | Planned |
-| `/events/{type}` | Social, weddings, corporate, brand activations | Planned |
-| `/tools/drink-calculator` | Drink / volume planner | Planned |
-| `/locations` (+ `/locations/{market}`) | Markets / service areas | Planned |
-| `/open` or franchise inquiry | Open a new location | Planned |
-| `/blog` (+ posts) | Lightweight content | Planned |
-| Header | Logo, nav mega-menus, Call us, Book now | Partial |
-| Chat launcher | Live chat module | Planned |
-| Locale control | Language selector | Planned |
+| `/contact` | Contact | Done |
+| `/events/{type}` | Social, weddings, corporate, brand activations | Done |
+| `/tools/drink-calculator` | Drink / volume planner | Done |
+| `/locations` (+ `/locations/{market}`) | Markets / service areas | Done |
+| `/open` | Open a new location | Done |
+| Home testimonials | Host quotes | Done |
+| Header | Logo, nav mega-menus, Call us, Book now | Done |
+| Chat launcher | Live chat module | Flagged |
+| Locale control | Language selector | Flagged |
 
 ## Feature modules
 
 Hot-plug contract: UI in Astro slots + Svelte islands; flags via `PUBLIC_FEATURE_*`. Full phase list and flag map: [PLAN.md](./PLAN.md).
 
-Core planned set: social, hero-media (rotating images), event-types, drink-calculator, locations, franchise, blog, events-calendar, live-chat, i18n, mailing-list, accounts, booking, payments.
+Core planned set: social, hero-media (rotating images), event-types, drink-calculator, locations, franchise, testimonials (not blog), events-calendar, live-chat, i18n, mailing-list, accounts, booking, payments.
+
+Customer content modules are **always on**. Ops widgets (chat, i18n, mail, booking Function, accounts, payments) stay behind `PUBLIC_FEATURE_*`.
 
 ## Success metrics
 
