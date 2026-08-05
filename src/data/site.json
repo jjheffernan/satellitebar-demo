@@ -11,6 +11,7 @@
   "nav": [
     {
       "label": "Events",
+      "href": "/events",
       "children": [
         { "href": "/events/social", "label": "Social" },
         { "href": "/events/weddings", "label": "Weddings" },
@@ -27,7 +28,7 @@
       ]
     },
     { "href": "/packages", "label": "Packages" },
-    { "href": "/menu", "label": "Sample menu" },
+    { "href": "/menu", "label": "Menu" },
     { "href": "/tools/drink-calculator", "label": "Calculator" },
     { "href": "/about", "label": "About" },
     { "href": "/contact", "label": "Contact" }
