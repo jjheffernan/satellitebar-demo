@@ -9,6 +9,6 @@
     "skipLibCheck": true,
     "verbatimModuleSyntax": false
   },
-  "include": [".astro/types.d.ts", "src/**/*"],
+  "include": [".astro/types.d.ts", "src/**/*", "src/env.d.ts"],
   "exclude": ["dist", "functions", "node_modules"]
 }
