@@ -44,7 +44,29 @@ Reference mobile-bar marketing site (Sip). **Adopt capability, not clone brandin
 
 - [x] Slot `footer.social`
 - [x] Production profile URLs
-- [ ] Optional Instagram embed island
+- [ ] Instagram business feed on About / Contact (pick option below; **Behold removed**)
+
+#### Instagram feed options (decide before implement)
+
+Need: showcase [@satellitebarco](https://www.instagram.com/satellitebarco/) on the site. Account must be **Professional** (Business/Creator) — Meta killed Basic Display (personal) Dec 2024.
+
+| Option | How it works | Pros | Cons | Fit for us |
+| --- | --- | --- | --- | --- |
+| **A. First-party Graph API + Pages Function** | Meta app + long-lived token; Cloudflare Function fetches `/me/media`, caches in KV/R2 or edge cache; Svelte island renders grid | No third-party SaaS dashboard; full UI control; Astro+Svelte only | Meta app review, token refresh, more eng time | **Preferred** if we own ops |
+| **B. Pane** ([pane.so](https://pane.so/)) | Tiny `<pane-widget>` + script; CDN-cached posts | Fast setup, ~5KB, domain allowlist | Still an external vendor (lighter than Behold) | Good if we want embed ASAP |
+| **C. EmbedSocial / Tagembed / Taggbox** | Dashboard → HTML/JS embed | Polished layouts, free tiers exist | SaaS account + branding on free plans; heavier scripts | OK for marketing, same class of pain as Behold |
+| **D. SnapWidget / LightWidget-class** | Classic iframe/script feed widgets | Familiar, cheap | Aging UX; ToS/API fragility | Avoid unless nothing else |
+| **E. Manual curated JSON** | Owner drops latest post URLs/images into `src/data/instagram.json`; Astro grid | Zero runtime API; matches our data-in-JSON pattern | Not live; needs occasional hand update | Fine interim / brand-control |
+| **F. Profile CTA only** | Link + SocialLinks (current state) | Already shipped | No on-site feed | Status quo until A/B/E |
+
+**Recommendation:** Prefer **A** (Graph API + cached Function) or **E** (curated JSON) to stay off external “connect your IG in our app” products. Use **B (Pane)** only if we need a live feed this week with minimal build. Skip Behold-class dashboards unless product owner insists.
+
+**Acceptance (when picked):**
+
+- [ ] Feed on `/about` and/or `/contact` Instagram section
+- [ ] Graceful empty/error state + profile link fallback
+- [ ] No Behold / no `PUBLIC_BEHOLD_*`
+- [ ] Document secrets + refresh in `docs/hosting/`
 
 ### Phase 2 — Brand chrome & conversion CTAs
 
@@ -158,3 +180,4 @@ Reference mobile-bar marketing site (Sip). **Adopt capability, not clone brandin
 | Hero media | Auto-rotating images are a first-class module, not decorative fluff |
 | Locations | Service markets / cities — not brick-and-mortar bar hours as the product |
 | Content modules | Always on (empty `publicEnv`); ops widgets stay flagged |
+| Instagram feed | **Behold removed** — prefer Graph API + cache, curated JSON, or lightweight Pane; avoid SaaS dashboards that require a separate app login |
