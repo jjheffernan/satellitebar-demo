@@ -1,5 +1,6 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import SocialLinks from "../components/layout/SocialLinks.astro";
 import site from "../data/site.json";
 ---
 
@@ -16,6 +17,12 @@ import site from "../data/site.json";
     <p>
       Questions: <a href={`mailto:${site.email}`}>{site.email}</a> · {site.phone}
     </p>
+
+    <section class="about__social" aria-labelledby="social-heading">
+      <h2 id="social-heading">Follow along</h2>
+      <p>Event setups, menus, and nights on the road.</p>
+      <SocialLinks />
+    </section>
   </article>
 </PageLayout>
 
@@ -30,5 +37,25 @@ import site from "../data/site.json";
 
   .about p + p {
     margin-top: 0.65rem;
+  }
+
+  .about a {
+    color: var(--primary);
+  }
+
+  .about__social {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    max-width: 40rem;
+  }
+
+  .about__social h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.15rem;
+  }
+
+  .about__social > p {
+    margin: 0 0 0.85rem;
   }
 </style>

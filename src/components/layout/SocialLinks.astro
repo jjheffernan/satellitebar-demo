@@ -1,0 +1,46 @@
+---
+import site from "../../data/site.json";
+
+const networks = [
+  { key: "instagram", label: "Instagram" },
+  { key: "facebook", label: "Facebook" },
+  { key: "twitter", label: "Twitter" },
+  { key: "x", label: "X" },
+]
+  .filter((n) => site.social?.[n.key])
+  .map((n) => ({ label: n.label, href: site.social[n.key] }));
+---
+
+{
+  networks.length > 0 && (
+    <nav class="social-links" aria-label="Social media">
+      {networks.map((n) => (
+        <a href={n.href} rel="noopener noreferrer" target="_blank">
+          {n.label}
+        </a>
+      ))}
+    </nav>
+  )
+}
+
+<style>
+  .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1.1rem;
+    margin: 0;
+  }
+
+  .social-links a {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-bottom: 1px solid color-mix(in oklch, var(--primary) 45%, transparent);
+  }
+
+  .social-links a:hover {
+    color: var(--foreground);
+    border-bottom-color: var(--foreground);
+  }
+</style>

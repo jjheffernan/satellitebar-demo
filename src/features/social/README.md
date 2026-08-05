@@ -1,13 +1,10 @@
-# Social (`social`)
+# Social
 
-Footer social links.
+Profile URLs live in `src/data/site.json` → `social`:
 
-## Enable
+- `instagram`
+- `facebook`
+- `twitter`
+- `x`
 
-1. Set production profile URLs in `src/data/site.json` → `social`.
-2. Set `PUBLIC_FEATURE_SOCIAL=1`.
-3. Optional: Instagram embed island (future).
-
-## Slot
-
-`footer.social` → `FooterSocial.svelte`
+Rendered on **About** (`SocialLinks.astro`). Header stays nav/CTAs only; footer stays contact utilities.

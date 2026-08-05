@@ -3,12 +3,10 @@
  * Hot-plug slot: renders active feature UI only.
  */
 import features from "../data/features.json";
-import site from "../data/site.json";
 import heroMedia from "../data/hero-media.json";
 import calendar from "../data/calendar.json";
 import liveChat from "../data/live-chat.json";
 import i18n from "../data/i18n.json";
-import FooterSocial from "../features/social/ui/FooterSocial.svelte";
 import HeroMedia from "../features/hero-media/ui/HeroMedia.svelte";
 import EventsCalendar from "../features/events-calendar/ui/EventsCalendar.svelte";
 import LiveChat from "../features/live-chat/ui/LiveChat.svelte";
@@ -27,17 +25,8 @@ function isActive(id = "") {
   if (!mod) return false;
   return (mod.publicEnv ?? []).every((key) => envOn(key));
 }
-
-const socialNetworks = [
-  { key: "instagram", label: "Instagram" },
-  { key: "facebook", label: "Facebook" },
-  { key: "x", label: "X" },
-]
-  .filter((n) => site.social?.[n.key])
-  .map((n) => ({ label: n.label, href: site.social[n.key] }));
 ---
 
-{name === "footer.social" && isActive("social") && <FooterSocial networks={socialNetworks} />}
 {
   name === "home.hero-media" && isActive("hero-media") && (
     <HeroMedia client:load slides={heroMedia.slides} intervalMs={heroMedia.intervalMs} />
