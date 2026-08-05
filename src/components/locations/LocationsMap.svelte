@@ -4,65 +4,83 @@
 
   maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
-  /** Approx circle ring in miles around a lng/lat (closed). */
-  function circleCoords(lng, lat, radiusMiles, steps = 64) {
-    const latRad = (lat * Math.PI) / 180;
-    const dLat = radiusMiles / 69.172;
-    const dLng = radiusMiles / (69.172 * Math.cos(latRad));
-    const ring = [];
-    for (let i = 0; i <= steps; i++) {
-      const t = (i / steps) * Math.PI * 2;
-      ring.push([lng + dLng * Math.sin(t), lat + dLat * Math.cos(t)]);
-    }
-    return ring;
+  const MILES_TO_METERS = 1609.344;
+  /** Equatorial meters/px at zoom 0, adjusted by cos(lat) for DE. */
+  const METERS_PER_PX_Z0 = 156543.03392;
+
+  /** Pixel size of `meters` at a zoom — used only as interpolate stops (zoom must be top-level). */
+  function pxAtZoom(meters, lat, zoom) {
+    const metersPerPx = (METERS_PER_PX_Z0 * Math.cos((lat * Math.PI) / 180)) / 2 ** zoom;
+    return meters / metersPerPx;
   }
 
-  /** Concentric disks — bright near the pin, fall off fast with distance. */
-  function glowCollection(markets, radiusMiles) {
-    // Small scales + rising opacity = dense core; outer rings stay faint
-    const bands = [
-      { scale: 1, opacity: 0.04 },
-      { scale: 0.55, opacity: 0.07 },
-      { scale: 0.32, opacity: 0.12 },
-      { scale: 0.18, opacity: 0.2 },
-      { scale: 0.1, opacity: 0.32 },
-      { scale: 0.05, opacity: 0.45 },
+  /** Soft radial falloff: opaque near center → transparent at radius edge. */
+  function heatmapRadiusExpr(radiusMiles, lat = 39.71) {
+    const meters = radiusMiles * MILES_TO_METERS;
+    return [
+      "interpolate",
+      ["exponential", 2],
+      ["zoom"],
+      8,
+      pxAtZoom(meters, lat, 8),
+      10,
+      pxAtZoom(meters, lat, 10),
+      12,
+      pxAtZoom(meters, lat, 12),
+      14,
+      pxAtZoom(meters, lat, 14),
     ];
-
-    return {
-      type: "FeatureCollection",
-      features: markets.flatMap((market) => {
-        const [lng, lat] = market.lngLat;
-        return bands.map((band, i) => ({
-          type: "Feature",
-          properties: {
-            id: `${market.id}-${i}`,
-            opacity: band.opacity,
-          },
-          geometry: {
-            type: "Polygon",
-            coordinates: [circleCoords(lng, lat, radiusMiles * band.scale)],
-          },
-        }));
-      }),
-    };
   }
 </script>
 
 <script>
-  import { MapLibre, Marker, Popup, GeoJSON, FillLayer } from "svelte-maplibre";
+  import { MapLibre, Marker, Popup, GeoJSON, HeatmapLayer } from "svelte-maplibre";
 
   let {
     center = [-75.64, 39.71],
-    zoom = 9.8,
+    zoom = 10.2,
     markets = [],
-    radiusMiles = 8,
+    radiusMiles = 15,
     selectedId = "",
     onSelect = undefined,
     compact = false,
   } = $props();
 
-  const glowGeo = $derived(glowCollection(markets, radiusMiles));
+  const glowGeo = $derived({
+    type: "FeatureCollection",
+    features: markets.map((market) => ({
+      type: "Feature",
+      properties: { id: market.id },
+      geometry: {
+        type: "Point",
+        coordinates: market.lngLat,
+      },
+    })),
+  });
+
+  const glowPaint = $derived({
+    "heatmap-radius": heatmapRadiusExpr(radiusMiles),
+    "heatmap-weight": 1,
+    "heatmap-intensity": 0.9,
+    "heatmap-opacity": 0.85,
+    "heatmap-color": [
+      "interpolate",
+      ["linear"],
+      ["heatmap-density"],
+      0,
+      "rgba(196, 160, 106, 0)",
+      0.15,
+      "rgba(196, 160, 106, 0.08)",
+      0.35,
+      "rgba(196, 160, 106, 0.22)",
+      0.55,
+      "rgba(196, 160, 106, 0.4)",
+      0.8,
+      "rgba(212, 176, 122, 0.62)",
+      1,
+      "rgba(212, 176, 122, 0.78)",
+    ],
+  });
 </script>
 
 <div class="locations-map" class:locations-map--compact={compact}>
@@ -75,14 +93,7 @@
     standardControls
   >
     <GeoJSON id="service-glow" data={glowGeo}>
-      <FillLayer
-        id="service-glow-fill"
-        beforeLayerType="symbol"
-        paint={{
-          "fill-color": "#c4a06a",
-          "fill-opacity": ["get", "opacity"],
-        }}
-      />
+      <HeatmapLayer id="service-glow-heat" beforeLayerType="symbol" paint={glowPaint} />
     </GeoJSON>
 
     {#each markets as market}
