@@ -1,10 +1,8 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import SocialLinks from "../components/layout/SocialLinks.astro";
-import InstagramFeed from "../components/social/InstagramFeed.svelte";
 import site from "../data/site.json";
 
-const beholdFeedId = String(import.meta.env.PUBLIC_BEHOLD_FEED_ID ?? "").trim();
 const igHandle = site.social.instagram
   ? new URL(site.social.instagram).pathname.replace(/\//g, "")
   : "";
@@ -39,13 +37,6 @@ const igHandle = site.social.instagram
         }
       </p>
       <SocialLinks />
-      {
-        beholdFeedId ? (
-          <div class="about__feed">
-            <InstagramFeed client:only="svelte" feedId={beholdFeedId} />
-          </div>
-        ) : null
-      }
     </section>
   </article>
 </PageLayout>
@@ -81,16 +72,5 @@ const igHandle = site.social.instagram
 
   .about__social > p {
     margin: 0 0 0.85rem;
-  }
-
-  .about__feed {
-    /* Dimensions live in Astro HTML so SSG doesn't collapse before client:only hydrates */
-    margin-top: 1.15rem;
-    width: 100%;
-    min-height: 24rem;
-    background: color-mix(in oklch, var(--muted) 35%, transparent);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    overflow: clip;
   }
 </style>

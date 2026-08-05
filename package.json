@@ -19,7 +19,6 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@astrojs/svelte": "^9.0.1",
-    "@behold/svelte": "^0.1.7",
     "@fontsource-variable/dm-sans": "^5.2.5",
     "@fontsource-variable/syne": "^5.2.5",
     "@tailwindcss/vite": "^4.1.11",

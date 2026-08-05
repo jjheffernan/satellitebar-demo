@@ -1,12 +1,10 @@
 <script>
   import { onMount } from "svelte";
-  import InstagramFeed from "./InstagramFeed.svelte";
 
   let {
     instagram = "",
     facebook = "",
     twitter = "",
-    beholdFeedId = "",
   } = $props();
 
   function handleFromUrl(url = "") {
@@ -67,15 +65,9 @@
       <p class="embed__link">
         <a href={instagram} rel="noopener noreferrer" target="_blank">@{igHandle || "profile"}</a>
       </p>
-      {#if beholdFeedId}
-        <div class="embed__frame embed__frame--ig">
-          <InstagramFeed feedId={beholdFeedId} />
-        </div>
-      {:else}
-        <p class="embed__fallback">
-          Feed embed needs <code>PUBLIC_BEHOLD_FEED_ID</code>. Profile link works meanwhile.
-        </p>
-      {/if}
+      <p class="embed__fallback">
+        Live feed embed is planned — follow @{igHandle || "us"} on Instagram meanwhile.
+      </p>
     </section>
   {/if}
 

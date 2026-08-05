@@ -13,13 +13,9 @@ Rendered on **About** (`SocialLinks.astro`). Header stays nav/CTAs only; footer 
 `/contact` embeds:
 
 - **X** — timeline widget (`platform.twitter.com/widgets.js`)
-- **Instagram** — Behold when `PUBLIC_BEHOLD_FEED_ID` is set
+- **Instagram** — profile link for now; live feed TBD (see `docs/PLAN.md` → Instagram feed options)
 - **Facebook** — page plugin iframe
 
-## Instagram feed (Behold)
+## Instagram feed
 
-1. Create a feed in the [Behold dashboard](https://app.behold.so) for [@satellitebarco](https://www.instagram.com/satellitebarco/)
-2. Copy the feed id from Embed Code
-3. Set `PUBLIC_BEHOLD_FEED_ID` in `.env` (and Cloudflare Pages)
-
-Used on About and Contact.
+Behold was removed (requires an external SaaS dashboard). Options for a business-account feed are tracked in [PLAN.md](../../../docs/PLAN.md).

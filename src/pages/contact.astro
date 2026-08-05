@@ -2,8 +2,6 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import SocialProfileEmbeds from "../components/social/SocialProfileEmbeds.svelte";
 import site from "../data/site.json";
-
-const beholdFeedId = String(import.meta.env.PUBLIC_BEHOLD_FEED_ID ?? "").trim();
 ---
 
 <PageLayout
@@ -26,7 +24,6 @@ const beholdFeedId = String(import.meta.env.PUBLIC_BEHOLD_FEED_ID ?? "").trim();
       instagram={site.social.instagram}
       facebook={site.social.facebook}
       twitter={site.social.twitter}
-      beholdFeedId={beholdFeedId}
     />
   </section>
 </PageLayout>
