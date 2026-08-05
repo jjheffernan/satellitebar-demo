@@ -2,6 +2,7 @@
 /**
  * Hot-plug slot: renders active feature UI only.
  */
+// @ts-nocheck — pnpm + Astro LS can false-positive TS2306 on .svelte imports; build/check OK.
 import features from "../data/features.json";
 import heroMedia from "../data/hero-media.json";
 import calendar from "../data/calendar.json";
