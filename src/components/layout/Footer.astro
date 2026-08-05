@@ -1,6 +1,23 @@
 ---
+import { FacebookShareButton, TwitterShareButton } from "astro-social-share";
 import site from "../../data/site.json";
 import FeatureSlot from "../FeatureSlot.astro";
+
+const {
+  title = site.name,
+  description = site.description,
+  path = "/",
+} = Astro.props;
+
+const shareUrl = new URL(path === "/" ? "/" : path, site.url).href;
+const shareText = title === site.name ? description : title;
+
+let via = "satellitebarco";
+try {
+  via = new URL(site.social.twitter).pathname.replace(/\//g, "") || via;
+} catch {
+  /* keep default */
+}
 ---
 
 <footer class="site-footer">
@@ -15,11 +32,20 @@ import FeatureSlot from "../FeatureSlot.astro";
       </p>
       <FeatureSlot name="footer.mailing-list" />
     </div>
-    <nav class="site-footer__nav" aria-label="Footer">
-      <a href="/book">Book</a>
-      <a href="/contact">Contact</a>
-      <a href="/about">About</a>
-    </nav>
+    <div class="site-footer__aside">
+      <nav class="site-footer__nav" aria-label="Footer">
+        <a href="/book">Book</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+      </nav>
+      <nav class="site-footer__share" aria-label="Share this page">
+        <p class="site-footer__share-label">Share</p>
+        <div class="site-footer__share-links">
+          <FacebookShareButton url={shareUrl}>Facebook</FacebookShareButton>
+          <TwitterShareButton url={shareUrl} description={shareText} via={via}>X</TwitterShareButton>
+        </div>
+      </nav>
+    </div>
   </div>
   <p class="site-footer__legal container-site">
     © {new Date().getFullYear()} {site.legalName}
@@ -53,11 +79,17 @@ import FeatureSlot from "../FeatureSlot.astro";
     line-height: 1.45;
   }
 
-  .site-footer a {
+  .site-footer__meta a {
     color: inherit;
   }
 
-  .site-footer__nav {
+  .site-footer__aside {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .site-footer__nav,
+  .site-footer__share-links {
     display: flex;
     flex-wrap: wrap;
     gap: 0.65rem 1rem;
@@ -73,6 +105,45 @@ import FeatureSlot from "../FeatureSlot.astro";
     color: var(--foreground);
   }
 
+  .site-footer__share {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .site-footer__share-label {
+    margin: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  /* Override astro-social-share defaults to match footer / SocialLinks */
+  .site-footer__share-links :global(a.social-share-btn) {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--primary);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklch, var(--primary) 45%, transparent);
+    cursor: pointer;
+  }
+
+  .site-footer__share-links :global(a.social-share-btn:hover) {
+    color: var(--foreground);
+    border-bottom-color: var(--foreground);
+  }
+
+  .site-footer__share-links :global(a.social-share-btn svg),
+  .site-footer__share-links :global(a.social-share-btn style) {
+    display: none;
+  }
+
   .site-footer__legal {
     margin: 0.75rem auto 0;
     color: var(--muted-foreground);
@@ -83,6 +154,11 @@ import FeatureSlot from "../FeatureSlot.astro";
     .site-footer__inner {
       grid-template-columns: 1fr auto;
       align-items: end;
+    }
+
+    .site-footer__aside {
+      justify-items: end;
+      text-align: right;
     }
   }
 </style>

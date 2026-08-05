@@ -51,7 +51,7 @@ const activeFeatures = features.modules
     <main id="main">
       <slot />
     </main>
-    {showFooter && <Footer />}
+    {showFooter && <Footer title={title} description={description} path={path} />}
     <FeatureSlot name="global.live-chat" />
     <FeatureSlot name="global.locale" />
   </body>
