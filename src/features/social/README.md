@@ -8,12 +8,18 @@ Profile URLs live in `src/data/site.json` → `social`:
 
 Rendered on **About** (`SocialLinks.astro`). Header stays nav/CTAs only; footer stays contact utilities.
 
+## Contact embeds
+
+`/contact` embeds:
+
+- **X** — timeline widget (`platform.twitter.com/widgets.js`)
+- **Instagram** — Behold when `PUBLIC_BEHOLD_FEED_ID` is set
+- **Facebook** — page plugin iframe
+
 ## Instagram feed (Behold)
 
-About also embeds [@behold/svelte](https://github.com/BeholdSocial/behold-svelte):
-
-1. Create a feed in the [Behold dashboard](https://app.behold.so) connected to [@satellitebarco](https://www.instagram.com/satellitebarco/)
+1. Create a feed in the [Behold dashboard](https://app.behold.so) for [@satellitebarco](https://www.instagram.com/satellitebarco/)
 2. Copy the feed id from Embed Code
 3. Set `PUBLIC_BEHOLD_FEED_ID` in `.env` (and Cloudflare Pages)
 
-Widget only mounts when that env var is set.
+Used on About and Contact.

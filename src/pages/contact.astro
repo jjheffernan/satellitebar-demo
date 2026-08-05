@@ -1,6 +1,9 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import SocialProfileEmbeds from "../components/social/SocialProfileEmbeds.svelte";
 import site from "../data/site.json";
+
+const beholdFeedId = String(import.meta.env.PUBLIC_BEHOLD_FEED_ID ?? "").trim();
 ---
 
 <PageLayout
@@ -14,6 +17,18 @@ import site from "../data/site.json";
     {site.serviceArea}
   </p>
   <p><a class="cta" href="/book">Check availability</a></p>
+
+  <section class="social" aria-labelledby="social-heading">
+    <h2 id="social-heading">On social</h2>
+    <p class="social__lede">Profiles and recent posts from X, Instagram, and Facebook.</p>
+    <SocialProfileEmbeds
+      client:only="svelte"
+      instagram={site.social.instagram}
+      facebook={site.social.facebook}
+      twitter={site.social.twitter}
+      beholdFeedId={beholdFeedId}
+    />
+  </section>
 </PageLayout>
 
 <style>
@@ -25,5 +40,21 @@ import site from "../data/site.json";
   .cta {
     color: var(--primary);
     font-weight: 600;
+  }
+
+  .social {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .social h2 {
+    margin: 0 0 0.25rem;
+    font-size: 1.15rem;
+  }
+
+  .social__lede {
+    margin: 0;
+    font-size: 0.9rem;
   }
 </style>
