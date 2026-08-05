@@ -1,18 +1,18 @@
 {
   "events": [
     {
-      "id": "harbor-tasting-aug",
-      "title": "Harbor tasting night",
+      "id": "newark-tasting-aug",
+      "title": "Newark tasting night",
       "date": "2026-08-22",
-      "place": "Harbor City — invite only",
+      "place": "Newark — invite only",
       "href": "/book"
     },
     {
-      "id": "rivermouth-popup",
-      "title": "Rivermouth popup bar",
+      "id": "wilmington-popup",
+      "title": "Wilmington popup bar",
       "date": "2026-09-05",
-      "place": "Rivermouth warehouse row",
-      "href": "/locations/rivermouth"
+      "place": "Wilmington riverfront",
+      "href": "/locations/wilmington"
     }
   ]
 }

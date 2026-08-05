@@ -1,22 +1,35 @@
 {
+  "region": {
+    "name": "Northern Delaware",
+    "headline": "Mobile bartending across Newark, Wilmington, and nearby venues.",
+    "center": [-75.64, 39.71],
+    "zoom": 10.2,
+    "serviceRadiusMiles": 8,
+    "bounds": [
+      [-75.9, 39.55],
+      [-75.4, 39.86]
+    ]
+  },
   "markets": [
     {
-      "id": "harbor-city",
-      "name": "Harbor City",
-      "eyebrow": "Mobile bar Harbor City",
-      "headline": "An elevated bar experience that rolls to your venue.",
-      "serviceArea": "Harbor City metro · within 60 miles",
-      "email": "harbor@satellitebar.example",
-      "phone": "(555) 014-2088"
+      "id": "newark",
+      "name": "Newark",
+      "eyebrow": "Mobile bar Newark",
+      "headline": "Campus events, backyard parties, and venues around Newark.",
+      "serviceArea": "Newark · within 8 miles",
+      "email": "newark@satellitebar.example",
+      "phone": "(555) 014-2088",
+      "lngLat": [-75.7497, 39.6837]
     },
     {
-      "id": "rivermouth",
-      "name": "Rivermouth",
-      "eyebrow": "Mobile bar Rivermouth",
-      "headline": "Staffed bars for riverside venues and warehouse loft parties.",
-      "serviceArea": "Rivermouth · within 45 miles",
-      "email": "rivermouth@satellitebar.example",
-      "phone": "(555) 014-2099"
+      "id": "wilmington",
+      "name": "Wilmington",
+      "eyebrow": "Mobile bar Wilmington",
+      "headline": "Downtown receptions, loft parties, and riverfront events.",
+      "serviceArea": "Wilmington · within 8 miles",
+      "email": "wilmington@satellitebar.example",
+      "phone": "(555) 014-2099",
+      "lngLat": [-75.5398, 39.7391]
     }
   ]
 }

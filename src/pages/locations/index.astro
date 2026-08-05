@@ -1,0 +1,80 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import LocationsMap from "../../components/locations/LocationsMap.svelte";
+import locations from "../../data/locations.json";
+
+const { region, markets } = locations;
+---
+
+<PageLayout title="Locations" description={region.headline} path="/locations">
+  <LocationsMap
+    client:load
+    center={region.center}
+    zoom={region.zoom}
+    markets={markets}
+    radiusMiles={region.serviceRadiusMiles ?? 15}
+  />
+
+  <ul class="markets">
+    {
+      markets.map((market) => (
+        <li>
+          <a href={`/locations/${market.id}`}>
+            <span>{market.name}</span>
+            <span>{market.serviceArea}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="open">
+    Out of our orbit? <a href="/open">Request info</a>
+  </p>
+</PageLayout>
+
+<style>
+  .markets {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  @media (min-width: 640px) {
+    .markets {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .markets a {
+    display: grid;
+    gap: 0.15rem;
+    text-decoration: none;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    color: inherit;
+  }
+
+  .markets a span:first-child {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .markets a span:last-child {
+    color: var(--muted-foreground);
+    font-size: 0.88rem;
+  }
+
+  .open {
+    margin: 1.5rem 0 0;
+    color: var(--muted-foreground);
+  }
+
+  .open a {
+    color: var(--primary);
+    font-weight: 600;
+  }
+</style>

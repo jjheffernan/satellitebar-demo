@@ -6,8 +6,8 @@
   "url": "https://satellitebar.example",
   "email": "book@satellitebar.example",
   "phone": "(555) 014-2088",
-  "defaultMarket": "harbor-city",
-  "serviceArea": "Harbor City metro · within 60 miles",
+  "defaultMarket": "newark",
+  "serviceArea": "Northern Delaware · Newark & Wilmington",
   "nav": [
     {
       "label": "Events",
@@ -20,22 +20,22 @@
     },
     {
       "label": "Locations",
+      "href": "/locations",
       "children": [
-        { "href": "/locations/harbor-city", "label": "Harbor City" },
-        { "href": "/locations/rivermouth", "label": "Rivermouth" },
+        { "href": "/locations/newark", "label": "Newark" },
+        { "href": "/locations/wilmington", "label": "Wilmington" },
         { "href": "/open", "label": "Open a new location" }
       ]
     },
     { "href": "/packages", "label": "Packages" },
-    { "href": "/menu", "label": "Cocktails" },
+    { "href": "/menu", "label": "Sample menu" },
     { "href": "/tools/drink-calculator", "label": "Calculator" },
     { "href": "/about", "label": "About" },
     { "href": "/contact", "label": "Contact" }
   ],
   "social": {
-    "instagram": "https://instagram.com/satellitebarco",
+    "instagram": "https://www.instagram.com/satellitebarco/",
     "facebook": "https://facebook.com/satellitebarco",
-    "twitter": "https://twitter.com/satellitebarco",
-    "x": "https://x.com/satellitebarco"
+    "twitter": "https://x.com/satellitebarco"
   }
 }
