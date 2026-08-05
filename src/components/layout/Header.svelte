@@ -24,8 +24,9 @@
     return pathname === href || pathname.startsWith(`${href}/`);
   }
 
-  function groupActive(children = []) {
-    return children.some((c) => isActive(c.href));
+  function groupActive(link) {
+    if (link.href && isActive(link.href)) return true;
+    return (link.children ?? []).some((c) => isActive(c.href));
   }
 </script>
 
@@ -48,7 +49,17 @@
                 openMenu = e.currentTarget.open ? link.label : "";
               }}
             >
-              <summary class:active={groupActive(kids)}>{link.label}</summary>
+              <summary class:active={groupActive(link)}>
+                {#if link.href}
+                  <a
+                    class="site-header__group-link"
+                    href={link.href}
+                    onclick={(e) => e.stopPropagation()}
+                  >{link.label}</a>
+                {:else}
+                  {link.label}
+                {/if}
+              </summary>
               <div class="site-header__dropdown">
                 {#each kids as child}
                   <a class:active={isActive(child.href)} href={child.href}>{child.label}</a>
@@ -76,7 +87,10 @@
       type="button"
       aria-expanded={open}
       aria-controls="mobile-nav"
-      onclick={() => (open = !open)}
+      onclick={() => {
+        open = !open;
+        if (!open) openMenu = "";
+      }}
     >
       {open ? "Close" : "Menu"}
     </button>
@@ -87,17 +101,67 @@
       {#each visibleLinks(links) as link}
         {#if link.children?.length}
           {@const kids = visibleLinks(link.children)}
-          {#each kids as child}
-            <a href={child.href} onclick={() => (open = false)}>{child.label}</a>
-          {/each}
+          {#if kids.length}
+            <details
+              class="site-header__group"
+              open={openMenu === link.label}
+              ontoggle={(e) => {
+                openMenu = e.currentTarget.open ? link.label : "";
+              }}
+            >
+              <summary class:active={groupActive(link)}>
+                {#if link.href}
+                  <a
+                    class="site-header__group-link"
+                    href={link.href}
+                    onclick={(e) => {
+                      e.stopPropagation();
+                      open = false;
+                      openMenu = "";
+                    }}
+                  >{link.label}</a>
+                {:else}
+                  {link.label}
+                {/if}
+              </summary>
+              <div class="site-header__dropdown">
+                {#each kids as child}
+                  <a
+                    class:active={isActive(child.href)}
+                    href={child.href}
+                    onclick={() => {
+                      open = false;
+                      openMenu = "";
+                    }}
+                  >{child.label}</a>
+                {/each}
+              </div>
+            </details>
+          {/if}
         {:else}
-          <a href={link.href} onclick={() => (open = false)}>{link.label}</a>
+          <a
+            class="site-header__link"
+            class:active={isActive(link.href)}
+            href={link.href}
+            onclick={() => {
+              open = false;
+              openMenu = "";
+            }}
+          >
+            {link.label}
+          </a>
         {/if}
       {/each}
-      {#if phone}
-        <a href={`tel:${phone.replace(/\D/g, "")}`} onclick={() => (open = false)}>Call us</a>
-      {/if}
-      <a href="/book" onclick={() => (open = false)}>Book now</a>
+      <div class="site-header__drawer-actions">
+        {#if phone}
+          <a
+            class="site-header__call"
+            href={`tel:${phone.replace(/\D/g, "")}`}
+            onclick={() => (open = false)}
+          >Call us</a>
+        {/if}
+        <a class="site-header__cta" href="/book" onclick={() => (open = false)}>Book now</a>
+      </div>
     </nav>
   {/if}
 </header>
@@ -160,12 +224,29 @@
   }
 
   .site-header__link,
-  .site-header__group summary {
+  .site-header__group summary,
+  .site-header__group-link {
     text-decoration: none;
     color: var(--muted-foreground);
     font-size: 0.88rem;
     cursor: pointer;
     list-style: none;
+  }
+
+  .site-header__group summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .site-header__group summary::after {
+    content: "";
+    width: 0.35rem;
+    height: 0.35rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translateY(-0.1rem);
+    opacity: 0.7;
   }
 
   .site-header__group summary::-webkit-details-marker {
@@ -175,7 +256,9 @@
   .site-header__link.active,
   .site-header__link:hover,
   .site-header__group summary.active,
-  .site-header__group summary:hover {
+  .site-header__group summary:hover,
+  .site-header__group summary.active .site-header__group-link,
+  .site-header__group-link:hover {
     color: var(--foreground);
   }
 
@@ -243,15 +326,48 @@
 
   .site-header__drawer {
     display: grid;
-    gap: 0.45rem;
-    padding: 0.65rem var(--space-gutter) 0.85rem;
+    gap: 0.15rem;
+    padding: 0.55rem var(--space-gutter) 0.95rem;
     border-top: 1px solid var(--border);
   }
 
-  .site-header__drawer a {
-    text-decoration: none;
-    font-family: var(--font-heading);
-    font-size: 1.05rem;
+  .site-header__drawer .site-header__link,
+  .site-header__drawer .site-header__group summary,
+  .site-header__drawer .site-header__group-link {
+    font-size: 0.95rem;
+    padding: 0.55rem 0;
+  }
+
+  .site-header__drawer .site-header__group {
+    position: static;
+  }
+
+  .site-header__drawer .site-header__group summary {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .site-header__drawer .site-header__group[open] summary::after {
+    transform: rotate(225deg) translateY(-0.05rem);
+  }
+
+  .site-header__drawer .site-header__dropdown {
+    position: static;
+    top: auto;
+    left: auto;
+    min-width: 0;
+    width: 100%;
+    margin: 0 0 0.35rem;
+    padding: 0.45rem 0.75rem;
+  }
+
+  .site-header__drawer-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.55rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
   }
 
   @media (min-width: 960px) {
