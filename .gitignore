@@ -18,6 +18,7 @@ dist/
 *.log
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 
 # Agent session
 .cursor/after-hours-loop.state.json

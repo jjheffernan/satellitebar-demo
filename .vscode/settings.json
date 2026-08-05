@@ -1,0 +1,6 @@
+{
+  "astro.language-server.ls-path": "./node_modules/@astrojs/language-server/bin/nodeServer.js",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "astro.typescript.enabled": true
+}
