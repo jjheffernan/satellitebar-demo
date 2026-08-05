@@ -1,0 +1,94 @@
+{
+  "menus": [
+    {
+      "id": "simple",
+      "label": "Simple",
+      "name": "Beer & wine",
+      "summary": "A lean, guest-friendly bar — no cocktail station, just cold beer and open bottles.",
+      "sections": [
+        {
+          "title": "Beer",
+          "items": [
+            { "name": "Local lager", "note": "Pils / light lager" },
+            { "name": "IPA", "note": "Regional craft" },
+            { "name": "Non-alcoholic beer", "note": "One option on ice" }
+          ]
+        },
+        {
+          "title": "Wine",
+          "items": [
+            { "name": "House white", "note": "Sauvignon blanc or similar" },
+            { "name": "House red", "note": "Pinot noir or similar" },
+            { "name": "Bubbles", "note": "Prosecco for toasts" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mid",
+      "label": "Mid tier",
+      "name": "Draft, cans & cocktails",
+      "summary": "Tap or draft pours, a can wall, and a short cocktail list that still feels intentional.",
+      "sections": [
+        {
+          "title": "Tap / draft",
+          "items": [
+            { "name": "House lager", "note": "Cold draft" },
+            { "name": "Seasonal ale", "note": "Rotating local" },
+            { "name": "Cider", "note": "Dry draft option" }
+          ]
+        },
+        {
+          "title": "Cans",
+          "items": [
+            { "name": "Light lager cans", "note": "High-volume easy pour" },
+            { "name": "Hard seltzer", "note": "2–3 flavors" },
+            { "name": "NA cans", "note": "Beer + seltzer" }
+          ]
+        },
+        {
+          "title": "Cocktails",
+          "items": [
+            { "name": "Signal Sour", "note": "Bourbon, lemon, demerara" },
+            { "name": "Reentry Spritz", "note": "Prosecco, bitter, soda" },
+            { "name": "Gin & tonic upgrade", "note": "Citrus + botanical garnish" },
+            { "name": "Dry Dock (NA)", "note": "Seedlip, citrus, tonic" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "custom",
+      "label": "Full custom",
+      "name": "Custom program",
+      "summary": "Built around your event — signatures, flights, branded touches, and a full spirit + NA line.",
+      "sections": [
+        {
+          "title": "Signature cocktails",
+          "items": [
+            { "name": "Couple’s namesake", "note": "Custom stirred or shaken" },
+            { "name": "Brand feature pour", "note": "Product-forward recipe" },
+            { "name": "Low Orbit Negroni", "note": "Campari, vermouth, gin" },
+            { "name": "Zero-proof twin", "note": "Matching NA signature" }
+          ]
+        },
+        {
+          "title": "Beer & wine program",
+          "items": [
+            { "name": "Curated draft lineup", "note": "2–3 taps to brief" },
+            { "name": "Can & bottle wall", "note": "Guest self-select options" },
+            { "name": "Wine flight", "note": "White, red, sparkling" }
+          ]
+        },
+        {
+          "title": "Extras",
+          "items": [
+            { "name": "Welcome punch or toast", "note": "Batch or poured" },
+            { "name": "Tasting flight format", "note": "Activations & launches" },
+            { "name": "Full NA bar", "note": "Mocktails + NA beer/wine" }
+          ]
+        }
+      ]
+    }
+  ]
+}

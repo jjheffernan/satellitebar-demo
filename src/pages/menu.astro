@@ -1,72 +1,13 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
-import catalog from "../data/catalog.json";
+import SampleMenuSelector from "../components/menu/SampleMenuSelector.svelte";
+import sampleMenus from "../data/sample-menus.json";
 ---
 
 <PageLayout
-  title="Cocktail menu"
-  description="Signature pours we bring. Final menu locked after a short consult."
+  title="Sample menus"
+  description="Three example bars — simple beer & wine, mid-tier draft and cocktails, or a full custom program."
   path="/menu"
 >
-  <ul class="drinks">
-    {
-      catalog.cocktails.map((drink) => (
-        <li>
-          <div>
-            <h2>{drink.name}</h2>
-            <p>{drink.description}</p>
-          </div>
-          <div class="meta">
-            <span>{drink.style}</span>
-            <span>{drink.priceNote}</span>
-          </div>
-        </li>
-      ))
-    }
-  </ul>
+  <SampleMenuSelector client:load menus={sampleMenus.menus} />
 </PageLayout>
-
-<style>
-  .drinks {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border-top: 1px solid var(--border);
-  }
-
-  .drinks li {
-    display: grid;
-    gap: 0.25rem;
-    padding: 0.7rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .drinks h2 {
-    margin: 0 0 0.15rem;
-    font-size: 1rem;
-  }
-
-  .drinks p {
-    margin: 0;
-    color: var(--muted-foreground);
-    font-size: 0.88rem;
-    line-height: 1.35;
-  }
-
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem;
-    color: var(--primary);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  @media (min-width: 720px) {
-    .drinks li {
-      grid-template-columns: 1fr auto;
-      align-items: start;
-    }
-  }
-</style>
