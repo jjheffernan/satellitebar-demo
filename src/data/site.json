@@ -23,8 +23,7 @@
       "href": "/locations",
       "children": [
         { "href": "/locations/newark", "label": "Newark" },
-        { "href": "/locations/wilmington", "label": "Wilmington" },
-        { "href": "/open", "label": "Open a new location" }
+        { "href": "/locations/wilmington", "label": "Wilmington" }
       ]
     },
     { "href": "/packages", "label": "Packages" },
