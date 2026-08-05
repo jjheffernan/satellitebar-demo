@@ -3,6 +3,7 @@
 
   const filters = ["all", "25–50", "50–100", "100–180"];
   let active = $state("all");
+  let showPrices = $state(false);
 
   let visible = $derived(
     active === "all" ? items : items.filter((p) => p.guests === active),
@@ -18,20 +19,34 @@
 </script>
 
 <div class="catalog">
-  <div class="catalog__filters" role="group" aria-label="Filter by guest count">
-    {#each filters as filter}
-      <button type="button" class:active={active === filter} onclick={() => (active = filter)}>
-        {filter === "all" ? "All packages" : filter + " guests"}
-      </button>
-    {/each}
+  <div class="catalog__toolbar">
+    <div class="catalog__filters" role="group" aria-label="Filter by guest count">
+      {#each filters as filter}
+        <button type="button" class:active={active === filter} onclick={() => (active = filter)}>
+          {filter === "all" ? "All packages" : filter + " guests"}
+        </button>
+      {/each}
+    </div>
+    <button
+      type="button"
+      class="catalog__prices"
+      aria-pressed={showPrices}
+      onclick={() => (showPrices = !showPrices)}
+    >
+      {showPrices ? "Hide starting prices" : "Show starting prices"}
+    </button>
   </div>
 
   <ul class="catalog__list">
     {#each visible as pkg (pkg.id)}
-      <li>
+      <li id={pkg.id}>
         <header>
           <h3>{pkg.name}</h3>
-          <p class="price">From {formatUsd(pkg.fromPrice)}</p>
+          {#if showPrices}
+            <p class="price">From {formatUsd(pkg.fromPrice)}</p>
+          {:else}
+            <p class="price price--muted">Pricing on request</p>
+          {/if}
         </header>
         <p class="summary">{pkg.summary}</p>
         <dl>
@@ -53,11 +68,16 @@
 </div>
 
 <style>
+  .catalog__toolbar {
+    display: grid;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem;
+  }
+
   .catalog__filters {
     display: flex;
     flex-wrap: wrap;
     gap: 0.35rem;
-    margin-bottom: 0.85rem;
   }
 
   .catalog__filters button {
@@ -76,6 +96,28 @@
     color: var(--primary-foreground);
     background: var(--primary);
     border-color: var(--primary);
+  }
+
+  .catalog__prices {
+    justify-self: start;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--primary);
+    border-radius: var(--radius-md);
+    padding: 0.35rem 0.75rem;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .catalog__prices[aria-pressed="true"] {
+    background: var(--card);
+  }
+
+  .price--muted {
+    color: var(--muted-foreground);
+    font-weight: 500;
   }
 
   .catalog__list {
