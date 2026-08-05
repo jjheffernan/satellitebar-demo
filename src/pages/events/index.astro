@@ -1,0 +1,73 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import eventTypes from "../../data/event-types.json";
+
+const description =
+  "Mobile bartending for socials, weddings, corporate mixers, and brand activations across Northern Delaware.";
+---
+
+<PageLayout title="Events" description={description} path="/events">
+  <ul class="types">
+    {
+      eventTypes.types.map((type) => (
+        <li>
+          <a href={`/events/${type.id}`}>
+            <span>{type.title}</span>
+            <span>{type.summary}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="cta">
+    Ready to pour? <a href="/book">Check availability</a>
+    {" · "}
+    <a href="/packages">Browse packages</a>
+  </p>
+</PageLayout>
+
+<style>
+  .types {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .types a {
+    display: grid;
+    gap: 0.2rem;
+    text-decoration: none;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+    color: inherit;
+  }
+
+  .types a span:first-child {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .types a span:last-child {
+    color: var(--muted-foreground);
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .types a:hover span:first-child {
+    color: var(--primary);
+  }
+
+  .cta {
+    margin: 1.5rem 0 0;
+    color: var(--muted-foreground);
+  }
+
+  .cta a {
+    color: var(--primary);
+    font-weight: 600;
+  }
+</style>
