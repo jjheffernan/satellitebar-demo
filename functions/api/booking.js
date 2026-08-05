@@ -19,7 +19,7 @@ export async function onRequestPost(context) {
   }
 
   const fields = await readFields(context.request);
-  const required = ["name", "email", "date", "guests", "package"];
+  const required = ["name", "email", "date", "guests", "package", "market", "address", "city", "state", "zip"];
   const missing = required.filter((key) => !String(fields[key] || "").trim());
   if (missing.length) {
     return new Response(`Missing: ${missing.join(", ")}`, { status: 400 });

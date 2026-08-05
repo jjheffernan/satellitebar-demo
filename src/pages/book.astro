@@ -1,14 +1,16 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import BookingForm from "../components/booking/BookingForm.svelte";
 import site from "../data/site.json";
 import catalog from "../data/catalog.json";
 import locations from "../data/locations.json";
 import eventTypes from "../data/event-types.json";
 import features from "../data/features.json";
 
-const selected = Astro.url.searchParams.get("package");
+const selected = Astro.url.searchParams.get("package") ?? "";
 const selectedPkg = catalog.packages.find((p) => p.id === selected);
 const guestsParam = Astro.url.searchParams.get("guests") ?? "";
+const hoursParam = Astro.url.searchParams.get("hours") ?? "";
 const marketParam = Astro.url.searchParams.get("market") ?? site.defaultMarket;
 const eventTypeParam = Astro.url.searchParams.get("eventType") ?? "";
 
@@ -26,11 +28,14 @@ function isActive(id = "") {
 const bookingModule = isActive("booking");
 const formAction = bookingModule ? "/api/booking" : `mailto:${site.email}`;
 const formMethod = bookingModule ? "post" : "get";
+const hint = bookingModule
+  ? "Submits to the booking Function when PUBLIC_FEATURE_BOOKING is on."
+  : "Opens your mail client until the booking module is enabled.";
 ---
 
 <PageLayout
   title="Book an event"
-  description="Date, guests, package — we’ll confirm and send a quote."
+  description="Pick a market, add the venue address, then send date and package details."
   path="/book"
 >
   <p class="lead">
@@ -45,84 +50,26 @@ const formMethod = bookingModule ? "post" : "get";
     )
   }
 
-  <form class="book-form" method={formMethod} action={formAction}>
-    <div class="row">
-      <label>
-        Name
-        <input name="name" type="text" required autocomplete="name" />
-      </label>
-      <label>
-        Email
-        <input name="email" type="email" required autocomplete="email" />
-      </label>
-    </div>
-    <div class="row">
-      <label>
-        Event date
-        <input name="date" type="date" required />
-      </label>
-      <label>
-        Guests
-        <input name="guests" type="number" min="10" max="300" required value={guestsParam} />
-      </label>
-    </div>
-    <label>
-      Market
-      <select name="market" required>
-        {
-          locations.markets.map((market) => (
-            <option value={market.id} selected={market.id === marketParam}>
-              {market.name}
-            </option>
-          ))
-        }
-      </select>
-    </label>
-    <label>
-      Event type
-      <select name="eventType">
-        <option value="">Select…</option>
-        {
-          eventTypes.types.map((type) => (
-            <option value={type.id} selected={type.id === eventTypeParam}>
-              {type.title}
-            </option>
-          ))
-        }
-      </select>
-    </label>
-    <label>
-      Package
-      <select name="package" required>
-        <option value="">Select…</option>
-        {
-          catalog.packages.map((pkg) => (
-            <option value={pkg.id} selected={pkg.id === selected}>
-              {pkg.name}
-            </option>
-          ))
-        }
-      </select>
-    </label>
-    <label>
-      Notes
-      <textarea name="notes" rows="2" placeholder="Venue, vibe, must-have drinks…"></textarea>
-    </label>
-    <p class="hint">
-      {
-        bookingModule
-          ? "Submits to the booking Function when PUBLIC_FEATURE_BOOKING is on."
-          : "Opens your mail client until the booking module is enabled."
-      }
-    </p>
-    <button type="submit">Check availability</button>
-  </form>
+  <BookingForm
+    client:load
+    action={formAction}
+    method={formMethod}
+    packages={catalog.packages}
+    markets={locations.markets}
+    eventTypes={eventTypes.types}
+    region={locations.region}
+    selectedPackage={selected}
+    guests={guestsParam}
+    hours={hoursParam}
+    market={marketParam}
+    eventType={eventTypeParam}
+    hint={hint}
+  />
 </PageLayout>
 
 <style>
   .lead,
-  .selected,
-  .hint {
+  .selected {
     color: var(--muted-foreground);
     max-width: 40rem;
     font-size: 0.9rem;
@@ -136,48 +83,7 @@ const formMethod = bookingModule ? "post" : "get";
     background: var(--card);
   }
 
-  .book-form {
-    display: grid;
-    gap: 0.65rem;
-    max-width: 32rem;
-    margin-top: 0.75rem;
-  }
-
-  .row {
-    display: grid;
-    gap: 0.65rem;
-  }
-
-  label {
-    display: grid;
-    gap: 0.25rem;
-    font-size: 0.85rem;
-  }
-
-  input,
-  select,
-  textarea,
-  button {
-    font: inherit;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--foreground);
-    padding: 0.45rem 0.65rem;
-  }
-
-  button {
-    background: var(--primary);
-    color: var(--primary-foreground);
-    border-color: var(--primary);
-    font-weight: 600;
-    cursor: pointer;
-    min-height: 2.4rem;
-  }
-
-  @media (min-width: 520px) {
-    .row {
-      grid-template-columns: 1fr 1fr;
-    }
+  .lead a {
+    color: var(--primary);
   }
 </style>
