@@ -4,59 +4,78 @@
       "id": "orbit-essentials",
       "name": "Orbit Essentials",
       "kind": "size",
+      "menuId": "simple",
       "guests": "25–50",
       "guestsMin": 25,
       "guestsMax": 50,
       "duration": "3 hours",
       "fromPrice": 850,
-      "summary": "Beer + wine + two house cocktails, ice & garnishes, disposable serviceware.",
-      "includes": ["Setup & breakdown", "Ice & garnishes", "Basic glassware or compostables"],
+      "summary": "Beer & wine bar — local lager, IPA, house white & red, bubbles for toasts. No cocktail station.",
+      "includes": [
+        "Local lager, IPA & nonalcoholic beer",
+        "House white, red & prosecco",
+        "Ice & garnishes",
+        "Compostable serviceware"
+      ],
       "bestFor": "Backyard parties, small birthdays",
       "featured": true,
-      "preset": { "guests": 40, "hours": 3, "menuIndex": 1, "glassIndex": 0, "naIndex": 0 }
+      "preset": { "guests": 40, "hours": 3, "menuIndex": 0, "glassIndex": 0, "naIndex": 0 }
     },
     {
       "id": "signal-soirée",
       "name": "Signal Soirée",
       "kind": "size",
+      "menuId": "mid",
       "guests": "50–100",
       "guestsMin": 50,
       "guestsMax": 100,
       "duration": "4 hours",
       "fromPrice": 1600,
-      "summary": "Full cocktail menu (6 drinks), beer & wine, branded napkins, premium mixers.",
-      "includes": ["Menu consult", "Premium mixers", "Bar linens"],
+      "summary": "Draft pours, a can wall, and a short cocktail list — Signal Sour, Reentry Spritz, G&T upgrade, Dry Dock nonalcoholic.",
+      "includes": [
+        "House lager, seasonal ale & cider on draft",
+        "Light lager, hard seltzer & nonalcoholic cans",
+        "Signal Sour, Reentry Spritz, G&T upgrade, Dry Dock (nonalcoholic)",
+        "Mixed serviceware & light nonalcoholic"
+      ],
       "bestFor": "Mid-size receptions and mixers",
       "featured": true,
-      "preset": { "guests": 75, "hours": 4, "menuIndex": 2, "glassIndex": 1, "naIndex": 1 }
+      "preset": { "guests": 75, "hours": 4, "menuIndex": 1, "glassIndex": 1, "naIndex": 1 }
     },
     {
       "id": "deep-space",
       "name": "Deep Space",
       "kind": "size",
+      "menuId": "custom",
       "guests": "100–180",
       "guestsMin": 100,
       "guestsMax": 180,
       "duration": "5 hours",
       "fromPrice": 2800,
-      "summary": "Full mobile bar build, custom menu, non-alcoholic program, site walkthrough.",
-      "includes": ["Site walkthrough", "Custom recipes", "Bar lead on radio"],
+      "summary": "Full custom program — signature cocktails, curated draft & wine, welcome toast, and a full nonalcoholic bar.",
+      "includes": [
+        "Custom signatures & zero-proof twins",
+        "Curated draft, can wall & wine flight",
+        "Welcome punch or toast",
+        "Full nonalcoholic bar & glassware"
+      ],
       "bestFor": "Large celebrations and festivals",
       "featured": true,
-      "preset": { "guests": 140, "hours": 5, "menuIndex": 3, "glassIndex": 2, "naIndex": 2 }
+      "preset": { "guests": 140, "hours": 5, "menuIndex": 2, "glassIndex": 2, "naIndex": 2 }
     },
     {
       "id": "social-gathering",
       "name": "Social Gathering",
       "kind": "event",
       "eventType": "social",
+      "menuId": "mid",
       "guests": "30–70",
       "guestsMin": 30,
       "guestsMax": 70,
       "duration": "3 hours",
       "fromPrice": 1100,
-      "summary": "Birthday and backyard energy — house cocktails, beer & wine, easy setup.",
-      "includes": ["House cocktail trio", "Beer & wine", "Ice, garnishes, compostables", "Playlist-friendly pacing"],
+      "summary": "Birthday and backyard energy — mid-tier draft, cans, and a short cocktail list.",
+      "includes": ["Draft + can wall", "Short cocktail list + Dry Dock nonalcoholic", "Ice, garnishes, compostables", "Playlist-friendly pacing"],
       "bestFor": "Birthdays, backyard nights, casual celebrations",
       "featured": false,
       "preset": { "guests": 45, "hours": 3, "menuIndex": 1, "glassIndex": 0, "naIndex": 1 }
@@ -66,13 +85,14 @@
       "name": "Wedding Reception",
       "kind": "event",
       "eventType": "weddings",
+      "menuId": "custom",
       "guests": "60–140",
       "guestsMin": 60,
       "guestsMax": 140,
       "duration": "5 hours",
       "fromPrice": 2400,
-      "summary": "Ceremony-to-reception flow with a full cocktail menu and glassware.",
-      "includes": ["Menu consult", "Champagne toast option", "Full cocktail list", "Glassware & linens", "Light NA options"],
+      "summary": "Ceremony-to-reception flow with a full custom cocktail program and glassware.",
+      "includes": ["Custom signatures & toast", "Curated beer & wine", "Glassware & linens", "Full nonalcoholic options"],
       "bestFor": "Weddings and rehearsal dinners",
       "featured": false,
       "preset": { "guests": 100, "hours": 5, "menuIndex": 2, "glassIndex": 2, "naIndex": 1 }
@@ -82,40 +102,41 @@
       "name": "Corporate Mixer",
       "kind": "event",
       "eventType": "corporate",
+      "menuId": "mid",
       "guests": "40–120",
       "guestsMin": 40,
       "guestsMax": 120,
       "duration": "3 hours",
       "fromPrice": 1800,
-      "summary": "Clean branding, paced pours, and a menu that works for client nights and offsites.",
-      "includes": ["Branded napkins option", "Beer, wine & signature drinks", "Paced service windows", "Mixed serviceware"],
+      "summary": "Clean branding with draft, cans, and a short intentional cocktail list.",
+      "includes": ["Draft + can wall", "Short cocktail list", "Paced service windows", "Mixed serviceware"],
       "bestFor": "Offsites, client nights, team mixers",
       "featured": false,
-      "preset": { "guests": 70, "hours": 3, "menuIndex": 2, "glassIndex": 1, "naIndex": 1 }
+      "preset": { "guests": 70, "hours": 3, "menuIndex": 1, "glassIndex": 1, "naIndex": 1 }
     },
     {
       "id": "brand-activation",
       "name": "Brand Activation",
       "kind": "event",
       "eventType": "brand-activations",
+      "menuId": "custom",
       "guests": "50–160",
       "guestsMin": 50,
       "guestsMax": 160,
       "duration": "4 hours",
       "fromPrice": 2600,
-      "summary": "Pop-up tasting bar built around your product story and custom recipes.",
-      "includes": ["Custom recipe development", "Branded garnish & napkin program", "Tasting flight format", "Full NA + spirit options"],
+      "summary": "Pop-up tasting bar built around your product story and a full custom program.",
+      "includes": ["Brand feature pours & flights", "Custom recipes + zero-proof twins", "Branded garnish program", "Full nonalcoholic + spirit options"],
       "bestFor": "Pop-ups, launches, tasting programs",
       "featured": false,
-      "preset": { "guests": 90, "hours": 4, "menuIndex": 3, "glassIndex": 2, "naIndex": 2 }
+      "preset": { "guests": 90, "hours": 4, "menuIndex": 2, "glassIndex": 2, "naIndex": 2 }
     }
   ],
   "quote": {
     "setupFee": 275,
     "menuTiers": [
-      { "id": "beer-wine", "label": "Beer & wine", "perGuestHour": 7 },
-      { "id": "house", "label": "House cocktails", "perGuestHour": 11 },
-      { "id": "full", "label": "Full cocktail menu", "perGuestHour": 15 },
+      { "id": "simple", "label": "Beer & wine", "perGuestHour": 7 },
+      { "id": "mid", "label": "Draft & cocktails", "perGuestHour": 12 },
       { "id": "custom", "label": "Custom program", "perGuestHour": 19 }
     ],
     "glassware": [
@@ -124,9 +145,9 @@
       { "id": "glass", "label": "Glassware", "perGuest": 4 }
     ],
     "naProgram": [
-      { "id": "none", "label": "No NA add-on", "perGuest": 0 },
-      { "id": "light", "label": "Light NA", "perGuest": 3 },
-      { "id": "full", "label": "Full NA bar", "perGuest": 6 }
+      { "id": "none", "label": "No nonalcoholic add-on", "perGuest": 0 },
+      { "id": "light", "label": "Light nonalcoholic", "perGuest": 3 },
+      { "id": "full", "label": "Full nonalcoholic bar", "perGuest": 6 }
     ]
   }
 }

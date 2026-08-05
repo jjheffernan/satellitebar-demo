@@ -43,7 +43,7 @@
           "items": [
             { "name": "Light lager cans", "note": "High-volume easy pour" },
             { "name": "Hard seltzer", "note": "2–3 flavors" },
-            { "name": "NA cans", "note": "Beer + seltzer" }
+            { "name": "Nonalcoholic cans", "note": "Beer + seltzer" }
           ]
         },
         {
@@ -52,7 +52,7 @@
             { "name": "Signal Sour", "note": "Bourbon, lemon, demerara" },
             { "name": "Reentry Spritz", "note": "Prosecco, bitter, soda" },
             { "name": "Gin & tonic upgrade", "note": "Citrus + botanical garnish" },
-            { "name": "Dry Dock (NA)", "note": "Seedlip, citrus, tonic" }
+            { "name": "Dry Dock (nonalcoholic)", "note": "Seedlip, citrus, tonic" }
           ]
         }
       ]
@@ -61,7 +61,7 @@
       "id": "custom",
       "label": "Full custom",
       "name": "Custom program",
-      "summary": "Built around your event — signatures, flights, branded touches, and a full spirit + NA line.",
+      "summary": "Built around your event — signatures, flights, branded touches, and a full spirit + nonalcoholic line.",
       "sections": [
         {
           "title": "Signature cocktails",
@@ -69,7 +69,7 @@
             { "name": "Couple’s namesake", "note": "Custom stirred or shaken" },
             { "name": "Brand feature pour", "note": "Product-forward recipe" },
             { "name": "Low Orbit Negroni", "note": "Campari, vermouth, gin" },
-            { "name": "Zero-proof twin", "note": "Matching NA signature" }
+            { "name": "Zero-proof twin", "note": "Matching nonalcoholic signature" }
           ]
         },
         {
@@ -85,7 +85,7 @@
           "items": [
             { "name": "Welcome punch or toast", "note": "Batch or poured" },
             { "name": "Tasting flight format", "note": "Activations & launches" },
-            { "name": "Full NA bar", "note": "Mocktails + NA beer/wine" }
+            { "name": "Full nonalcoholic bar", "note": "Mocktails + nonalcoholic beer/wine" }
           ]
         }
       ]

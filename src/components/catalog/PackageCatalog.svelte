@@ -1,5 +1,5 @@
 <script>
-  let { items = [], quote = null, eventTypes = [] } = $props();
+  let { items = [], quote = null, eventTypes = [], sampleMenus = [] } = $props();
 
   const menuTiers = $derived(quote?.menuTiers ?? []);
   const glassware = $derived(quote?.glassware ?? []);
@@ -54,6 +54,10 @@
     return eventTypes.find((t) => t.id === id)?.title ?? id;
   }
 
+  function sampleMenu(id) {
+    return sampleMenus.find((m) => m.id === id) ?? null;
+  }
+
   function applyPackage(pkg) {
     selectedId = pkg.id;
     const preset = pkg.preset;
@@ -71,6 +75,170 @@
     }`,
   );
 </script>
+
+<section class="quote-block" aria-labelledby="quote-heading">
+  <h2 id="quote-heading">Quote calculator</h2>
+  <p class="packs__lede">Slide guests, hours, and menu style for a starting estimate.</p>
+
+  <div class="quote">
+    <div class="quote__sliders">
+      <label class="slider">
+        <span class="slider__head">
+          <span>Guests</span>
+          <strong>{guestCount}</strong>
+        </span>
+        <input type="range" min="20" max="180" step="5" bind:value={guests} />
+        <span class="slider__scale"><span>20</span><span>180</span></span>
+      </label>
+
+      <label class="slider">
+        <span class="slider__head">
+          <span>Service hours</span>
+          <strong>{hourCount} hr</strong>
+        </span>
+        <input type="range" min="2" max="6" step="1" bind:value={hours} />
+        <span class="slider__scale"><span>2</span><span>6</span></span>
+      </label>
+
+      <label class="slider">
+        <span class="slider__head">
+          <span>Menu</span>
+          <strong>{menu?.label ?? "—"}</strong>
+        </span>
+        <input
+          type="range"
+          min="0"
+          max={Math.max(menuTiers.length - 1, 0)}
+          step="1"
+          bind:value={menuIndex}
+        />
+        <span class="slider__scale">
+          <span>{menuTiers[0]?.label ?? ""}</span>
+          <span>{menuTiers.at(-1)?.label ?? ""}</span>
+        </span>
+      </label>
+
+      <label class="slider">
+        <span class="slider__head">
+          <span>Serviceware</span>
+          <strong>{glass?.label ?? "—"}</strong>
+        </span>
+        <input
+          type="range"
+          min="0"
+          max={Math.max(glassware.length - 1, 0)}
+          step="1"
+          bind:value={glassIndex}
+        />
+        <span class="slider__scale">
+          <span>{glassware[0]?.label ?? ""}</span>
+          <span>{glassware.at(-1)?.label ?? ""}</span>
+        </span>
+      </label>
+
+      <label class="slider">
+        <span class="slider__head">
+          <span>Nonalcoholic program</span>
+          <strong>{na?.label ?? "—"}</strong>
+        </span>
+        <input
+          type="range"
+          min="0"
+          max={Math.max(naProgram.length - 1, 0)}
+          step="1"
+          bind:value={naIndex}
+        />
+        <span class="slider__scale">
+          <span>{naProgram[0]?.label ?? ""}</span>
+          <span>{naProgram.at(-1)?.label ?? ""}</span>
+        </span>
+      </label>
+    </div>
+
+    <aside class="quote__result" aria-live="polite">
+      <p class="quote__eyebrow">Estimated quote</p>
+      <p class="quote__total">{formatUsd(estimated)}</p>
+      <p class="quote__band">
+        Suggested package: <strong>{suggested?.name ?? "Custom"}</strong>
+        {#if suggested}
+          <span>
+            {suggested.guests} guests · {suggested.duration}
+            {#if suggested.eventType}
+              · {eventLabel(suggested.eventType)}
+            {/if}
+          </span>
+        {/if}
+      </p>
+      <ul class="quote__breakdown">
+        <li>Setup <span>{formatUsd(setupFee)}</span></li>
+        <li>
+          {menu?.label ?? "Menu"} · {guestCount} × {hourCount} hr
+          <span>{formatUsd(guestCount * hourCount * (menu?.perGuestHour ?? 0))}</span>
+        </li>
+        {#if (glass?.perGuest ?? 0) > 0}
+          <li>
+            {glass.label}
+            <span>{formatUsd(guestCount * glass.perGuest)}</span>
+          </li>
+        {/if}
+        {#if (na?.perGuest ?? 0) > 0}
+          <li>
+            {na.label}
+            <span>{formatUsd(guestCount * na.perGuest)}</span>
+          </li>
+        {/if}
+      </ul>
+      <p class="quote__note">Starting estimate — final quote confirms after date and venue details.</p>
+      <a class="quote__cta" href={bookHref}>Request this quote</a>
+    </aside>
+  </div>
+</section>
+
+{#if sizePackages.length}
+  <section class="packs" aria-labelledby="branded-packs-heading">
+    <h2 id="branded-packs-heading">Branded packages</h2>
+    <p class="packs__lede">
+      Orbit, Signal, and Deep Space match our
+      <a class="packs__inline" href="/menu">sample menu</a>
+      tiers — load one to seed the quote sliders.
+    </p>
+    <ul class="packs__grid packs__grid--size">
+      {#each sizePackages as pkg (pkg.id)}
+        {@const sample = sampleMenu(pkg.menuId)}
+        <li id={pkg.id} class:active={suggested?.id === pkg.id || selectedId === pkg.id}>
+          {#if sample}
+            <p class="eyebrow">{sample.label} · {sample.name}</p>
+          {/if}
+          <h3>{pkg.name}</h3>
+          <p>{sample?.summary ?? pkg.summary}</p>
+          <p class="meta">{pkg.guests} guests · {pkg.duration} · {pkg.bestFor}</p>
+          {#if sample}
+            <ul class="includes">
+              {#each sample.sections as section}
+                <li>
+                  <strong>{section.title}:</strong>
+                  {section.items.map((i) => i.name).join(", ")}
+                </li>
+              {/each}
+            </ul>
+          {:else}
+            <ul class="includes">
+              {#each pkg.includes as line}
+                <li>{line}</li>
+              {/each}
+            </ul>
+          {/if}
+          <div class="packs__actions">
+            <button type="button" onclick={() => applyPackage(pkg)}>Load into quote</button>
+            {#if sample}
+              <a href="/menu">View sample menu</a>
+            {/if}
+          </div>
+        </li>
+      {/each}
+    </ul>
+  </section>
+{/if}
 
 {#if eventPackages.length}
   <section class="packs" aria-labelledby="event-packs-heading">
@@ -98,146 +266,17 @@
   </section>
 {/if}
 
-<div class="quote">
-  <div class="quote__sliders">
-    <label class="slider">
-      <span class="slider__head">
-        <span>Guests</span>
-        <strong>{guestCount}</strong>
-      </span>
-      <input type="range" min="20" max="180" step="5" bind:value={guests} />
-      <span class="slider__scale"><span>20</span><span>180</span></span>
-    </label>
-
-    <label class="slider">
-      <span class="slider__head">
-        <span>Service hours</span>
-        <strong>{hourCount} hr</strong>
-      </span>
-      <input type="range" min="2" max="6" step="1" bind:value={hours} />
-      <span class="slider__scale"><span>2</span><span>6</span></span>
-    </label>
-
-    <label class="slider">
-      <span class="slider__head">
-        <span>Menu</span>
-        <strong>{menu?.label ?? "—"}</strong>
-      </span>
-      <input
-        type="range"
-        min="0"
-        max={Math.max(menuTiers.length - 1, 0)}
-        step="1"
-        bind:value={menuIndex}
-      />
-      <span class="slider__scale">
-        <span>{menuTiers[0]?.label ?? ""}</span>
-        <span>{menuTiers.at(-1)?.label ?? ""}</span>
-      </span>
-    </label>
-
-    <label class="slider">
-      <span class="slider__head">
-        <span>Serviceware</span>
-        <strong>{glass?.label ?? "—"}</strong>
-      </span>
-      <input
-        type="range"
-        min="0"
-        max={Math.max(glassware.length - 1, 0)}
-        step="1"
-        bind:value={glassIndex}
-      />
-      <span class="slider__scale">
-        <span>{glassware[0]?.label ?? ""}</span>
-        <span>{glassware.at(-1)?.label ?? ""}</span>
-      </span>
-    </label>
-
-    <label class="slider">
-      <span class="slider__head">
-        <span>NA program</span>
-        <strong>{na?.label ?? "—"}</strong>
-      </span>
-      <input
-        type="range"
-        min="0"
-        max={Math.max(naProgram.length - 1, 0)}
-        step="1"
-        bind:value={naIndex}
-      />
-      <span class="slider__scale">
-        <span>{naProgram[0]?.label ?? ""}</span>
-        <span>{naProgram.at(-1)?.label ?? ""}</span>
-      </span>
-    </label>
-  </div>
-
-  <aside class="quote__result" aria-live="polite">
-    <p class="quote__eyebrow">Estimated quote</p>
-    <p class="quote__total">{formatUsd(estimated)}</p>
-    <p class="quote__band">
-      Suggested package: <strong>{suggested?.name ?? "Custom"}</strong>
-      {#if suggested}
-        <span>
-          {suggested.guests} guests · {suggested.duration}
-          {#if suggested.eventType}
-            · {eventLabel(suggested.eventType)}
-          {/if}
-        </span>
-      {/if}
-    </p>
-    <ul class="quote__breakdown">
-      <li>Setup <span>{formatUsd(setupFee)}</span></li>
-      <li>
-        {menu?.label ?? "Menu"} · {guestCount} × {hourCount} hr
-        <span>{formatUsd(guestCount * hourCount * (menu?.perGuestHour ?? 0))}</span>
-      </li>
-      {#if (glass?.perGuest ?? 0) > 0}
-        <li>
-          {glass.label}
-          <span>{formatUsd(guestCount * glass.perGuest)}</span>
-        </li>
-      {/if}
-      {#if (na?.perGuest ?? 0) > 0}
-        <li>
-          {na.label}
-          <span>{formatUsd(guestCount * na.perGuest)}</span>
-        </li>
-      {/if}
-    </ul>
-    <p class="quote__note">Starting estimate — final quote confirms after date and venue details.</p>
-    <a class="quote__cta" href={bookHref}>Request this quote</a>
-  </aside>
-</div>
-
-{#if sizePackages.length}
-  <section class="packs packs--bands" aria-labelledby="size-packs-heading">
-    <h2 id="size-packs-heading">Size bands</h2>
-    <p class="packs__lede">Sample packages by guest count — load one to seed the quote sliders.</p>
-    <ul class="packs__grid packs__grid--size">
-      {#each sizePackages as pkg (pkg.id)}
-        <li id={pkg.id} class:active={suggested?.id === pkg.id}>
-          <h3>{pkg.name}</h3>
-          <p>{pkg.summary}</p>
-          <p class="meta">{pkg.guests} guests · {pkg.duration} · {pkg.bestFor}</p>
-          <button type="button" onclick={() => applyPackage(pkg)}>Load into quote</button>
-        </li>
-      {/each}
-    </ul>
-  </section>
-{/if}
-
 <style>
+  .quote-block,
   .packs {
-    margin-bottom: 1.75rem;
+    margin-bottom: 2rem;
   }
 
-  .packs--bands {
-    margin-top: 1.75rem;
+  .packs:last-child {
     margin-bottom: 0;
   }
 
+  .quote-block h2,
   .packs h2 {
     margin: 0 0 0.25rem;
     font-size: 1.05rem;
@@ -247,6 +286,21 @@
     margin: 0 0 0.75rem;
     color: var(--muted-foreground);
     font-size: 0.88rem;
+  }
+
+  .packs__inline {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .packs__inline:hover {
+    border-bottom: 1px solid var(--primary);
+  }
+
+  .includes strong {
+    color: var(--foreground);
+    font-weight: 600;
   }
 
   .packs__grid {
