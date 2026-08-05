@@ -19,12 +19,18 @@ export async function onRequestPost(context) {
   }
 
   const fields = await readFields(context.request);
-  const required = ["name", "email", "date", "guests", "package", "market", "address", "city", "state", "zip"];
+  const outside = String(fields.scope || "") === "outside";
+
+  const required = outside
+    ? ["name", "email", "date", "guests", "region", "address", "city", "state", "zip"]
+    : ["name", "email", "date", "guests", "package", "market", "address", "city", "state", "zip"];
+
   const missing = required.filter((key) => !String(fields[key] || "").trim());
   if (missing.length) {
     return new Response(`Missing: ${missing.join(", ")}`, { status: 400 });
   }
 
-  // Queue / CRM adapter lands here. Acknowledge with a static thanks page redirect for now.
-  return Response.redirect(new URL("/book?sent=1", context.request.url), 303);
+  const thanks = outside ? "/open?sent=1" : "/book?sent=1";
+  // Queue / CRM adapter lands here.
+  return Response.redirect(new URL(thanks, context.request.url), 303);
 }

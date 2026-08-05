@@ -4,6 +4,8 @@
   let {
     action = "",
     method = "get",
+    /** "standard" = in-radius book · "outside" = beyond service radius */
+    variant = "standard",
     packages = [],
     markets = [],
     eventTypes = [],
@@ -16,18 +18,26 @@
     hint = "",
   } = $props();
 
+  const outside = $derived(variant === "outside");
+
   let marketId = $state(market || markets[0]?.id || "");
 
   const selectedMarket = $derived(markets.find((m) => m.id === marketId));
 </script>
 
 <form class="book-form" {method} {action}>
+  <input type="hidden" name="scope" value={outside ? "outside" : "standard"} />
+
   <section class="book-form__location" aria-labelledby="location-heading">
     <h2 id="location-heading">Location</h2>
     <p class="book-form__hint">
-      Tap a market on the map, then add the venue address.
-      {#if selectedMarket}
-        <span>Serving {selectedMarket.serviceArea}.</span>
+      {#if outside}
+        We’re based in northern Delaware. Tell us where your venue is and we’ll see if we can travel.
+      {:else}
+        Tap a market on the map, then add the venue address.
+        {#if selectedMarket}
+          <span>Serving {selectedMarket.serviceArea}.</span>
+        {/if}
       {/if}
     </p>
 
@@ -36,19 +46,32 @@
       center={region?.center ?? [-75.64, 39.71]}
       zoom={region?.zoom ?? 10.2}
       {markets}
-      radiusMiles={region?.serviceRadiusMiles ?? 8}
-      selectedId={marketId}
-      onSelect={(m) => (marketId = m.id)}
+      radiusMiles={region?.serviceRadiusMiles ?? 15}
+      selectedId={outside ? "" : marketId}
+      onSelect={outside ? undefined : (m) => (marketId = m.id)}
     />
 
-    <label>
-      Market
-      <select name="market" required bind:value={marketId}>
-        {#each markets as m}
-          <option value={m.id}>{m.name}</option>
-        {/each}
-      </select>
-    </label>
+    {#if outside}
+      <label>
+        Region / city
+        <input
+          name="region"
+          type="text"
+          required
+          placeholder="City, metro, or travel area"
+          autocomplete="address-level2"
+        />
+      </label>
+    {:else}
+      <label>
+        Market
+        <select name="market" required bind:value={marketId}>
+          {#each markets as m}
+            <option value={m.id}>{m.name}</option>
+          {/each}
+        </select>
+      </label>
+    {/if}
 
     <label>
       Venue name
@@ -67,7 +90,14 @@
       </label>
       <label>
         State
-        <input name="state" type="text" required autocomplete="address-level1" maxlength="2" placeholder="DE" />
+        <input
+          name="state"
+          type="text"
+          required
+          autocomplete="address-level1"
+          maxlength="2"
+          placeholder="DE"
+        />
       </label>
       <label>
         ZIP
@@ -101,40 +131,48 @@
       </label>
     </div>
 
-    {#if hours}
+    {#if hours && !outside}
       <input type="hidden" name="hours" value={hours} />
     {/if}
 
-    <label>
-      Event type
-      <select name="eventType">
-        <option value="">Select…</option>
-        {#each eventTypes as type}
-          <option value={type.id} selected={type.id === eventType}>{type.title}</option>
-        {/each}
-      </select>
-    </label>
+    {#if !outside}
+      <label>
+        Event type
+        <select name="eventType">
+          <option value="">Select…</option>
+          {#each eventTypes as type}
+            <option value={type.id} selected={type.id === eventType}>{type.title}</option>
+          {/each}
+        </select>
+      </label>
 
-    <label>
-      Package
-      <select name="package" required>
-        <option value="">Select…</option>
-        {#each packages as pkg}
-          <option value={pkg.id} selected={pkg.id === selectedPackage}>{pkg.name}</option>
-        {/each}
-      </select>
-    </label>
+      <label>
+        Package
+        <select name="package" required>
+          <option value="">Select…</option>
+          {#each packages as pkg}
+            <option value={pkg.id} selected={pkg.id === selectedPackage}>{pkg.name}</option>
+          {/each}
+        </select>
+      </label>
+    {/if}
 
     <label>
       Notes
-      <textarea name="notes" rows="2" placeholder="Vibe, must-have drinks, timing…"></textarea>
+      <textarea
+        name="notes"
+        rows="2"
+        placeholder={outside
+          ? "Distance, date flexibility, what you need from the bar…"
+          : "Vibe, must-have drinks, timing…"}
+      ></textarea>
     </label>
   </section>
 
   {#if hint}
     <p class="hint">{hint}</p>
   {/if}
-  <button type="submit">Check availability</button>
+  <button type="submit">{outside ? "Request travel quote" : "Check availability"}</button>
 </form>
 
 <style>
