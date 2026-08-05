@@ -16,7 +16,8 @@
 
   /** Soft radial falloff: opaque near center → transparent at radius edge. */
   function heatmapRadiusExpr(radiusMiles, lat = 39.71) {
-    const meters = radiusMiles * MILES_TO_METERS;
+    // Stretch drop-off past the service radius so the glow reads softer/wider.
+    const meters = radiusMiles * MILES_TO_METERS * 1.35;
     return [
       "interpolate",
       ["exponential", 2],
@@ -61,8 +62,8 @@
   const glowPaint = $derived({
     "heatmap-radius": heatmapRadiusExpr(radiusMiles),
     "heatmap-weight": 1,
-    "heatmap-intensity": 0.9,
-    "heatmap-opacity": 0.85,
+    "heatmap-intensity": 1.08,
+    "heatmap-opacity": 1,
     "heatmap-color": [
       "interpolate",
       ["linear"],
@@ -70,15 +71,15 @@
       0,
       "rgba(196, 160, 106, 0)",
       0.15,
-      "rgba(196, 160, 106, 0.08)",
+      "rgba(196, 160, 106, 0.1)",
       0.35,
-      "rgba(196, 160, 106, 0.22)",
+      "rgba(196, 160, 106, 0.26)",
       0.55,
-      "rgba(196, 160, 106, 0.4)",
+      "rgba(196, 160, 106, 0.48)",
       0.8,
-      "rgba(212, 176, 122, 0.62)",
+      "rgba(212, 176, 122, 0.74)",
       1,
-      "rgba(212, 176, 122, 0.78)",
+      "rgba(212, 176, 122, 0.94)",
     ],
   });
 </script>
