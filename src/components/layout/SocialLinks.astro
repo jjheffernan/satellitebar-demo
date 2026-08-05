@@ -5,7 +5,6 @@ const networks = [
   { key: "instagram", label: "Instagram" },
   { key: "facebook", label: "Facebook" },
   { key: "twitter", label: "Twitter" },
-  { key: "x", label: "X" },
 ]
   .filter((n) => site.social?.[n.key])
   .map((n) => ({ label: n.label, href: site.social[n.key] }));
