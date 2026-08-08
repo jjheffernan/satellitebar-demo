@@ -1,7 +1,7 @@
 # Satellite Bar — Build plan
 
 **Product:** Mobile bartending marketing + ordering hub.  
-**Stack:** **Astro + Svelte only** → Cloudflare Pages.  
+**Stack:** **Astro + Svelte only** → Cloudflare Pages **or** Netlify.  
 **Vision:** [VISION.md](./VISION.md) · **Hosting:** [hosting/README.md](./hosting/README.md)
 
 ## North star
@@ -122,7 +122,9 @@ Reference mobile-bar marketing site (Sip). **Adopt capability, not clone brandin
 
 ### Phase 8 — Events calendar (optional) (`events-calendar`)
 
-- [x] Static/list adapter (always on with other content modules)
+- [x] Static/list adapter on home (Upcoming teaser)
+- [x] Full calendar page `/calendar` — month grid + list from `calendar.json`
+- [x] Nav under Events → Calendar
 
 ### Phase 9 — Live chat (`live-chat`)
 
@@ -142,9 +144,11 @@ Do not expand i18n until a concrete locale (beyond English) is scheduled. Select
 
 - [x] Signup island + ESP Function
 
-### Phase 12 — Accounts (`accounts`) — **parked**
+### Phase 12 — Accounts (`accounts`) — **wire-in done; production parked**
 
-- [ ] Hosted IdP; guest + admin (Svelte islands for auth UI) — see [Adoption plan — Accounts & payments](#adoption-plan--accounts--payments)
+- [x] **Accounts M1 wire-in** — Better Auth + Google SSO (Astro’s preferred auth path); header island; `/api/auth/*` on Cloudflare + Netlify
+- [ ] Admin queue / roles (M2) — see [Adoption plan — Accounts & payments](#adoption-plan--accounts--payments)
+- [ ] Keep `PUBLIC_FEATURE_ACCOUNTS` **off** in production until secrets + libSQL schema are ready
 
 ### Phase 13 — Booking / availability (`booking`)
 
@@ -165,7 +169,7 @@ Do not expand i18n until a concrete locale (beyond English) is scheduled. Select
 
 ## Adoption plan — Accounts & payments
 
-Both modules stay **parked** (flags exist in `features.json` / `.env.example`; **no UI or Functions yet**). High-risk overnight work: auth, money movement, PCI-adjacent flows, support load. This section is the adoption contract so we can unpark without redesigning the hub.
+Payments stay **parked**. Accounts has a **Gmail SSO wire-in** (Better Auth + Google) behind `PUBLIC_FEATURE_ACCOUNTS` — leave the flag off in production until secrets + DB migrate are ready. High-risk overnight work remains: money movement, admin roles, PCI-adjacent flows. This section is the adoption contract for the rest.
 
 ### Why they wait
 
@@ -173,7 +177,7 @@ Both modules stay **parked** (flags exist in `features.json` / `.env.example`; *
 | --- | --- |
 | Booking is inquiry-first today | Deposit only makes sense after availability confirm is trusted |
 | No guest identity yet | Payments without accounts ⇒ one-off checkout links; accounts without payments ⇒ empty admin |
-| Language rule | Auth + pay UI = **Svelte islands**; server = Cloudflare **Functions** only — no app JS in `src/` |
+| Language rule | Auth + pay UI = **Svelte islands**; server = host Functions (Cloudflare `functions/` or Netlify `netlify/functions/`) — no app JS in `src/` |
 | Owner ops | Secrets, webhooks, and refunds must be checklist-driven ([hosting/README.md](./hosting/README.md)) |
 
 ### North-star customer loop (when unparked)
@@ -195,14 +199,14 @@ Accounts and payments are **paired**: ship payment deposit first if we must sequ
 - [ ] Stripe (and optional PayPal) business account ready; tax/payout settings done
 - [ ] Decision: guest accounts **required** for deposit vs **optional** magic-link checkout
 
-### Recommended providers (hosted — no DIY IdP/processor)
+### Recommended providers (hosted — no DIY password DB / processor)
 
 | Concern | Choice | Notes |
 | --- | --- | --- |
-| Auth / IdP | **Clerk** or **Auth0** (pick one) | Hosted; Svelte islands for sign-in; session via HTTP-only cookie or JWT verified in Functions |
+| Auth / SSO | **Better Auth + Google** (chosen) | Astro-documented auth path; Google is the IdP for Gmail SSO; session cookies via `/api/auth/*` Functions; users/sessions in **libSQL/Turso** |
 | Card + wallet | **Stripe Checkout** (primary) | Hosted checkout = less PCI surface; Functions create session + webhook |
 | Alt pay | **PayPal** (± Venmo where available) | Second button on deposit step only if owner needs it day one |
-| Data | Cloudflare **D1** or **KV** for booking↔payment ids | Keep PII minimal; never store raw card data |
+| Booking↔pay ids | Cloudflare **D1** or **KV** (optional) | Keep PII minimal; never store raw card data |
 
 ### Build slices (order matters)
 
@@ -217,14 +221,14 @@ Accounts and payments are **paired**: ship payment deposit first if we must sequ
    - Success / cancel return URLs; clear copy; link back to packages.  
    - Owner hosting checklist: webhook URL, test mode → live flip.
 
-3. **Accounts M1 — guest auth**  
-   - Hosted IdP; `PUBLIC_FEATURE_ACCOUNTS=1` + `AUTH_SECRET` (or IdP keys).  
-   - Svelte islands: sign-in / sign-out in header slot.  
-   - Attach auth subject to booking records created while signed in.
+3. **Accounts M1 — guest auth (wired)**  
+   - Better Auth + Google; `PUBLIC_FEATURE_ACCOUNTS=1` + `BETTER_AUTH_SECRET` (or `AUTH_SECRET`), `BETTER_AUTH_URL`, `GOOGLE_CLIENT_*`, `AUTH_DATABASE_URL`.  
+   - Svelte island: Continue with Google / sign-out in header (`header.accounts`).  
+   - Next: attach auth subject to booking records created while signed in.
 
 4. **Accounts M2 — admin**  
    - Role-gated `/admin` (Astro shell + Svelte table): inquiry queue, confirm, trigger deposit.  
-   - Prefer IdP roles over rolling our own permission DB.
+   - Prefer Better Auth roles / allowlist over rolling our own permission DB.
 
 5. **Accounts M3 — guest portal (optional)**  
    - “My bookings” read-only; deep-link to pay if unpaid.
@@ -234,7 +238,7 @@ Accounts and payments are **paired**: ship payment deposit first if we must sequ
 | Module | Public flag | Secrets | Safe when missing |
 | --- | --- | --- | --- |
 | `payments` | `PUBLIC_FEATURE_PAYMENTS` | `STRIPE_SECRET_KEY`, Stripe webhook secret; optional PayPal | Site up; no pay CTAs; booking still works as inquiry |
-| `accounts` | `PUBLIC_FEATURE_ACCOUNTS` | IdP keys + `AUTH_SECRET` | Site up; no sign-in chrome; admin routes 404 |
+| `accounts` | `PUBLIC_FEATURE_ACCOUNTS` | `BETTER_AUTH_SECRET` (or `AUTH_SECRET`), `BETTER_AUTH_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `AUTH_DATABASE_URL` (± `AUTH_DATABASE_AUTH_TOKEN`) | Site up; no sign-in chrome when flag off; `/api/auth/*` → 503 if secrets/DB missing |
 
 Missing secrets ⇒ feature **off** or safe error. Never commit keys. Redeploy after env changes; confirm via `/api/capabilities`.
 
@@ -274,7 +278,7 @@ Product owner schedules a dedicated sprint (not overnight), prerequisites checkl
 | `live-chat` | `PUBLIC_FEATURE_LIVE_CHAT` | Vendor embed |
 | `i18n` | `PUBLIC_FEATURE_I18N` | **Parked — leave off** until real locales |
 | `mailing-list` | `PUBLIC_FEATURE_MAILING_LIST` | Exists in features.json |
-| `accounts` | `PUBLIC_FEATURE_ACCOUNTS` | **Parked** — see adoption plan |
+| `accounts` | `PUBLIC_FEATURE_ACCOUNTS` | **Wire-in** Better Auth + Google; leave off in prod until secrets + migrate |
 | `booking` | `PUBLIC_FEATURE_BOOKING` | Form posts to Function when on |
 | `payments` | `PUBLIC_FEATURE_PAYMENTS` | **Parked** — see adoption plan |
 
@@ -286,7 +290,7 @@ Product owner schedules a dedicated sprint (not overnight), prerequisites checkl
 | Offerings | `src/data/catalog.json` |
 | Interactive UI | Svelte islands |
 | Static shell | Astro pages/layouts |
-| Hosting | Cloudflare Pages |
+| Hosting | **Cloudflare Pages** or **Netlify** (same `dist/`; parallel `/api/*` adapters) |
 | Mistake corrected | SvelteKit-only migration reverted — Astro stays |
 | Competitive ref | Sip feature set adopted into plan; Satellite brand + compact UX kept |
 | Blog | **Dropped** — use testimonials instead |
@@ -295,4 +299,5 @@ Product owner schedules a dedicated sprint (not overnight), prerequisites checkl
 | Content modules | Always on (empty `publicEnv`); ops widgets stay flagged |
 | Instagram feed | **Pane (B)** — live grid via `PUBLIC_PANE_FEED_ID`; Behold removed; Graph API deferred |
 | i18n | **Flagged off** until translated copy exists |
-| Accounts / payments | **Parked** with adoption plan; Stripe Checkout + hosted IdP when unparked |
+| Accounts | **Better Auth + Google** wire-in; flag off in prod until secrets + libSQL migrate |
+| Payments | **Parked** with adoption plan; Stripe Checkout when unparked |
