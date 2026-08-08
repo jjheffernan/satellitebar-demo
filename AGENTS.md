@@ -18,7 +18,7 @@ Data is JSON under `src/data/`. Tooling configs (`astro.config.mjs`, `svelte.con
 
 - Astro 7 + `@astrojs/svelte` + Svelte 5
 - Tailwind v4 via Vite plugin
-- Cloudflare Pages (`dist/` + optional `functions/`)
+- Deploy: **Cloudflare Pages** (`functions/`) **or** **Netlify** (`netlify/functions/`) — both publish `dist/`
 
 ## Hard rules
 
