@@ -10,5 +10,5 @@
     "verbatimModuleSyntax": false
   },
   "include": [".astro/types.d.ts", "src/**/*", "src/env.d.ts"],
-  "exclude": ["dist", "functions", "node_modules"]
+  "exclude": ["dist", "deploy", "functions", "node_modules"]
 }

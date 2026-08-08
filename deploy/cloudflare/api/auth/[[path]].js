@@ -1,4 +1,4 @@
-import { authConfigured, createAuth, notConfiguredResponse } from "../../functions/_shared/auth.mjs";
+import { authConfigured, createAuth, notConfiguredResponse } from "../../../shared/auth.mjs";
 
 function corsHeaders(request) {
   const origin = request.headers.get("Origin") || "";
@@ -11,8 +11,9 @@ function corsHeaders(request) {
   return headers;
 }
 
-export default async (request) => {
-  const env = process.env;
+export async function onRequest(context) {
+  const env = context.env ?? {};
+  const { request } = context;
 
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: corsHeaders(request) });
@@ -47,6 +48,4 @@ export default async (request) => {
       },
     );
   }
-};
-
-export const config = { path: "/api/auth/*" };
+}

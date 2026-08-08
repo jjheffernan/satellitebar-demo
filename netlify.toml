@@ -1,5 +1,5 @@
 # Netlify — static Astro site + /api/* Functions
-# Cloudflare Pages remains supported via wrangler.jsonc + functions/
+# Cloudflare twin: wrangler.jsonc + deploy/cloudflare (root `functions` symlink)
 
 [build]
   command = "pnpm build"
@@ -10,7 +10,7 @@
   PNPM_VERSION = "9.15.0"
 
 [functions]
-  directory = "netlify/functions"
+  directory = "deploy/netlify"
   node_bundler = "esbuild"
 
 # Prefer pnpm (matches packageManager in package.json)

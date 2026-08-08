@@ -1,5 +1,5 @@
 import features from "../../src/data/features.json";
-import { authConfigured } from "../_shared/auth.mjs";
+import { authConfigured } from "../../shared/auth.mjs";
 
 function envOn(env, key) {
   const value = env?.[key];
