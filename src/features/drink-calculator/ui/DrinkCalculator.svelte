@@ -10,8 +10,8 @@
       id: "beer-wine",
       label: "Beer & wine",
       factor: 0.7,
-      vessel: "bottle",
-      vesselLabel: "Beer bottle",
+      vessel: "beer",
+      vesselLabel: "Beer glass",
     },
     {
       id: "mixed",
@@ -22,10 +22,10 @@
     },
     {
       id: "premium",
-      label: "Premium / full menu",
+      label: "Premium / full bar",
       factor: 1.25,
-      vessel: "fancy",
-      vesselLabel: "Coupe glass",
+      vessel: "whiskey",
+      vesselLabel: "Whiskey glass",
     },
   ];
 
@@ -72,8 +72,31 @@
       {#each styles as s}
         <label class="styles__option" class:active={style === s.id}>
           <input type="radio" name="drink-style" value={s.id} bind:group={style} />
+          <span class="styles__icon" aria-hidden="true">
+            {#if s.vessel === "beer"}
+              <!-- Lucide beer · ISC https://lucide.dev/icons/beer -->
+              <svg viewBox="0 0 24 24"
+                ><path d="M17 11h1a3 3 0 0 1 0 6h-1" /><path d="M9 12v6" /><path d="M13 12v6" /><path
+                  d="M14 7.5c-1 0-1.44.5-3 .5s-2-.5-3-.5-1.72.5-2.5.5a2.5 2.5 0 0 1 0-5c.78 0 1.57.5 2.5.5S9.44 2 11 2s2 1.5 3 1.5 1.72-.5 2.5-.5a2.5 2.5 0 0 1 0 5c-.78 0-1.5-.5-2.5-.5Z"
+                /><path d="M5 8v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8" /></svg
+              >
+            {:else if s.vessel === "wine"}
+              <!-- Lucide wine · ISC https://lucide.dev/icons/wine -->
+              <svg viewBox="0 0 24 24"
+                ><path d="M8 22h8" /><path d="M7 10h10" /><path d="M12 15v7" /><path
+                  d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z"
+                /></svg
+              >
+            {:else}
+              <!-- Rocks / whiskey tumbler (Lucide-style stroke) -->
+              <svg viewBox="0 0 24 24"
+                ><path d="M6 5h12l-1.2 14.2A2 2 0 0 1 14.8 21H9.2a2 2 0 0 1-2-1.8L6 5Z" /><path
+                  d="M7.2 11h9.6"
+                /><path d="M10 8.5h1.2v2.2H10z" /><path d="M12.8 7.8h1.4v2.8h-1.4z" /></svg
+              >
+            {/if}
+          </span>
           <span class="styles__name">{s.label}</span>
-          <span class="styles__vessel">{s.vesselLabel}</span>
         </label>
       {/each}
     </fieldset>
@@ -110,29 +133,32 @@
       <div class="gauge__vessel" data-vessel={activeStyle.vessel}>
         <div class="gauge__liquid" style={`--level: ${fill};`}></div>
 
-        {#if activeStyle.vessel === "bottle"}
-          <svg class="gauge__icon" viewBox="0 0 64 120" aria-hidden="true">
+        {#if activeStyle.vessel === "beer"}
+          <!-- Lucide beer · ISC https://lucide.dev/icons/beer -->
+          <svg class="gauge__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17 11h1a3 3 0 0 1 0 6h-1" />
+            <path d="M9 12v6" />
+            <path d="M13 12v6" />
             <path
-              class="gauge__outline"
-              d="M26 8h12l2 18c6 4 10 12 10 22v54a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10V48c0-10 4-18 10-22L26 8z"
+              d="M14 7.5c-1 0-1.44.5-3 .5s-2-.5-3-.5-1.72.5-2.5.5a2.5 2.5 0 0 1 0-5c.78 0 1.57.5 2.5.5S9.44 2 11 2s2 1.5 3 1.5 1.72-.5 2.5-.5a2.5 2.5 0 0 1 0 5c-.78 0-1.5-.5-2.5-.5Z"
             />
-            <rect class="gauge__neck" x="28" y="4" width="8" height="10" rx="2" />
+            <path d="M5 8v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8" />
           </svg>
         {:else if activeStyle.vessel === "wine"}
-          <svg class="gauge__icon" viewBox="0 0 64 120" aria-hidden="true">
-            <path
-              class="gauge__outline"
-              d="M14 12h36c0 18-8 30-18 36v36h10v8H22v-8h10V48C22 42 14 30 14 12z"
-            />
-            <ellipse class="gauge__rim" cx="32" cy="12" rx="18" ry="3" />
+          <!-- Lucide wine · ISC https://lucide.dev/icons/wine -->
+          <svg class="gauge__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 22h8" />
+            <path d="M7 10h10" />
+            <path d="M12 15v7" />
+            <path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z" />
           </svg>
         {:else}
-          <svg class="gauge__icon" viewBox="0 0 64 120" aria-hidden="true">
-            <path
-              class="gauge__outline"
-              d="M10 28c0-2 2-6 8-10 6-4 14-6 14-6s8 2 14 6c6 4 8 8 8 10 0 18-10 28-22 34v26h8v8H24v-8h8V62C20 56 10 46 10 28z"
-            />
-            <path class="gauge__rim" d="M12 28c4-8 12-14 20-14s16 6 20 14" />
+          <!-- Rocks / whiskey tumbler -->
+          <svg class="gauge__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 5h12l-1.2 14.2A2 2 0 0 1 14.8 21H9.2a2 2 0 0 1-2-1.8L6 5Z" />
+            <path d="M7.2 11h9.6" />
+            <path d="M10 8.5h1.2v2.2H10z" />
+            <path d="M12.8 7.8h1.4v2.8h-1.4z" />
           </svg>
         {/if}
       </div>
@@ -201,11 +227,9 @@
 
   .styles__option {
     display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto;
-    column-gap: 0.55rem;
-    row-gap: 0.05rem;
+    grid-template-columns: auto auto 1fr;
     align-items: center;
+    column-gap: 0.55rem;
     padding: 0.55rem 0.7rem;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
@@ -219,19 +243,31 @@
   }
 
   .styles__option input {
-    grid-row: 1 / span 2;
     accent-color: var(--primary);
+  }
+
+  .styles__icon {
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    color: var(--primary);
+  }
+
+  .styles__icon svg {
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .styles__name {
     font-size: 0.9rem;
     font-weight: 600;
-  }
-
-  .styles__vessel {
-    grid-column: 2;
-    color: var(--muted-foreground);
-    font-size: 0.75rem;
+    min-width: 0;
   }
 
   .suggest {
@@ -333,44 +369,39 @@
     pointer-events: none;
   }
 
-  .gauge__vessel[data-vessel="bottle"] .gauge__liquid {
-    left: 28%;
-    right: 28%;
-    bottom: 12%;
-    height: calc(58% * var(--level, 0));
-    border-radius: 8px 8px 14px 14px;
+  .gauge__vessel[data-vessel="beer"] .gauge__liquid {
+    left: 30%;
+    right: 26%;
+    bottom: 14%;
+    height: calc(48% * var(--level, 0));
+    border-radius: 4px 4px 10px 10px;
   }
 
   .gauge__vessel[data-vessel="wine"] .gauge__liquid {
-    left: 24%;
-    right: 24%;
-    bottom: 38%;
-    height: calc(28% * var(--level, 0));
+    left: 34%;
+    right: 34%;
+    bottom: 42%;
+    height: calc(22% * var(--level, 0));
     border-radius: 50% 50% 40% 40%;
   }
 
-  .gauge__vessel[data-vessel="fancy"] .gauge__liquid {
-    left: 22%;
-    right: 22%;
-    bottom: 42%;
-    height: calc(26% * var(--level, 0));
-    border-radius: 45% 45% 35% 35%;
+  .gauge__vessel[data-vessel="whiskey"] .gauge__liquid {
+    left: 28%;
+    right: 28%;
+    bottom: 18%;
+    height: calc(42% * var(--level, 0));
+    border-radius: 2px 2px 8px 8px;
   }
 
   .gauge__icon {
     position: relative;
     z-index: 1;
-    width: 42%;
+    width: 46%;
     height: auto;
     overflow: visible;
-  }
-
-  .gauge__outline,
-  .gauge__neck,
-  .gauge__rim {
     fill: none;
     stroke: color-mix(in oklch, var(--foreground) 88%, var(--primary));
-    stroke-width: 2.5;
+    stroke-width: 1.75;
     stroke-linejoin: round;
     stroke-linecap: round;
   }
