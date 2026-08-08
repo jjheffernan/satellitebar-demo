@@ -8,6 +8,9 @@ export default defineConfig({
   integrations: [svelte(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: ["maplibre-gl", "svelte-maplibre"],
+    },
   },
   build: {
     format: "directory",
