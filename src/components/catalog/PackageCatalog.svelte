@@ -15,6 +15,8 @@
   let glassIndex = $state(1);
   let naIndex = $state(0);
   let selectedId = $state("");
+  let quoteFlash = $state(false);
+  let quoteEl = $state(null);
 
   const menu = $derived(menuTiers[Number(menuIndex)] ?? menuTiers[0]);
   const glass = $derived(glassware[Number(glassIndex)] ?? glassware[0]);
@@ -61,12 +63,21 @@
   function applyPackage(pkg) {
     selectedId = pkg.id;
     const preset = pkg.preset;
-    if (!preset) return;
-    guests = preset.guests;
-    hours = preset.hours;
-    menuIndex = preset.menuIndex;
-    glassIndex = preset.glassIndex;
-    naIndex = preset.naIndex;
+    if (preset) {
+      // Coerce — range inputs often leave string state after user drag.
+      guests = Number(preset.guests);
+      hours = Number(preset.hours);
+      menuIndex = Number(preset.menuIndex);
+      glassIndex = Number(preset.glassIndex);
+      naIndex = Number(preset.naIndex);
+    }
+    quoteFlash = true;
+    requestAnimationFrame(() => {
+      quoteEl?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    window.setTimeout(() => {
+      quoteFlash = false;
+    }, 1200);
   }
 
   const bookHref = $derived(
@@ -76,7 +87,13 @@
   );
 </script>
 
-<section class="quote-block" aria-labelledby="quote-heading">
+<section
+  id="quote-calculator"
+  class="quote-block"
+  class:quote-block--flash={quoteFlash}
+  aria-labelledby="quote-heading"
+  bind:this={quoteEl}
+>
   <h2 id="quote-heading">Quote calculator</h2>
   <p class="packs__lede">Slide guests, hours, and menu style for a starting estimate.</p>
 
@@ -273,6 +290,26 @@
   .quote-block,
   .packs {
     margin-bottom: 2rem;
+  }
+
+  .quote-block {
+    scroll-margin-top: 4.5rem;
+  }
+
+  .quote-block--flash .quote__result {
+    animation: quote-flash 1.1s ease;
+  }
+
+  @keyframes quote-flash {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in oklch, var(--primary) 55%, transparent);
+    }
+    35% {
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--primary) 45%, transparent);
+    }
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+    }
   }
 
   .packs:last-child {
