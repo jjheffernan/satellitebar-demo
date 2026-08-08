@@ -33,7 +33,10 @@ const hubLinks = [
     <Testimonials />
 
     <div class="hub__block">
-      <h2 id="cal-heading">Upcoming</h2>
+      <div class="hub__block-head">
+        <h2 id="cal-heading">Upcoming</h2>
+        <a class="hub__block-link" href="/calendar">Full calendar</a>
+      </div>
       <FeatureSlot name="home.events-calendar" />
     </div>
 
@@ -59,10 +62,30 @@ const hubLinks = [
     margin-top: 1.35rem;
   }
 
-  .hub__block h2 {
+  .hub__block-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
     margin: 0 0 0.55rem;
+  }
+
+  .hub__block h2 {
+    margin: 0;
     font-size: 1.05rem;
     letter-spacing: -0.02em;
+  }
+
+  .hub__block-link {
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .hub__block-link:hover {
+    text-decoration: underline;
   }
 
   .hub__links {
