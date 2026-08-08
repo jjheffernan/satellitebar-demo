@@ -1,0 +1,31 @@
+---
+// @ts-nocheck — pnpm + Astro LS can false-positive TS2306 on .svelte imports; build/check OK.
+import PageLayout from "../../layouts/PageLayout.astro";
+import TestimonialAdmin from "../../features/testimonials/ui/TestimonialAdmin.svelte";
+---
+
+<PageLayout
+  title="Moderate testimonials"
+  description="Approve or reject host testimonials before they appear on the site."
+  path="/admin/testimonials"
+>
+  <p class="lede">
+    Pending quotes from signed-in hosts. Approved items show on the home page via
+    <code>/api/testimonials</code> without a rebuild.
+  </p>
+  <TestimonialAdmin client:load />
+</PageLayout>
+
+<style>
+  .lede {
+    margin: 0 0 1.25rem;
+    max-width: 36rem;
+    color: var(--muted-foreground);
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  code {
+    font-size: 0.85em;
+  }
+</style>
