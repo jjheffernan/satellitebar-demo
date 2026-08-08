@@ -70,7 +70,8 @@
         "BETTER_AUTH_URL",
         "GOOGLE_CLIENT_ID",
         "GOOGLE_CLIENT_SECRET",
-        "AUTH_DATABASE_URL"
+        "AUTH_DATABASE_URL",
+        "ADMIN_EMAILS"
       ],
       "slots": ["header.accounts"]
     },

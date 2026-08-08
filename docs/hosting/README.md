@@ -3,14 +3,14 @@
 Non-engineering checklist for **Cloudflare Pages** or **Netlify** + feature flags.
 
 Site build is the same on both: `pnpm build` → `dist/`.  
-`/api/*` exists on both platforms (Cloudflare `functions/`, Netlify `netlify/functions/`).
+`/api/*` lives under [`deploy/`](../../deploy/README.md) (shared helpers + per-host adapters).
 
 ## Choose a host
 
 | | Cloudflare Pages | Netlify |
 | --- | --- | --- |
 | Config | `wrangler.jsonc` | `netlify.toml` |
-| API routes | `functions/api/*.js` | `netlify/functions/*.mjs` (`path: /api/…`) |
+| API routes | `deploy/cloudflare/api/*.js` (root `functions` → symlink) | `deploy/netlify/*.mjs` (`path: /api/…`) |
 | Env vars | Pages → Settings → Environment variables | Site → Project configuration → Environment variables |
 | Headers | `public/_headers` (copied to `dist/`) | same `_headers` in publish dir |
 | Local API | `wrangler pages dev dist` (optional) | `npx netlify dev` (optional) |
@@ -25,14 +25,14 @@ Pick **one** production host. You can keep the other config in-repo for a future
 2. Build command: `pnpm build`
 3. Output directory: `dist`
 4. Compatibility: Node (see `wrangler.jsonc` — `nodejs_compat`)
-5. Leave `functions/` in place for `/api/*`
+5. Leave `deploy/cloudflare/` (and root `functions` symlink) in place for `/api/*`
 
 ## Deploy — Netlify
 
 1. Connect this GitHub repo to **Netlify**
 2. Build settings are in `netlify.toml` (`pnpm build` → `dist`)
 3. Node **22** + pnpm **9.15.0** (set in `netlify.toml`)
-4. Leave `netlify/functions/` in place for `/api/*`
+4. Leave `deploy/netlify/` in place for `/api/*`
 
 CLI (optional):
 
@@ -97,13 +97,22 @@ Gmail SSO is wired (Astro’s preferred auth path: **Better Auth** + Google). Le
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | From Google Cloud Console |
 | `AUTH_DATABASE_URL` | `libsql://…` (or file URL for local Node/Netlify experiments) |
 | `AUTH_DATABASE_AUTH_TOKEN` | Turso token when using remote libSQL |
+| `ADMIN_EMAILS` | Comma-separated Google emails allowed to moderate at `/admin/testimonials` |
 
 Confirm: `/api/capabilities` lists `accounts` as `active: true`. Missing secrets ⇒ `/api/auth/*` returns **503** JSON (`accounts_not_configured`).
 
+### Testimonials (sign-in + approve)
+
+With accounts configured:
+
+1. Hosts sign in on the home page (“Share your experience”) and submit a quote → stored as **pending** in libSQL.
+2. Admins open `/admin/testimonials`, sign in with an `ADMIN_EMAILS` address, **Approve** or **Reject**.
+3. Approved quotes appear on the home page via `GET /api/testimonials` **without a rebuild** (seed JSON remains the offline fallback).
+
 API routes:
 
-- Cloudflare: `functions/api/auth/[[path]].js`
-- Netlify: `netlify/functions/auth.mjs` → `/api/auth/*`
+- Cloudflare: `deploy/cloudflare/api/auth/[[path]].js`, `…/testimonials.js`, `…/testimonials/admin.js`
+- Netlify: `deploy/netlify/auth.mjs` → `/api/auth/*`; `testimonials.mjs` / `testimonials-admin.mjs`
 
 ## Parked: payments
 

@@ -117,8 +117,9 @@ Reference mobile-bar marketing site (Sip). **Adopt capability, not clone brandin
 
 ### Phase 7 — Testimonials (not blog)
 
-- [x] Home testimonials from `src/data/testimonials.json`
+- [x] Home testimonials from `src/data/testimonials.json` (seed) + live approved feed
 - [x] **No blog** — dropped; social proof via quotes instead
+- [x] Sign-in–gated submit form; admin approve at `/admin/testimonials` (`ADMIN_EMAILS`)
 
 ### Phase 8 — Events calendar (optional) (`events-calendar`)
 
@@ -177,7 +178,7 @@ Payments stay **parked**. Accounts has a **Gmail SSO wire-in** (Better Auth + Go
 | --- | --- |
 | Booking is inquiry-first today | Deposit only makes sense after availability confirm is trusted |
 | No guest identity yet | Payments without accounts ⇒ one-off checkout links; accounts without payments ⇒ empty admin |
-| Language rule | Auth + pay UI = **Svelte islands**; server = host Functions (Cloudflare `functions/` or Netlify `netlify/functions/`) — no app JS in `src/` |
+| Language rule | Auth + pay UI = **Svelte islands**; server = host Functions under `deploy/` (Cloudflare / Netlify) — no app JS in `src/` |
 | Owner ops | Secrets, webhooks, and refunds must be checklist-driven ([hosting/README.md](./hosting/README.md)) |
 
 ### North-star customer loop (when unparked)
@@ -227,8 +228,9 @@ Accounts and payments are **paired**: ship payment deposit first if we must sequ
    - Next: attach auth subject to booking records created while signed in.
 
 4. **Accounts M2 — admin**  
-   - Role-gated `/admin` (Astro shell + Svelte table): inquiry queue, confirm, trigger deposit.  
-   - Prefer Better Auth roles / allowlist over rolling our own permission DB.
+   - [x] Testimonial moderation: `/admin/testimonials` + `ADMIN_EMAILS` allowlist; approve → live on home via `/api/testimonials`.  
+   - [ ] Booking inquiry queue / deposit triggers (later).  
+   - Prefer email allowlist / Better Auth roles over rolling our own permission DB.
 
 5. **Accounts M3 — guest portal (optional)**  
    - “My bookings” read-only; deep-link to pay if unpaid.
@@ -238,7 +240,7 @@ Accounts and payments are **paired**: ship payment deposit first if we must sequ
 | Module | Public flag | Secrets | Safe when missing |
 | --- | --- | --- | --- |
 | `payments` | `PUBLIC_FEATURE_PAYMENTS` | `STRIPE_SECRET_KEY`, Stripe webhook secret; optional PayPal | Site up; no pay CTAs; booking still works as inquiry |
-| `accounts` | `PUBLIC_FEATURE_ACCOUNTS` | `BETTER_AUTH_SECRET` (or `AUTH_SECRET`), `BETTER_AUTH_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `AUTH_DATABASE_URL` (± `AUTH_DATABASE_AUTH_TOKEN`) | Site up; no sign-in chrome when flag off; `/api/auth/*` → 503 if secrets/DB missing |
+| `accounts` | `PUBLIC_FEATURE_ACCOUNTS` | `BETTER_AUTH_SECRET` (or `AUTH_SECRET`), `BETTER_AUTH_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `AUTH_DATABASE_URL` (± `AUTH_DATABASE_AUTH_TOKEN`), `ADMIN_EMAILS` | Site up; no sign-in chrome when flag off; `/api/auth/*` → 503 if secrets/DB missing; testimonial form hidden |
 
 Missing secrets ⇒ feature **off** or safe error. Never commit keys. Redeploy after env changes; confirm via `/api/capabilities`.
 
