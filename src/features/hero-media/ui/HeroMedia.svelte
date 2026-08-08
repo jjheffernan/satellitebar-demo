@@ -48,43 +48,50 @@
 
 <style>
   .hero-media {
-    margin: 1rem 0 0;
+    margin: 1.25rem 0 0.35rem;
     position: relative;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background: var(--card);
+    width: min(100%, 52rem);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
   }
 
   img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 16 / 10;
+    min-height: clamp(14rem, 42vw, 22rem);
     object-fit: cover;
+    border-radius: 0;
+    box-shadow: 0 16px 28px -12px oklch(0 0 0 / 0.55), 0 6px 12px -6px oklch(0 0 0 / 0.35);
   }
 
   figcaption {
     position: absolute;
-    left: 0.75rem;
-    bottom: 0.75rem;
-    padding: 0.25rem 0.55rem;
+    left: 1rem;
+    bottom: 1rem;
+    padding: 0.4rem 0.75rem;
     border-radius: var(--radius-sm);
-    background: color-mix(in oklch, var(--background) 75%, transparent);
-    font-size: 0.8rem;
+    background: color-mix(in oklch, var(--background) 78%, transparent);
+    font-size: clamp(0.95rem, 2.4vw, 1.15rem);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
   }
 
   .dots {
     position: absolute;
-    right: 0.75rem;
-    bottom: 0.75rem;
+    right: 1rem;
+    bottom: 1.15rem;
     display: flex;
-    gap: 0.35rem;
+    gap: 0.4rem;
   }
 
   .dots button {
-    width: 0.55rem;
-    height: 0.55rem;
+    width: 0.65rem;
+    height: 0.65rem;
     border-radius: 999px;
     border: 0;
     padding: 0;
