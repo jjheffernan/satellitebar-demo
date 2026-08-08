@@ -13,8 +13,20 @@ import testimonials from "../../data/testimonials.json";
           <blockquote>
             <p>“{item.quote}”</p>
             <footer>
-              <cite>{item.name}</cite>
-              <span>{item.role}</span>
+              {item.image ? (
+                <img
+                  class="quotes__photo"
+                  src={item.image}
+                  alt={item.imageAlt || ""}
+                  width="48"
+                  height="48"
+                  loading="lazy"
+                />
+              ) : null}
+              <span class="quotes__by">
+                <cite>{item.name}</cite>
+                <span>{item.role}</span>
+              </span>
             </footer>
           </blockquote>
         </li>
@@ -52,7 +64,7 @@ import testimonials from "../../data/testimonials.json";
   }
 
   blockquote p {
-    margin: 0 0 0.4rem;
+    margin: 0 0 0.55rem;
     font-size: 0.95rem;
     line-height: 1.4;
   }
@@ -60,9 +72,26 @@ import testimonials from "../../data/testimonials.json";
   footer {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem 0.75rem;
+    align-items: center;
+    gap: 0.55rem 0.75rem;
     font-size: 0.8rem;
     color: var(--muted-foreground);
+  }
+
+  .quotes__photo {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: var(--muted);
+  }
+
+  .quotes__by {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 0;
   }
 
   cite {
