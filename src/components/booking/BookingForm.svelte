@@ -21,6 +21,8 @@
   const outside = $derived(variant === "outside");
 
   let marketId = $state(market || markets[0]?.id || "");
+  let packageId = $state(selectedPackage || "");
+  let eventTypeId = $state(eventType || "");
 
   const selectedMarket = $derived(markets.find((m) => m.id === marketId));
 </script>
@@ -138,21 +140,23 @@
     {#if !outside}
       <label>
         Event type
-        <select name="eventType">
+        <select name="eventType" bind:value={eventTypeId}>
           <option value="">Select…</option>
           {#each eventTypes as type}
-            <option value={type.id} selected={type.id === eventType}>{type.title}</option>
+            <option value={type.id}>{type.title}</option>
           {/each}
+          <option value="other">Other</option>
         </select>
       </label>
 
       <label>
         Package
-        <select name="package" required>
+        <select name="package" required bind:value={packageId}>
           <option value="">Select…</option>
           {#each packages as pkg}
-            <option value={pkg.id} selected={pkg.id === selectedPackage}>{pkg.name}</option>
+            <option value={pkg.id}>{pkg.label}</option>
           {/each}
+          <option value="custom">Custom</option>
         </select>
       </label>
     {/if}

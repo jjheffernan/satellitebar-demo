@@ -9,7 +9,6 @@ import eventTypes from "../data/event-types.json";
 import features from "../data/features.json";
 
 const selected = Astro.url.searchParams.get("package") ?? "";
-const selectedPkg = catalog.packages.find((p) => p.id === selected);
 const guestsParam = Astro.url.searchParams.get("guests") ?? "";
 const hoursParam = Astro.url.searchParams.get("hours") ?? "";
 const marketParam = Astro.url.searchParams.get("market") ?? site.defaultMarket;
@@ -25,6 +24,33 @@ function isActive(id = "") {
   if (!mod) return false;
   return (mod.publicEnv ?? []).every((key) => envOn(key));
 }
+
+function packageLabel(pkg) {
+  const tier = catalog.quote.menuTiers.find((t) => t.id === pkg.menuId);
+  const tierLabel = tier?.label ?? "Bar package";
+  return `${tierLabel} · ${pkg.guests} guests`;
+}
+
+/** Size bands only — brand/event package names stay off the booking select. */
+const bookingPackages = catalog.packages
+  .filter((pkg) => pkg.kind === "size")
+  .map((pkg) => ({ id: pkg.id, label: packageLabel(pkg) }));
+
+function bookingPackageId(id = "") {
+  if (!id) return "";
+  if (id === "custom") return "custom";
+  const pkg = catalog.packages.find((p) => p.id === id);
+  if (!pkg) return "";
+  if (pkg.kind === "size") return pkg.id;
+  const byMenu = catalog.packages.find((p) => p.kind === "size" && p.menuId === pkg.menuId);
+  return byMenu?.id ?? "custom";
+}
+
+const selectedBookingPackage = bookingPackageId(selected);
+const selectedLabel =
+  selectedBookingPackage === "custom"
+    ? "Custom"
+    : bookingPackages.find((p) => p.id === selectedBookingPackage)?.label;
 
 const bookingModule = isActive("booking");
 const formAction = bookingModule ? "/api/booking" : `mailto:${site.email}`;
@@ -44,9 +70,9 @@ const hint = bookingModule
   </p>
 
   {
-    selectedPkg && (
+    selectedLabel && (
       <p class="selected">
-        Selected package: <strong>{selectedPkg.name}</strong>
+        Selected package: <strong>{selectedLabel}</strong>
       </p>
     )
   }
@@ -56,11 +82,11 @@ const hint = bookingModule
     variant="standard"
     action={formAction}
     method={formMethod}
-    packages={catalog.packages}
+    packages={bookingPackages}
     markets={locations.markets}
     eventTypes={eventTypes.types}
     region={locations.region}
-    selectedPackage={selected}
+    selectedPackage={selectedBookingPackage}
     guests={guestsParam}
     hours={hoursParam}
     market={marketParam}
