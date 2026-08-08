@@ -13,6 +13,7 @@
       "label": "Events",
       "href": "/events",
       "children": [
+        { "href": "/calendar", "label": "Calendar" },
         { "href": "/events/social", "label": "Social" },
         { "href": "/events/weddings", "label": "Weddings" },
         { "href": "/events/corporate", "label": "Corporate" },

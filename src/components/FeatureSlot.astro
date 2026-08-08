@@ -35,7 +35,12 @@ function isActive(id = "") {
 }
 {
   name === "home.events-calendar" && isActive("events-calendar") && (
-    <EventsCalendar client:visible events={calendar.events} />
+    <EventsCalendar
+      client:visible
+      events={calendar.events.filter(
+        (event) => String(event.date) >= new Date().toISOString().slice(0, 10),
+      )}
+    />
   )
 }
 {

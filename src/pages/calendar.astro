@@ -1,0 +1,50 @@
+---
+// @ts-nocheck — pnpm + Astro LS can false-positive TS2306 on .svelte imports; build/check OK.
+import PageLayout from "../layouts/PageLayout.astro";
+import FullEventCalendar from "../features/events-calendar/ui/FullEventCalendar.svelte";
+import calendar from "../data/calendar.json";
+---
+
+<PageLayout
+  title="Event calendar"
+  description="Public tastings, popups, and Satellite Bar nights across Northern Delaware."
+  path="/calendar"
+>
+  <p class="lede">
+    Month view of public dates. Private bookings stay off this list —
+    <a href="/book">check availability</a> for your own night.
+  </p>
+
+  <FullEventCalendar client:load events={calendar.events} />
+
+  <p class="back">
+    <a href="/events">Browse event types</a>
+  </p>
+</PageLayout>
+
+<style>
+  .lede {
+    margin: 0 0 1.25rem;
+    max-width: 36rem;
+    color: var(--muted-foreground);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .lede a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .back {
+    margin: 1.5rem 0 0;
+    font-size: 0.9rem;
+  }
+
+  .back a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

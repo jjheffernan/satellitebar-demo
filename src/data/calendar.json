@@ -1,18 +1,72 @@
 {
   "events": [
     {
+      "id": "lavender-birthday-aug",
+      "title": "Birthday pour — lavender lemon drops",
+      "date": "2026-08-02",
+      "place": "Private home · Newark area",
+      "href": "/events/social",
+      "summary": "Season opener for Satellite Bar — signature lavender lemon drops for a sisters birthday.",
+      "imageAlt": "Bar setup and lavender lemon drops from a private birthday",
+      "images": [
+        "/media/calendar/birthday-lavender/01.jpg",
+        "/media/calendar/birthday-lavender/02.jpg",
+        "/media/calendar/birthday-lavender/03.jpg",
+        "/media/calendar/birthday-lavender/04.jpg",
+        "/media/calendar/birthday-lavender/05.jpg",
+        "/media/calendar/birthday-lavender/06.jpg",
+        "/media/calendar/birthday-lavender/07.jpg",
+        "/media/calendar/birthday-lavender/08.jpg",
+        "/media/calendar/birthday-lavender/09.jpg"
+      ]
+    },
+    {
       "id": "newark-tasting-aug",
       "title": "Newark tasting night",
       "date": "2026-08-22",
       "place": "Newark — invite only",
-      "href": "/book"
+      "href": "/book",
+      "summary": "Short pours and menu samples for hosts planning fall events."
     },
     {
       "id": "wilmington-popup",
       "title": "Wilmington popup bar",
       "date": "2026-09-05",
       "place": "Wilmington riverfront",
-      "href": "/locations/wilmington"
+      "href": "/locations/wilmington",
+      "summary": "Public popup — draft, spritz, and a zero-proof twin."
+    },
+    {
+      "id": "campus-mixer-sep",
+      "title": "Campus mixer",
+      "date": "2026-09-18",
+      "place": "Newark · private",
+      "href": "/events/corporate",
+      "summary": "Staffed bar for a mid-size corporate mixer."
+    },
+    {
+      "id": "wedding-fair-oct",
+      "title": "Wedding fair tasting",
+      "date": "2026-10-04",
+      "place": "Wilmington",
+      "href": "/events/weddings",
+      "summary": "Signatures and toast options for engaged hosts."
+    },
+    {
+      "id": "brand-activation-oct",
+      "title": "Brand activation bar",
+      "date": "2026-10-24",
+      "place": "Northern Delaware",
+      "href": "/events/brand-activations",
+      "summary": "Product-forward pours for a launch night."
+    },
+    {
+      "id": "holiday-social-dec",
+      "title": "Holiday social",
+      "date": "2026-12-12",
+      "place": "Newark",
+      "href": "/events/social",
+      "summary": "Seasonal cocktails and a full nonalcoholic line."
     }
   ]
 }
