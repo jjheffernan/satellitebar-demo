@@ -65,8 +65,14 @@
       "id": "accounts",
       "title": "Guest + admin accounts",
       "publicEnv": ["PUBLIC_FEATURE_ACCOUNTS"],
-      "secretEnv": ["AUTH_SECRET"],
-      "slots": []
+      "secretEnv": [
+        "BETTER_AUTH_SECRET",
+        "BETTER_AUTH_URL",
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "AUTH_DATABASE_URL"
+      ],
+      "slots": ["header.accounts"]
     },
     {
       "id": "booking",

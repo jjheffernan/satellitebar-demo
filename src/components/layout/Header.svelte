@@ -1,4 +1,6 @@
 <script>
+  import AccountAuth from "../../features/accounts/ui/AccountAuth.svelte";
+
   let {
     pathname = "/",
     links = [],
@@ -8,6 +10,8 @@
 
   let open = $state(false);
   let openMenu = $state("");
+
+  const accountsOn = $derived(activeFeatures.includes("accounts"));
 
   function featureOn(feature) {
     if (!feature) return true;
@@ -76,6 +80,9 @@
     </nav>
 
     <div class="site-header__actions">
+      {#if accountsOn}
+        <AccountAuth enabled />
+      {/if}
       {#if phone}
         <a class="site-header__call" href={`tel:${phone.replace(/\D/g, "")}`}>Call us</a>
       {/if}
@@ -153,6 +160,9 @@
         {/if}
       {/each}
       <div class="site-header__drawer-actions">
+        {#if accountsOn}
+          <AccountAuth enabled />
+        {/if}
         {#if phone}
           <a
             class="site-header__call"

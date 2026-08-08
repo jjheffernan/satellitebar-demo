@@ -13,6 +13,7 @@ import EventsCalendar from "../features/events-calendar/ui/EventsCalendar.svelte
 import LiveChat from "../features/live-chat/ui/LiveChat.svelte";
 import LocaleSwitcher from "../features/i18n/ui/LocaleSwitcher.svelte";
 import MailingListSignup from "../features/mailing-list/ui/MailingListSignup.svelte";
+import AccountAuth from "../features/accounts/ui/AccountAuth.svelte";
 
 const { name } = Astro.props;
 
@@ -59,3 +60,8 @@ function isActive(id = "") {
   )
 }
 {name === "footer.mailing-list" && isActive("mailing-list") && <MailingListSignup client:visible />}
+{
+  name === "header.accounts" && isActive("accounts") && (
+    <AccountAuth client:load enabled />
+  )
+}
