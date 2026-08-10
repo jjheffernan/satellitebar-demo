@@ -45,7 +45,28 @@
     selectedId = "",
     onSelect = undefined,
     compact = false,
+    /** When false, market teardrops stay hidden (booking address pin mode). */
+    showMarkets = true,
+    /** Optional single venue pin: `{ lngLat: [lng, lat], label?: string }`. */
+    pin = null,
   } = $props();
+
+  let map = $state(undefined);
+  let viewCenter = $state(center);
+  let viewZoom = $state(zoom);
+
+  $effect(() => {
+    viewCenter = center;
+    viewZoom = zoom;
+  });
+
+  $effect(() => {
+    const lngLat = pin?.lngLat;
+    if (!lngLat || !map) return;
+    map.flyTo({ center: lngLat, zoom: Math.max(map.getZoom(), 14), essential: true });
+    viewCenter = lngLat;
+    viewZoom = Math.max(viewZoom, 14);
+  });
 
   const glowGeo = $derived({
     type: "FeatureCollection",
@@ -86,10 +107,11 @@
 
 <div class="locations-map" class:locations-map--compact={compact}>
   <MapLibre
+    bind:map
     class="locations-map__canvas"
     style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-    {center}
-    {zoom}
+    center={viewCenter}
+    zoom={viewZoom}
     cooperativeGestures
     standardControls
   >
@@ -97,32 +119,51 @@
       <HeatmapLayer id="service-glow-heat" beforeLayerType="symbol" paint={glowPaint} />
     </GeoJSON>
 
-    {#each markets as market}
-      <Marker lngLat={market.lngLat} anchor="bottom">
-        <button
-          class="locations-map__pin"
-          class:locations-map__pin--active={selectedId === market.id}
-          type="button"
-          aria-label={market.name}
-          aria-pressed={selectedId === market.id}
-          onclick={() => onSelect?.(market)}
+    {#if showMarkets}
+      {#each markets as market}
+        <Marker lngLat={market.lngLat} anchor="bottom">
+          <button
+            class="locations-map__pin"
+            class:locations-map__pin--active={selectedId === market.id}
+            type="button"
+            aria-label={market.name}
+            aria-pressed={selectedId === market.id}
+            onclick={() => onSelect?.(market)}
+          >
+            <svg viewBox="0 0 24 32" width="28" height="36" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 0C6.5 0 2 4.5 2 10c0 7.2 8.4 18.4 9.2 19.4a1 1 0 0 0 1.6 0C13.6 28.4 22 17.2 22 10 22 4.5 17.5 0 12 0zm0 14.5A4.5 4.5 0 1 1 12 5.5a4.5 4.5 0 0 1 0 9z"
+              />
+            </svg>
+          </button>
+          {#if !onSelect}
+            <Popup openOn="click" closeButton maxWidth="14rem">
+              <strong>{market.name}</strong>
+              <p>{market.serviceArea}</p>
+              <a href={`/locations/${market.id}`}>View market</a>
+            </Popup>
+          {/if}
+        </Marker>
+      {/each}
+    {/if}
+
+    {#if pin?.lngLat}
+      <Marker lngLat={pin.lngLat} anchor="bottom">
+        <div
+          class="locations-map__pin locations-map__pin--venue"
+          title={pin.label || "Venue"}
+          aria-label={pin.label || "Venue"}
         >
-          <svg viewBox="0 0 24 32" width="28" height="36" aria-hidden="true">
+          <svg viewBox="0 0 24 32" width="32" height="40" aria-hidden="true">
             <path
               fill="currentColor"
               d="M12 0C6.5 0 2 4.5 2 10c0 7.2 8.4 18.4 9.2 19.4a1 1 0 0 0 1.6 0C13.6 28.4 22 17.2 22 10 22 4.5 17.5 0 12 0zm0 14.5A4.5 4.5 0 1 1 12 5.5a4.5 4.5 0 0 1 0 9z"
             />
           </svg>
-        </button>
-        {#if !onSelect}
-          <Popup openOn="click" closeButton maxWidth="14rem">
-            <strong>{market.name}</strong>
-            <p>{market.serviceArea}</p>
-            <a href={`/locations/${market.id}`}>View market</a>
-          </Popup>
-        {/if}
+        </div>
       </Marker>
-    {/each}
+    {/if}
   </MapLibre>
 </div>
 
@@ -164,8 +205,14 @@
     color: var(--primary-hover);
   }
 
-  .locations-map__pin--active {
+  .locations-map__pin--active,
+  .locations-map__pin--venue {
     transform: scale(1.12);
+  }
+
+  .locations-map__pin--venue {
+    cursor: default;
+    pointer-events: none;
   }
 
   :global(.maplibregl-popup-content) {

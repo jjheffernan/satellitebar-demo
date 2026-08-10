@@ -23,8 +23,71 @@
   let marketId = $state(market || markets[0]?.id || "");
   let packageId = $state(selectedPackage || "");
   let eventTypeId = $state(eventType || "");
+  let street = $state("");
+  let city = $state("");
+  let state = $state("");
+  let zip = $state("");
+  let venuePin = $state(null);
+  let pinStatus = $state("");
 
   const selectedMarket = $derived(markets.find((m) => m.id === marketId));
+
+  const addressQuery = $derived(
+    [street, city, state, zip].map((p) => String(p || "").trim()).filter(Boolean).join(", "),
+  );
+
+  // ponytail: Photon geocode; swap for keyed provider if rate limits bite
+  async function geocodeVenue(query, bias) {
+    const url = new URL("https://photon.komoot.io/api/");
+    url.searchParams.set("q", query);
+    url.searchParams.set("limit", "1");
+    if (bias?.lngLat) {
+      url.searchParams.set("lon", String(bias.lngLat[0]));
+      url.searchParams.set("lat", String(bias.lngLat[1]));
+    }
+    const res = await fetch(url.toString(), { headers: { Accept: "application/json" } });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const feature = data.features?.[0];
+    const lngLat = feature?.geometry?.coordinates;
+    if (!Array.isArray(lngLat) || lngLat.length < 2) return null;
+    const props = feature.properties ?? {};
+    const label = [props.name, props.street, props.city || props.county, props.state]
+      .filter(Boolean)
+      .join(", ");
+    return { lngLat, label: label || query };
+  }
+
+  $effect(() => {
+    const query = addressQuery;
+    const bias = selectedMarket;
+    if (!street.trim() || !city.trim() || !state.trim()) {
+      venuePin = null;
+      pinStatus = "";
+      return;
+    }
+
+    pinStatus = "Finding address on the map…";
+    const handle = setTimeout(async () => {
+      try {
+        const hit = await geocodeVenue(query, bias);
+        if (addressQuery !== query) return;
+        if (hit) {
+          venuePin = hit;
+          pinStatus = "Confirm this pin matches your venue.";
+        } else {
+          venuePin = null;
+          pinStatus = "Couldn’t place that address — check street, city, and ZIP.";
+        }
+      } catch {
+        if (addressQuery !== query) return;
+        venuePin = null;
+        pinStatus = "Map lookup unavailable — you can still submit the booking.";
+      }
+    }, 550);
+
+    return () => clearTimeout(handle);
+  });
 </script>
 
 <form class="book-form" {method} {action}>
@@ -34,24 +97,14 @@
     <h2 id="location-heading">Location</h2>
     <p class="book-form__hint">
       {#if outside}
-        We’re based in northern Delaware. Tell us where your venue is and we’ll see if we can travel.
+        We’re based in northern Delaware. Enter the venue address — the map pin updates so you can confirm the spot.
       {:else}
-        Tap a market on the map, then add the venue address.
+        Pick a market, then enter the venue address. One pin shows where we’ll pour so you can confirm it’s right.
         {#if selectedMarket}
           <span>Serving {selectedMarket.serviceArea}.</span>
         {/if}
       {/if}
     </p>
-
-    <LocationsMap
-      compact
-      center={region?.center ?? [-75.64, 39.71]}
-      zoom={region?.zoom ?? 10.2}
-      {markets}
-      radiusMiles={region?.serviceRadiusMiles ?? 15}
-      selectedId={outside ? "" : marketId}
-      onSelect={outside ? undefined : (m) => (marketId = m.id)}
-    />
 
     {#if outside}
       <label>
@@ -82,13 +135,13 @@
 
     <label>
       Street address
-      <input name="address" type="text" required autocomplete="street-address" />
+      <input name="address" type="text" required autocomplete="street-address" bind:value={street} />
     </label>
 
     <div class="row">
       <label>
         City
-        <input name="city" type="text" required autocomplete="address-level2" />
+        <input name="city" type="text" required autocomplete="address-level2" bind:value={city} />
       </label>
       <label>
         State
@@ -99,13 +152,34 @@
           autocomplete="address-level1"
           maxlength="2"
           placeholder="DE"
+          bind:value={state}
         />
       </label>
       <label>
         ZIP
-        <input name="zip" type="text" required autocomplete="postal-code" inputmode="numeric" />
+        <input
+          name="zip"
+          type="text"
+          required
+          autocomplete="postal-code"
+          inputmode="numeric"
+          bind:value={zip}
+        />
       </label>
     </div>
+
+    <LocationsMap
+      compact
+      center={venuePin?.lngLat ?? selectedMarket?.lngLat ?? region?.center ?? [-75.64, 39.71]}
+      zoom={venuePin ? 14 : (region?.zoom ?? 10.2)}
+      {markets}
+      radiusMiles={region?.serviceRadiusMiles ?? 15}
+      showMarkets={false}
+      pin={venuePin}
+    />
+    {#if pinStatus}
+      <p class="book-form__pin-status" aria-live="polite">{pinStatus}</p>
+    {/if}
   </section>
 
   <section class="book-form__event" aria-labelledby="event-heading">
@@ -199,11 +273,16 @@
   }
 
   .book-form__hint,
+  .book-form__pin-status,
   .hint {
     margin: 0;
     color: var(--muted-foreground);
     font-size: 0.85rem;
     line-height: 1.35;
+  }
+
+  .book-form__pin-status {
+    margin-top: -0.25rem;
   }
 
   .row {
