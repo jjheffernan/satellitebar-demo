@@ -5,12 +5,12 @@ const { title, description, path } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} path={path}>
-  <div class="page-shell">
-    <header class="page-shell__head container-site">
+  <div class="page-shell container-site">
+    <header class="page-shell__head">
       <h1>{title}</h1>
       {description && <p>{description}</p>}
     </header>
-    <div class="page-shell__body container-site">
+    <div class="page-shell__body">
       <slot />
     </div>
   </div>
@@ -22,7 +22,7 @@ const { title, description, path } = Astro.props;
   }
 
   .page-shell__head {
-    margin-bottom: 1.15rem;
+    margin: 0 0 1.15rem;
     max-width: 40rem;
   }
 
@@ -36,5 +36,10 @@ const { title, description, path } = Astro.props;
     color: var(--muted-foreground);
     font-size: 0.95rem;
     line-height: 1.4;
+  }
+
+  .page-shell__body {
+    width: 100%;
+    min-width: 0;
   }
 </style>

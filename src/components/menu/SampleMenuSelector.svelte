@@ -190,11 +190,16 @@
 {/if}
 
 <style>
+  .picker {
+    width: 100%;
+    max-width: 40rem;
+    min-width: 0;
+  }
+
   .picker__controls {
     display: grid;
     gap: 0.65rem;
     margin-bottom: 1.15rem;
-    max-width: 42rem;
   }
 
   .picker__tabs {
@@ -321,7 +326,6 @@
 
   .picker__header {
     margin-bottom: 0.85rem;
-    max-width: 40rem;
   }
 
   .picker__header h2 {
@@ -446,12 +450,12 @@
 
   @media (min-width: 560px) {
     .picker__meta {
-      grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .picker__na {
-      grid-column: auto;
-      white-space: nowrap;
+      grid-column: 1 / -1;
+      justify-self: start;
     }
   }
 
