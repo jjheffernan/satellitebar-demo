@@ -1,5 +1,36 @@
 <script>
-  let { events = [] } = $props();
+  let { events: seed = [] } = $props();
+
+  let events = $state([...seed]);
+
+  function merge(seedItems, apiItems) {
+    const map = new Map();
+    for (const item of seedItems) {
+      if (item?.id) map.set(item.id, item);
+    }
+    for (const item of apiItems) {
+      if (item?.id) map.set(item.id, item);
+    }
+    return [...map.values()];
+  }
+
+  $effect(() => {
+    let cancelled = false;
+    events = [...seed];
+    fetch("/api/calendar")
+      .then((res) => (res.ok ? res.json() : { events: [] }))
+      .then((data) => {
+        if (cancelled) return;
+        const apiItems = Array.isArray(data?.events) ? data.events : [];
+        events = merge(seed, apiItems);
+      })
+      .catch(() => {
+        if (!cancelled) events = [...seed];
+      });
+    return () => {
+      cancelled = true;
+    };
+  });
 
   const sorted = $derived(
     [...events].sort((a, b) => String(a.date).localeCompare(String(b.date))),
@@ -62,6 +93,7 @@
     for (let d = 1; d <= daysInMonth; d++) {
       out.push({ day: d, events: byDay.get(d) ?? [] });
     }
+    while (out.length % 7 !== 0) out.push(null);
     return out;
   });
 
@@ -86,28 +118,26 @@
 
 {#if sorted.length}
   <div class="full-cal">
-    <div class="full-cal__toolbar">
-      <button type="button" onclick={prevMonth} disabled={monthIndex <= 0} aria-label="Previous month">
-        ←
-      </button>
-      <h2>{monthLabel}</h2>
-      <button
-        type="button"
-        onclick={nextMonth}
-        disabled={monthIndex >= monthKeys.length - 1}
-        aria-label="Next month"
-      >
-        →
-      </button>
-    </div>
-
-    <div class="full-cal__grid" role="grid" aria-label={`Calendar for ${monthLabel}`}>
-      <div class="full-cal__dow" role="row">
-        {#each ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as dow}
-          <span role="columnheader">{dow}</span>
-        {/each}
+    <div class="full-cal__month">
+      <div class="full-cal__toolbar">
+        <button type="button" onclick={prevMonth} disabled={monthIndex <= 0} aria-label="Previous month">
+          ←
+        </button>
+        <h2>{monthLabel}</h2>
+        <button
+          type="button"
+          onclick={nextMonth}
+          disabled={monthIndex >= monthKeys.length - 1}
+          aria-label="Next month"
+        >
+          →
+        </button>
       </div>
-      <div class="full-cal__days" role="rowgroup">
+
+      <div class="full-cal__grid" role="grid" aria-label={`Calendar for ${monthLabel}`}>
+        {#each ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as dow}
+          <span class="full-cal__dow" role="columnheader">{dow}</span>
+        {/each}
         {#each cells as cell, i (i)}
           {#if cell}
             <div
@@ -174,15 +204,32 @@
 
 <style>
   .full-cal {
-    display: grid;
-    gap: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+  }
+
+  .full-cal__month {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 42rem;
+    min-width: 0;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
   }
 
   .full-cal__toolbar {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
     align-items: center;
     gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
   }
 
   .full-cal__toolbar h2 {
@@ -212,35 +259,39 @@
     border-color: color-mix(in oklch, var(--primary) 45%, var(--border));
   }
 
-  .full-cal__dow,
-  .full-cal__days {
+  .full-cal__grid {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.2rem;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
-  .full-cal__dow span {
-    padding: 0.35rem 0.2rem;
+  .full-cal__dow {
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 0.3rem 0.1rem;
     text-align: center;
     font-size: 0.68rem;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--muted-foreground);
   }
 
-  .full-cal__days {
-    gap: 0.25rem;
-  }
-
   .day {
+    box-sizing: border-box;
+    min-width: 0;
     min-height: 4.5rem;
     padding: 0.35rem;
     border: 1px solid var(--border);
     background: color-mix(in oklch, var(--muted) 22%, transparent);
+    overflow: hidden;
   }
 
   .day--empty {
-    background: transparent;
-    border-color: transparent;
+    background: color-mix(in oklch, var(--muted) 10%, transparent);
+    border-color: color-mix(in oklch, var(--border) 55%, transparent);
   }
 
   .day--busy {
