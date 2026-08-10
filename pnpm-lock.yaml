@@ -26,6 +26,9 @@ importers:
       '@libsql/kysely-libsql':
         specifier: ^0.4.1
         version: 0.4.1(kysely@0.29.4)
+      '@svar-ui/svelte-calendar':
+        specifier: ^2.6.0
+        version: 2.6.0(picomatch@4.0.5)(svelte@5.56.8)(typescript@5.9.3)
       '@tailwindcss/vite':
         specifier: ^4.1.11
         version: 4.3.3(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))
@@ -1117,6 +1120,92 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
+  '@svar-ui/calendar-ical@2.6.0':
+    resolution: {integrity: sha512-EsECDqf3E4nA2Pky66eAWER9LMAdLmZRaYC/3Z/nHCzhYbuvyItb6PvNFVJbbd0qsC73LkTGgFHsnC6reddeKw==}
+
+  '@svar-ui/calendar-locales@2.6.0':
+    resolution: {integrity: sha512-1l7nxt9lF0PhmTb/2SGh8vcqYyVwuQuLYaFVpwcJ10Dwm9PPEJCr5BOV+63oi3fH8NgnEc0BYQxqYZGshzXLfQ==}
+
+  '@svar-ui/calendar-provider@2.6.0':
+    resolution: {integrity: sha512-4hlsYHp3mVWQBeHh8amELqVK9ylGDGzyL7pRq+wen8wy5559AaL5Y01+a5VVetJumWwSKI0gMBfSlVI14+YXcQ==}
+
+  '@svar-ui/calendar-store@2.6.0':
+    resolution: {integrity: sha512-02RReUFDanVV8kWag40WAmpGNFf7AYEHhiDw97sKkSYuwxaOJf1T8HbrBnU4VsEUfqxogugXjnN/oUEf3J1Azw==}
+
+  '@svar-ui/comments-locales@2.5.1':
+    resolution: {integrity: sha512-dAjmI1m25HUGEANfWbqQ/T66ahjOqkAKcC3VIFRU2fDvrL4DEtaJtiXTonzFTshhKt/mCHkZ5CW0xiyPXxbO7g==}
+
+  '@svar-ui/core-locales@2.5.0':
+    resolution: {integrity: sha512-vL8y8B1/YeHd89cd6x5jzSWLxYxNICXZY2Gx4+Op26L8N8IhCR26r8fpuptugodKLIQkyua3fh27ZB+5sJSXHg==}
+
+  '@svar-ui/core-locales@2.5.1':
+    resolution: {integrity: sha512-3VYDf/zdFVPKb8Zyf6u5IjM089WGOtNswPG8KT4KZNEoWiVIHblCJp1uXfzHERTFikNSVjllaT44S7M9nOhRsw==}
+
+  '@svar-ui/core-locales@2.5.3':
+    resolution: {integrity: sha512-qJhdIPiiLDO0qsyFrTc7YIkBU1nM3we7zn+uCiaNFVZ4+mvVMWDTYhYvwrrsxltL/E26at5SXB8CVVngQCUqKA==}
+
+  '@svar-ui/editor-locales@2.5.3':
+    resolution: {integrity: sha512-Pi3FLdqEVfN5SQbgvkClq5WqWt4xh2bCmL9Zo5RmAGBGCDKy0jcOrhoBxnoeyPSq9TlzrRrwiD3N/z1i96+jDA==}
+
+  '@svar-ui/lib-data-provider@1.7.1':
+    resolution: {integrity: sha512-5Bi9ywngcMTKpGtan0s7q8ivd84Bp0ZnRP+5bLZg6oiRB7YMyN5D5X+apc3CWDAnG4zZn3en4YwS2qc/aHIIuQ==}
+
+  '@svar-ui/lib-dom@0.12.0':
+    resolution: {integrity: sha512-rrFdV/SlYsWFejtRHAltk/Tk91xM+uifvMwM0EmgTqi16BSe86DnnE7czMtEEVx0308cTcrD0OX2hmO+MFgArg==}
+
+  '@svar-ui/lib-dom@0.12.1':
+    resolution: {integrity: sha512-srvDleQqR6stBBDijCgzDHMFTTffI6sv3XCpNPKmurrnE83L1MDNqezqg6j3+0dUVPd4AAEGOez2DvK6byblTQ==}
+
+  '@svar-ui/lib-dom@0.12.2':
+    resolution: {integrity: sha512-tV9sJ7Xpedxf1dttTc8I190eqlP0UsassUw48uW3JuEQR0G3IRfmH53/X+mYEooc7bcpZDkzYukWEqJeEq9UlQ==}
+
+  '@svar-ui/lib-state@1.9.6':
+    resolution: {integrity: sha512-twoHa8wZvzdxtES68s6Wnp4Xi1WivScNaFFK6sJ6WDgqVYOzJw0ZhVVrdwHQgieLITTKl/DYh/U3nuqtMetKYw==}
+
+  '@svar-ui/lib-svelte@0.5.2':
+    resolution: {integrity: sha512-i+hHMT3zctaGbRpyMDREt9im7YfLpvGwFYvH1ntEp/kYAwUrR/sxMJlEEKIid+Yg2EeMUstGxmYQbkWoMpPG7A==}
+
+  '@svar-ui/svelte-calendar@2.6.0':
+    resolution: {integrity: sha512-MqFe0bpPXKeRxYA7jV2NtrhNwoUkiJ7Z7nK1pbuh6zv6NrsRW+aKX+WWqWN9xyadCuydSPo9Lfz7g3mxk+00nQ==}
+    peerDependencies:
+      svelte: ^5.54.0
+
+  '@svar-ui/svelte-comments@2.5.1':
+    resolution: {integrity: sha512-hjuO96TLchIBrEoto2H1njDDiEdyXeWq4idD/IA0gpIsQoDDmVHIhxUHIXbCQZ5T/qBMWBrrMxDC8BLk8CUddA==}
+
+  '@svar-ui/svelte-core@2.5.0':
+    resolution: {integrity: sha512-POqG2dL6SeGcrFTYSxWWbbAdHoW9I6sdA7T9pld8/GnRn0X2sYnQBBvIPCMo5wC/zvEHVOpKGRiLZn6evTNQJw==}
+
+  '@svar-ui/svelte-core@2.5.1':
+    resolution: {integrity: sha512-snXNEYhWkg+7JQmhsS3xnN6UozfTj8+cQadKl3dsUyh3328F6NZZpKbUkXNArK95+OcueJZUXyExkDWv1NqmDA==}
+
+  '@svar-ui/svelte-core@2.5.3':
+    resolution: {integrity: sha512-5yQPnvgDRPdknHA4YtDwBOC2fuFiXFpuAdViIbfreaNtEGz1XVONj7V8jEC31ADS3a/xEltJD+AW23gMMDUQUA==}
+
+  '@svar-ui/svelte-editor@2.5.3':
+    resolution: {integrity: sha512-rjEjQ4RwxKdq417qFNOmRrXVSz8xPnATlpjvLuQc0cQw2vE5LlWPiS8maXh8Nxw7JoLw2ZAVJlFFFzOFJO0Rjg==}
+
+  '@svar-ui/svelte-layout@2.5.0':
+    resolution: {integrity: sha512-8Q+8dNUeMmTpfseC2PksALah5LbOjeJYHmxMMpWKXznq1vdKUpYO6DXGZtoLtfTSQYCTqjv6SAJjQyempv3nrw==}
+
+  '@svar-ui/svelte-menu@2.5.1':
+    resolution: {integrity: sha512-2ysDlaWR9FrLPRjCd/KB9L9FQry6xR06krAGKPvfFeueXIo3ySuRks6lniNzbLMvKWHG6VOzrBlAAfn0FTeipw==}
+
+  '@svar-ui/svelte-menu@2.5.3':
+    resolution: {integrity: sha512-oHtdxLkeGCHUi4hW03vOPMAwUko2duLierebXGkm9spFQfkJmY8u3wZ/XLcVITkGjHTY6Pfmn7qSt1dnmbHa/Q==}
+
+  '@svar-ui/svelte-tasklist@2.5.1':
+    resolution: {integrity: sha512-wNHOJNiaM8g+Bby457e9zi4C2xN3YNiSwHNMim7IlJtC9S9sSUsaB3ZoUfIDzdogNh3F1TVM+RmIm7Y9DeP2Kg==}
+
+  '@svar-ui/svelte-toolbar@2.5.2':
+    resolution: {integrity: sha512-T7kHXBF0Yfm54mUJYEh75kCZB1XhgUzdBae9y2tsbTB0k/fNH41/qAS6SqMzt3NQ4fg86FmO8eVm2PAzxMC8CA==}
+
+  '@svar-ui/svelte-toolbar@2.5.3':
+    resolution: {integrity: sha512-elrsyfAm/fsjqmn1qMc2Kb3n5+E1hqBa8eF4p0sq/Gf8/wiXcpnMI70G9ApCtAYEgUR3E6chL1WEWpSQowIYIQ==}
+
+  '@svar-ui/tasklist-locales@2.5.1':
+    resolution: {integrity: sha512-tHxVJgTgDrp4OCZlpp/Ge0gLbJrG++c0ZrgOy+Z66I/B48nZeRVFhB9g1uL/4Na3uAxmCWPOqb9+fQxXaGkT6A==}
+
   '@sveltejs/acorn-typescript@1.0.11':
     resolution: {integrity: sha512-LFuZUkjJ9iF7JZye/aG5XM0SFcQ5VyL0oVX4WJ9dc0Va3R3s0OauX1BESVCb+YN/ol8TAfqGDDAQsTG627Y5kw==}
     peerDependencies:
@@ -1781,12 +1870,10 @@ packages:
 
   libsql@0.3.19:
     resolution: {integrity: sha512-Aj5cQ5uk/6fHdmeW0TiXK42FqUlwx7ytmMLPSaUQPin5HKKKuUPD62MAbN4OEweGBBI7q1BekoEN4gPUEL6MZA==}
-    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   libsql@0.5.29:
     resolution: {integrity: sha512-8lMP8iMgiBzzoNbAPQ59qdVcj6UaE/Vnm+fiwX4doX4Narook0a4GPKWBEv+CR8a1OwbfkgL18uBfBjWdF0Fzg==}
-    cpu: [x64, arm64, wasm32, arm]
     os: [darwin, linux, win32]
 
   lightningcss-android-arm64@1.32.0:
@@ -3506,6 +3593,135 @@ snapshots:
   '@shikijs/vscode-textmate@10.0.2': {}
 
   '@standard-schema/spec@1.1.0': {}
+
+  '@svar-ui/calendar-ical@2.6.0': {}
+
+  '@svar-ui/calendar-locales@2.6.0': {}
+
+  '@svar-ui/calendar-provider@2.6.0': {}
+
+  '@svar-ui/calendar-store@2.6.0':
+    dependencies:
+      '@svar-ui/lib-dom': 0.12.1
+      '@svar-ui/lib-state': 1.9.6
+
+  '@svar-ui/comments-locales@2.5.1': {}
+
+  '@svar-ui/core-locales@2.5.0': {}
+
+  '@svar-ui/core-locales@2.5.1': {}
+
+  '@svar-ui/core-locales@2.5.3': {}
+
+  '@svar-ui/editor-locales@2.5.3': {}
+
+  '@svar-ui/lib-data-provider@1.7.1':
+    dependencies:
+      '@svar-ui/lib-state': 1.9.6
+
+  '@svar-ui/lib-dom@0.12.0': {}
+
+  '@svar-ui/lib-dom@0.12.1': {}
+
+  '@svar-ui/lib-dom@0.12.2': {}
+
+  '@svar-ui/lib-state@1.9.6': {}
+
+  '@svar-ui/lib-svelte@0.5.2':
+    dependencies:
+      '@svar-ui/lib-state': 1.9.6
+
+  '@svar-ui/svelte-calendar@2.6.0(picomatch@4.0.5)(svelte@5.56.8)(typescript@5.9.3)':
+    dependencies:
+      '@svar-ui/calendar-ical': 2.6.0
+      '@svar-ui/calendar-locales': 2.6.0
+      '@svar-ui/calendar-provider': 2.6.0
+      '@svar-ui/calendar-store': 2.6.0
+      '@svar-ui/core-locales': 2.5.0
+      '@svar-ui/lib-dom': 0.12.1
+      '@svar-ui/lib-state': 1.9.6
+      '@svar-ui/svelte-core': 2.5.3
+      '@svar-ui/svelte-editor': 2.5.3
+      '@svar-ui/svelte-layout': 2.5.0
+      '@svar-ui/svelte-menu': 2.5.3
+      '@svar-ui/svelte-toolbar': 2.5.3
+      svelte: 5.56.8
+      svelte-check: 4.7.4(picomatch@4.0.5)(svelte@5.56.8)(typescript@5.9.3)
+    transitivePeerDependencies:
+      - picomatch
+      - typescript
+
+  '@svar-ui/svelte-comments@2.5.1':
+    dependencies:
+      '@svar-ui/comments-locales': 2.5.1
+      '@svar-ui/lib-data-provider': 1.7.1
+      '@svar-ui/lib-dom': 0.12.1
+      '@svar-ui/lib-state': 1.9.6
+      '@svar-ui/svelte-core': 2.5.1
+      '@svar-ui/svelte-menu': 2.5.1
+
+  '@svar-ui/svelte-core@2.5.0':
+    dependencies:
+      '@svar-ui/core-locales': 2.5.0
+      '@svar-ui/lib-dom': 0.12.1
+      '@svar-ui/lib-svelte': 0.5.2
+
+  '@svar-ui/svelte-core@2.5.1':
+    dependencies:
+      '@svar-ui/core-locales': 2.5.1
+      '@svar-ui/lib-dom': 0.12.1
+      '@svar-ui/lib-svelte': 0.5.2
+
+  '@svar-ui/svelte-core@2.5.3':
+    dependencies:
+      '@svar-ui/core-locales': 2.5.3
+      '@svar-ui/lib-dom': 0.12.2
+      '@svar-ui/lib-svelte': 0.5.2
+
+  '@svar-ui/svelte-editor@2.5.3':
+    dependencies:
+      '@svar-ui/editor-locales': 2.5.3
+      '@svar-ui/lib-dom': 0.12.1
+      '@svar-ui/lib-state': 1.9.6
+      '@svar-ui/lib-svelte': 0.5.2
+      '@svar-ui/svelte-comments': 2.5.1
+      '@svar-ui/svelte-core': 2.5.1
+      '@svar-ui/svelte-tasklist': 2.5.1
+      '@svar-ui/svelte-toolbar': 2.5.2
+
+  '@svar-ui/svelte-layout@2.5.0':
+    dependencies:
+      '@svar-ui/svelte-core': 2.5.0
+
+  '@svar-ui/svelte-menu@2.5.1':
+    dependencies:
+      '@svar-ui/lib-dom': 0.12.1
+      '@svar-ui/svelte-core': 2.5.1
+
+  '@svar-ui/svelte-menu@2.5.3':
+    dependencies:
+      '@svar-ui/lib-dom': 0.12.2
+      '@svar-ui/svelte-core': 2.5.3
+
+  '@svar-ui/svelte-tasklist@2.5.1':
+    dependencies:
+      '@svar-ui/lib-data-provider': 1.7.1
+      '@svar-ui/lib-dom': 0.12.0
+      '@svar-ui/lib-state': 1.9.6
+      '@svar-ui/svelte-core': 2.5.1
+      '@svar-ui/tasklist-locales': 2.5.1
+
+  '@svar-ui/svelte-toolbar@2.5.2':
+    dependencies:
+      '@svar-ui/lib-dom': 0.12.1
+      '@svar-ui/svelte-core': 2.5.1
+
+  '@svar-ui/svelte-toolbar@2.5.3':
+    dependencies:
+      '@svar-ui/lib-dom': 0.12.2
+      '@svar-ui/svelte-core': 2.5.3
+
+  '@svar-ui/tasklist-locales@2.5.1': {}
 
   '@sveltejs/acorn-typescript@1.0.11(acorn@8.18.0)':
     dependencies:
