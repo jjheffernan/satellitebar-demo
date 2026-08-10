@@ -1,0 +1,38 @@
+---
+// @ts-nocheck — pnpm + Astro LS can false-positive TS2306 on .svelte imports; build/check OK.
+import PageLayout from "../../layouts/PageLayout.astro";
+import CalendarAdmin from "../../features/events-calendar/ui/CalendarAdmin.svelte";
+---
+
+<PageLayout
+  title="Calendar admin"
+  description="Manage public schedule events. Import or export .ics / JSON. Save to publish without a rebuild."
+  path="/admin/calendar"
+>
+  <p class="lede">
+    Admins only (<code>ADMIN_EMAILS</code>). Guests still see the simple month view on
+    <a href="/calendar">/calendar</a>.
+  </p>
+  <CalendarAdmin client:load />
+</PageLayout>
+
+<style>
+  .lede {
+    margin: 0 0 1rem;
+    max-width: 40rem;
+    color: var(--muted-foreground);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .lede a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .lede code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+</style>
