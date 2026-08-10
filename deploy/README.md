@@ -4,7 +4,7 @@ All host Functions live here. Site source stays Astro + Svelte under `src/`.
 
 ```
 deploy/
-  shared/       # libSQL auth + testimonials helpers (both hosts)
+  shared/       # libSQL auth + testimonials + calendar helpers (both hosts)
   cloudflare/   # Cloudflare Pages Functions → /api/*
   netlify/      # Netlify Functions (config maps each to /api/…)
 ```

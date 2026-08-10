@@ -124,8 +124,9 @@ Reference mobile-bar marketing site (Sip). **Adopt capability, not clone brandin
 ### Phase 8 — Events calendar (optional) (`events-calendar`)
 
 - [x] Static/list adapter on home (Upcoming teaser)
-- [x] Full calendar page `/calendar` — month grid + list from `calendar.json`
+- [x] Full calendar page `/calendar` — simple month grid + list (seed JSON + live `GET /api/calendar`)
 - [x] Nav under Events → Calendar
+- [x] Admin: SVAR OSS at `/admin/calendar` (`ADMIN_EMAILS`) — CRUD + `.ics`/JSON import-export; libSQL persistence
 
 ### Phase 9 — Live chat (`live-chat`)
 
@@ -229,6 +230,7 @@ Accounts and payments are **paired**: ship payment deposit first if we must sequ
 
 4. **Accounts M2 — admin**  
    - [x] Testimonial moderation: `/admin/testimonials` + `ADMIN_EMAILS` allowlist; approve → live on home via `/api/testimonials`.  
+   - [x] Calendar schedule: `/admin/calendar` (SVAR) + import/export; public `/calendar` stays simple read-only.  
    - [ ] Booking inquiry queue / deposit triggers (later).  
    - Prefer email allowlist / Better Auth roles over rolling our own permission DB.
 

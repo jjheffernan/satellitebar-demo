@@ -19,6 +19,7 @@ Data is JSON under `src/data/`. Tooling configs (`astro.config.mjs`, `svelte.con
 - Astro 7 + `@astrojs/svelte` + Svelte 5
 - Tailwind v4 via Vite plugin
 - Deploy: **Cloudflare Pages** or **Netlify** — Functions under `deploy/` (see `deploy/README.md`); both publish `dist/`
+- Calendar admin: SVAR island at `/admin/calendar`; public `/calendar` stays a simple month/list
 
 ## Hard rules
 

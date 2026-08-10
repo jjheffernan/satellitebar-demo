@@ -97,7 +97,7 @@ Gmail SSO is wired (Astro’s preferred auth path: **Better Auth** + Google). Le
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | From Google Cloud Console |
 | `AUTH_DATABASE_URL` | `libsql://…` (or file URL for local Node/Netlify experiments) |
 | `AUTH_DATABASE_AUTH_TOKEN` | Turso token when using remote libSQL |
-| `ADMIN_EMAILS` | Comma-separated Google emails allowed to moderate at `/admin/testimonials` |
+| `ADMIN_EMAILS` | Comma-separated Google emails allowed to moderate testimonials and manage `/admin/calendar` |
 
 Confirm: `/api/capabilities` lists `accounts` as `active: true`. Missing secrets ⇒ `/api/auth/*` returns **503** JSON (`accounts_not_configured`).
 
@@ -113,6 +113,16 @@ API routes:
 
 - Cloudflare: `deploy/cloudflare/api/auth/[[path]].js`, `…/testimonials.js`, `…/testimonials/admin.js`
 - Netlify: `deploy/netlify/auth.mjs` → `/api/auth/*`; `testimonials.mjs` / `testimonials-admin.mjs`
+
+### Calendar admin (SVAR)
+
+Same auth DB + `ADMIN_EMAILS`:
+
+1. Open `/admin/calendar`, sign in, edit in SVAR (Day/Week/Month).
+2. **Save to server** publishes to libSQL — public `/calendar` and home Upcoming merge `GET /api/calendar` (seed JSON fallback if DB off).
+3. Import/export `.ics` or JSON from the admin toolbar (import replaces all events).
+
+API routes: `GET /api/calendar`; admin `GET|POST|PUT|DELETE /api/calendar/admin`; `POST /api/calendar/admin/import`.
 
 ## Parked: payments
 

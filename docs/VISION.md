@@ -85,7 +85,7 @@ JSON/CSS/Markdown for data and styles is fine. `astro.config.mjs` / `svelte.conf
 | Home testimonials | Host quotes from JSON | Done |
 | Chat launcher | Live chat module | Flagged (`PUBLIC_FEATURE_LIVE_CHAT`) |
 | Locale control | Language selector | **Parked** — leave `PUBLIC_FEATURE_I18N` off |
-| Guest / admin accounts | Better Auth + Google SSO; testimonial approve at `/admin/testimonials` | **Flagged** (`PUBLIC_FEATURE_ACCOUNTS`) — leave off until secrets + DB |
+| Guest / admin accounts | Better Auth + Google SSO; `/admin/testimonials` + `/admin/calendar` | **Flagged** (`PUBLIC_FEATURE_ACCOUNTS`) — leave off until secrets + DB |
 | Payments / deposit | Stripe (± PayPal) after confirm | **Parked** — see PLAN adoption |
 
 ## Feature modules
