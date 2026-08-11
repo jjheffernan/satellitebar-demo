@@ -3,6 +3,7 @@ node_modules/
 
 # Build
 dist/
+.cf-worker/
 .astro/
 .svelte-kit/
 .wrangler/

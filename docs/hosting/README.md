@@ -1,29 +1,29 @@
 # Hosting & modules (owner guide)
 
-Non-engineering checklist for **Cloudflare Pages** or **Netlify** + feature flags.
+Non-engineering checklist for **Cloudflare Workers** or **Netlify** + feature flags.
 
-Site build is the same on both: `pnpm build` → `dist/`.  
+Site build is the same on both: `pnpm build` → `dist/` (Cloudflare also emits `.cf-worker/` for `/api/*`).  
 `/api/*` lives under [`deploy/`](../../deploy/README.md) (shared helpers + per-host adapters).
 
 ## Choose a host
 
-| | Cloudflare Pages | Netlify |
+| | Cloudflare Workers | Netlify |
 | --- | --- | --- |
 | Config | `wrangler.jsonc` | `netlify.toml` |
-| API routes | `deploy/cloudflare/api/*.js` (root `functions` → symlink) | `deploy/netlify/*.mjs` (`path: /api/…`) |
-| Env vars | Pages → Settings → Environment variables | Site → Project configuration → Environment variables |
+| API routes | `deploy/cloudflare/api/*.js` (root `functions` → symlink; bundled at build) | `deploy/netlify/*.mjs` (`path: /api/…`) |
+| Env vars | Worker → Settings → Variables and Secrets | Site → Project configuration → Environment variables |
 | Headers | `public/_headers` (copied to `dist/`) | same `_headers` in publish dir |
-| Local API | `wrangler pages dev dist` (optional) | `npx netlify dev` (optional) |
+| Local API | `pnpm cf:dev` (after `pnpm build`) | `npx netlify dev` (optional) |
 
 Pick **one** production host. You can keep the other config in-repo for a future move.
 
 ---
 
-## Deploy — Cloudflare Pages
+## Deploy — Cloudflare Workers
 
-1. Connect this GitHub repo to **Cloudflare Pages**
+1. Connect this GitHub repo to **Workers Builds** (Workers & Pages)
 2. Build command: `pnpm build`
-3. Output directory: `dist`
+3. Deploy command: leave default (`npx wrangler deploy` / `pnpm run cf:deploy`)
 4. Compatibility: Node (see `wrangler.jsonc` — `nodejs_compat`)
 5. Leave `deploy/cloudflare/` (and root `functions` symlink) in place for `/api/*`
 
@@ -58,7 +58,7 @@ Full decision + acceptance: [PLAN.md](../PLAN.md) Phase 1.
 
 ## Turn an ops feature on
 
-1. Host dashboard → Environment variables (Cloudflare Pages **or** Netlify)
+1. Host dashboard → Environment variables (Cloudflare Worker **or** Netlify)
 2. Add every `PUBLIC_FEATURE_*` (and secrets) listed below
 3. Save → redeploy
 4. Confirm: open `/api/capabilities` — module `active: true`

@@ -1,4 +1,4 @@
-import features from "../../src/data/features.json";
+import features from "../../../src/data/features.json";
 import { authConfigured } from "../../shared/auth.mjs";
 
 function envOn(env, key) {

@@ -11,12 +11,12 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && wrangler pages functions build --outdir=./.cf-worker --compatibility-date=2026-06-24 --compatibility-flag=nodejs_compat",
     "preview": "astro preview",
     "check": "astro check && svelte-check --tsconfig ./tsconfig.json",
     "astro": "astro",
-    "cf:pages:create": "wrangler pages project create satellitebar-demo --production-branch=main",
-    "cf:deploy": "wrangler pages deploy dist --project-name=satellitebar-demo"
+    "cf:dev": "wrangler dev",
+    "cf:deploy": "wrangler deploy"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

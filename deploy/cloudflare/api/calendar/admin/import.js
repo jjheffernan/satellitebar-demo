@@ -1,11 +1,11 @@
-import { authConfigured } from "../../../shared/auth.mjs";
+import { authConfigured } from "../../../../shared/auth.mjs";
 import {
   dbConfigured,
   getSessionUser,
   isAdminEmail,
   json,
   replaceAllEvents,
-} from "../../../shared/calendar.mjs";
+} from "../../../../shared/calendar.mjs";
 
 async function requireAdmin(env, request) {
   if (!authConfigured(env) || !dbConfigured(env)) {

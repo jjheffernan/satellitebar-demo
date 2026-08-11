@@ -11,7 +11,7 @@ Marketing + ordering hub for a **mobile bartending** company.
 - Astro 7 (pages/layouts)
 - Svelte 5 islands (`client:load` where interactive)
 - Tailwind CSS v4
-- Deploy on **Cloudflare Pages** or **Netlify** (see [docs/hosting/README.md](docs/hosting/README.md))
+- Deploy on **Cloudflare Workers** or **Netlify** (see [docs/hosting/README.md](docs/hosting/README.md))
 
 ## Quick start
 
